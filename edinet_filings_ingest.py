@@ -107,6 +107,82 @@ def generate_summary(filing: dict, is_position: bool, is_watch: bool) -> str:
     return " ".join(bits)
 
 
+def update_filing_history(position: dict, new_filing: dict) -> "dict | None":
+    """Append a filing to a position's filing_history and recompute the
+    activist accumulation rate.
+
+    Maintains position["filing_history"] (deduped by date, sorted ascending)
+    and position["accumulation"] — how fast the activist's stake is building.
+    Returns the accumulation block, or None when there are fewer than two
+    stake-bearing filings (not enough to measure a rate).
+
+    new_filing keys used: date (YYYY-MM-DD), doc_type, filer, stake_after,
+    purpose. Call this BEFORE overwriting last_filing — on first run it seeds
+    the baseline data point from the position's existing last_filing.
+    """
+    hist = position.setdefault("filing_history", [])
+
+    # First run: seed the baseline from the pre-existing last_filing so the
+    # incoming filing already has a prior point to compare against.
+    lf = position.get("last_filing")
+    if not hist and isinstance(lf, dict) and lf.get("date") \
+            and lf.get("stake_after") is not None:
+        hist.append({
+            "date": lf["date"], "doc_type": lf.get("type", ""),
+            "filer": lf.get("filer", ""), "stake_after": lf.get("stake_after"),
+            "purpose": lf.get("purpose", ""),
+        })
+
+    # Insert the new filing, deduped by date (a same-day re-run replaces it).
+    entry = {
+        "date": new_filing.get("date", ""),
+        "doc_type": new_filing.get("doc_type", ""),
+        "filer": new_filing.get("filer", ""),
+        "stake_after": new_filing.get("stake_after"),
+        "purpose": new_filing.get("purpose", ""),
+    }
+    hist = [h for h in hist if h.get("date") != entry["date"]]
+    hist.append(entry)
+    hist.sort(key=lambda h: h.get("date", ""))
+    position["filing_history"] = hist
+
+    staked = [h for h in hist
+              if h.get("stake_after") is not None and h.get("date")]
+    if len(staked) < 2:
+        position.pop("accumulation", None)
+        return None
+
+    def _d(s):
+        return datetime.fromisoformat(str(s).split("T")[0]).date()
+
+    try:
+        first, prev, last = staked[0], staked[-2], staked[-1]
+        span_days = (_d(last["date"]) - _d(first["date"])).days
+        leg_days = (_d(last["date"]) - _d(prev["date"])).days
+    except (ValueError, TypeError):
+        position.pop("accumulation", None)
+        return None
+
+    total_pp = round(last["stake_after"] - first["stake_after"], 2)
+    leg_pp = round(last["stake_after"] - prev["stake_after"], 2)
+    accumulation = {
+        "first_date": first["date"], "first_stake": first["stake_after"],
+        "latest_date": last["date"], "latest_stake": last["stake_after"],
+        "filings": len(staked),
+        "total_pp": total_pp,
+        "span_days": span_days,
+        # average pace over the whole accumulation window
+        "pp_per_30d": round(total_pp / span_days * 30, 2) if span_days > 0 else None,
+        # most recent filing-to-filing leg — the current pace
+        "recent_leg_pp": leg_pp,
+        "recent_leg_days": leg_days,
+        "recent_pp_per_30d": (round(leg_pp / leg_days * 30, 2)
+                              if leg_days > 0 else None),
+    }
+    position["accumulation"] = accumulation
+    return accumulation
+
+
 def ingest_filings(data_path: str, filings_path: str) -> dict:
     """Load existing dashboard_data.json + filings_today.json, merge filings.
 
@@ -155,6 +231,7 @@ def ingest_filings(data_path: str, filings_path: str) -> dict:
 
     today_filings = []
     auto_updated = []
+    accel = []
 
     for f in raw_filings:
         ticker = f.get("ticker")
@@ -188,6 +265,7 @@ def ingest_filings(data_path: str, filings_path: str) -> dict:
         # pill reads, and it's only available when filing_parser.py has
         # populated it from the EDINET API.
         if is_position and ticker in position_map:
+            pos = position_map[ticker]
             new_lf = {
                 "date": normalized["received_at"][:10],
                 "type": f.get("doc_type", ""),
@@ -199,10 +277,19 @@ def ingest_filings(data_path: str, filings_path: str) -> dict:
                 new_lf["edinet_code"] = f["edinet_code"]
             if f.get("edinet_url"):
                 new_lf["source"] = "edinet"  # source attribution audit picks this up
-            position_map[ticker]["last_filing"] = new_lf
+            # Compare against prior filings → activist accumulation speed.
+            # Runs BEFORE last_filing is overwritten (it seeds the baseline).
+            acc = update_filing_history(pos, {
+                "date": new_lf["date"], "doc_type": new_lf["type"],
+                "filer": new_lf["filer"], "stake_after": f.get("stake_after"),
+                "purpose": new_lf["purpose"],
+            })
+            if acc:
+                accel.append(ticker)
+            pos["last_filing"] = new_lf
             # Optionally also update stake_pct on the position
             if f.get("stake_after") is not None:
-                position_map[ticker]["stake_pct"] = f["stake_after"]
+                pos["stake_pct"] = f["stake_after"]
             auto_updated.append(ticker)
 
     data["todays_filings"] = today_filings
@@ -224,6 +311,7 @@ def ingest_filings(data_path: str, filings_path: str) -> dict:
         "filings_ingested": len(today_filings),
         "high_priority": sum(1 for f in today_filings if f["alert_priority"] == "HIGH"),
         "positions_auto_updated": auto_updated,
+        "accumulation_tracked": accel,
         "auto_tilts_applied": len(tilt_entries),
         "tilts": tilt_entries,
     }
@@ -240,6 +328,8 @@ def main():
     print(f"✓ Ingested {summary['filings_ingested']} filings ({summary['high_priority']} high priority)")
     if summary["positions_auto_updated"]:
         print(f"  Auto-updated last_filing on: {', '.join(summary['positions_auto_updated'])}")
+    if summary.get("accumulation_tracked"):
+        print(f"  Activist accumulation rate updated on: {', '.join(summary['accumulation_tracked'])}")
 
 
 if __name__ == "__main__":
