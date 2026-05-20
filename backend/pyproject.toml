@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asuka-edinet"
+version = "1.0.0"
+description = "Daily risk pipeline for the Asuka Fund (Japan activist event-driven)"
+authors = [{name = "GAO Capital"}]
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31",
+    "ddgs>=3.0",
+    "PyYAML>=6.0",
+    "python-dotenv>=1.0",
+    "lxml>=5.0",
+    "beautifulsoup4>=4.12",
+]
+
+[project.optional-dependencies]
+bloomberg = ["blpapi"]
+ib = ["ib_insync>=0.9"]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.5", "mypy>=1.10"]
+
+[project.scripts]
+asuka-run = "pipeline.orchestrator:main"
+asuka-render = "pipeline.render.dashboard:main"
+asuka-audit = "pipeline.engine.audit:main"
+
+[tool.setuptools.packages.find]
+include = ["pipeline*"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"

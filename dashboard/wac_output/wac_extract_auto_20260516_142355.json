@@ -1,0 +1,90 @@
+[
+  {
+    "label": "1878 Daito Trust × 大東建託株式会社",
+    "ticker": "1878",
+    "issuer_E": "E04878",
+    "filer_E": "E00218",
+    "filer_name": "大東建託株式会社",
+    "doc_id": "S100XTVK",
+    "submit_date": "2026-03-31",
+    "doc_description": "変更報告書",
+    "total_acquisition_cost_jpy": 14418312000,
+    "own_funds_jpy": null,
+    "borrowings_jpy": null,
+    "shares_held": 31805100,
+    "holding_ratio_pct": 0.3357,
+    "implied_wac_per_share": 453.33,
+    "raw_xml_extract": {
+      "TotalAmountOfFundingForAcquisition": [
+        "14418312000"
+      ],
+      "TotalNumberOfStocksEtcHeld": [
+        "31805100"
+      ],
+      "HoldingRatioOfShareCertificatesEtc": [
+        "0.3357"
+      ],
+      "HoldingRatioOfShareCertificatesEtcPerLastReport": [
+        "0.3750"
+      ]
+    }
+  },
+  {
+    "label": "6675 Saxa × サクサ株式会社",
+    "ticker": "6675",
+    "issuer_E": "E02072",
+    "filer_E": "E01874",
+    "filer_name": "サクサ株式会社",
+    "doc_id": "S100XMJ4",
+    "submit_date": "2026-02-20",
+    "doc_description": "変更報告書",
+    "total_acquisition_cost_jpy": 5155477000,
+    "own_funds_jpy": null,
+    "borrowings_jpy": null,
+    "shares_held": 1945463,
+    "holding_ratio_pct": 0.9349,
+    "implied_wac_per_share": 2650.0,
+    "raw_xml_extract": {
+      "TotalAmountOfFundingForAcquisition": [
+        "5155477000"
+      ],
+      "TotalNumberOfStocksEtcHeld": [
+        "1945463"
+      ],
+      "HoldingRatioOfShareCertificatesEtc": [
+        "0.9349"
+      ],
+      "HoldingRatioOfShareCertificatesEtcPerLastReport": [
+        "0.8722"
+      ]
+    }
+  },
+  {
+    "label": "9147 Nippon Express Holdings × ＮＩＰＰＯＮ　ＥＸＰＲＥＳＳホールディングス株式会社",
+    "ticker": "9147",
+    "issuer_E": "E05001",
+    "filer_E": "E36706",
+    "filer_name": "ＮＩＰＰＯＮ　ＥＸＰＲＥＳＳホールディングス株式会社",
+    "doc_id": "S100XS1K",
+    "submit_date": "2026-03-25",
+    "doc_description": "変更報告書（短期大量譲渡）",
+    "total_acquisition_cost_jpy": null,
+    "own_funds_jpy": null,
+    "borrowings_jpy": null,
+    "shares_held": 0,
+    "holding_ratio_pct": 0.0,
+    "implied_wac_per_share": null,
+    "raw_xml_extract": {
+      "TotalNumberOfStocksEtcHeld": [
+        "0"
+      ],
+      "HoldingRatioOfShareCertificatesEtc": [
+        "0.00"
+      ],
+      "HoldingRatioOfShareCertificatesEtcPerLastReport": [
+        "0.1111"
+      ],
+      "_diagnostic_hint": "No 取得資金 / acquisition-fund tags matched. Run wac_xbrl_dump.py --doc <docID> to enumerate actual tags, then add them to ACQUISITION_FUND_TAGS."
+    }
+  }
+]

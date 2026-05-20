@@ -1,0 +1,111 @@
+# Asuka Fund — Tracked Activist Universe
+# Conviction scorer reads from this file instead of hardcoded lists in code.
+# To upgrade/downgrade an activist's tier, edit this file and re-render.
+
+tier1:  # Hard activists with track record + escalation history
+  - name: "Effissimo Capital Management"
+    aliases: ["effissimo", "effissimo capital", "smt partners", "smt partners cayman"]
+    edinet_codes: ["E20473", "E25946"]  # Effissimo + SMT Partners
+    style: "3-mode framework: capital return / strategic review / blocking-stake"
+    pwer_cap: null  # no cap
+  - name: "3D Investment Partners"
+    aliases: ["3d investment", "3d partners"]
+    edinet_codes: []
+    style: "Combative public campaigns; AGM proxy battles"
+    pwer_cap: null
+  - name: "Dalton Investments"
+    aliases: ["dalton", "dalton investments", "navf", "nippon active value fund", "kizuna"]
+    edinet_codes: []
+    style: "Dual-vehicle accumulation; dividend authority proposals; board nominees"
+    pwer_cap: null
+  - name: "Oasis Management"
+    aliases: ["oasis", "oasis management"]
+    edinet_codes: []
+    style: "Public campaigns; shareholder letters; media pressure"
+    pwer_cap: null
+  - name: "Strategic Capital"
+    aliases: ["strategic capital"]
+    edinet_codes: []
+    style: "Domestic governance proposals; cross-shareholding pressure; PBR reform"
+    pwer_cap: null
+  - name: "LIM Advisors"
+    aliases: ["lim advisors", "lim"]
+    edinet_codes: []
+    style: "Capital return / real estate monetization playbook"
+    pwer_cap: null
+  - name: "Elliott Investment Management"
+    aliases: ["elliott", "elliott investment"]
+    edinet_codes: []
+    style: "Large-cap activist; SOTP / break-up theses"
+    pwer_cap: null
+  - name: "Murakami group"
+    aliases: ["murakami", "city index", "cie", "cif", "reno", "s-grant", "fortis", "c&i", "rebuild", "atra", "office support", "aya nomura", "yoshiaki murakami", "minami aoyama real estate", "takateru murakami", "mi2", "mi5"]
+    edinet_codes: []
+    style: "5-step playbook: silent accumulation → engagement → public escalation → 33% veto → buyback-then-exit"
+    pwer_cap: null
+  - name: "Ueshima wolf-pack"
+    aliases: ["ueshima", "ueshima kankuro", "doe5%", "naturali", "fuwa tetsuji"]
+    edinet_codes: []
+    style: "DOE 5% capital efficiency demand; AGM-driven"
+    pwer_cap: null
+  - name: "Be Brave"
+    aliases: ["be brave", "kazuto izumida", "izumida", "esg投資事業組合"]
+    edinet_codes: []
+    style: "Domestic hard-activist; ~99% margin via 立花証券; sub-1x PBR / weak-governance / cash-rich BS targets; DOE 8% adoption playbook"
+    pwer_cap: null
+    track_record: ["Toyo Securities (8614) 2024", "Nishikawa Rubber (5161) 2025 (+87% in 13mo)"]
+  - name: "SilverCape Investments"
+    aliases: ["silvercape", "silvercape investments"]
+    edinet_codes: ["E40437"]
+    style: "TMT/digital infrastructure cluster; aggressive ratchet with 純投資・重要提案行為 language; counsel: White & Case"
+    pwer_cap: null
+    track_record: ["Inter Action 7725 (5.02%→12.25% Mar→Dec 2025)", "Broadband Tower 3776 (~17% Mode 3 anti-MBO)"]
+  - name: "UGS Asset Management"
+    aliases: ["ugs", "ugs asset management"]
+    edinet_codes: []
+    style: "TOB track record; capital efficiency thesis"
+    pwer_cap: null
+
+tier2:  # Engagement / long-only quality investors
+  - name: "Silchester International Investors"
+    aliases: ["silchester", "silchester international"]
+    edinet_codes: ["E24872"]
+    style: "Quiet accumulator; multi-year ratchet; capital return pressure"
+    pwer_cap: 12  # typical target zone — engagement not hard activism
+  - name: "AVI Japan / Asset Value Investors"
+    aliases: ["avi", "avi japan", "asset value investors"]
+    edinet_codes: []
+    style: "Long-form engagement letters; governance reform; 3-7yr hold"
+    pwer_cap: 12
+  - name: "Arcus Investment"
+    aliases: ["arcus", "arcus investment"]
+    edinet_codes: []
+    style: "Non-adversarial engagement; quality compounder bias"
+    pwer_cap: 12
+  - name: "Wil Field Capital"
+    aliases: ["wil field", "wil field capital", "will field"]
+    edinet_codes: []
+    style: "Quiet accumulator; multi-quarter ratchet (純投資 only)"
+    pwer_cap: 12
+
+tier3:  # Patient compounders / fundamental signals
+  - name: "GMO Grantham Mayo Van Otterloo (Usonian)"
+    aliases: ["gmo", "grantham", "grantham mayo", "usonian", "gmo-usonian", "drew edwards"]
+    edinet_codes: []
+    style: "Deep value / quality; sector concentration; multi-year ratchet"
+    pwer_cap: null  # not capped — compounder thesis can run far
+  - name: "Ariake Capital"
+    aliases: ["ariake", "ariake capital"]
+    edinet_codes: []
+    style: "Regional bank / financial sector specialist; PBR reform thesis"
+    pwer_cap: null
+  - name: "MIRI Capital Management"
+    aliases: ["miri", "miri capital"]
+    edinet_codes: []
+    style: "Under-researched micro/small-cap value"
+    pwer_cap: null
+  - name: "Zennor Asset Management"
+    aliases: ["zennor", "zennor asset"]
+    edinet_codes: []
+    style: "Long-only special situations; discount-to-IV + parent/sub consolidation; engagement via commentary only"
+    pwer_cap: 12

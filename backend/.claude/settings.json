@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(pytest *)",
+      "Bash(pip install *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(diff *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Read(**)",
+      "Write(**)",
+      "Edit(**)",
+      "Glob(**)",
+      "Grep(**)",
+      "WebSearch",
+      "WebFetch"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push *)",
+      "Bash(git reset --hard *)",
+      "Bash(git checkout --force *)",
+      "Bash(curl * | sh)",
+      "Bash(wget * | sh)",
+      "Write(.env)",
+      "Write(.git/**)"
+    ]
+  },
+  "model": "claude-opus-4-7",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "command": "echo '⚠ Modifying repo file — confirm freshness stamp updates if data/positions.json'"
+      }
+    ]
+  },
+  "env": {
+    "PYTHONPATH": "${CLAUDE_PROJECT_DIR}",
+    "DASHBOARD_TODAY": ""
+  }
+}

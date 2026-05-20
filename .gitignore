@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Virtual envs
+venv/
+.venv/
+env/
+.env
+.env.local
+
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Backups / corrupted state
+*.bak
+*.corrupt-*
+*.tmp
+
+# OS / sync artifacts
+desktop.ini
+~$*
+
+# Source spreadsheets (PM working copies)
+*.xlsx
+*.xlsm
+
+# Local dashboards rendered on-the-fly (regenerated each run)
+# Comment out the next line if you want to track a snapshot.
+# dashboard/dashboard.html
+
+# Local secret/credential files
+*.pem
+*.key
+credentials.json
+secrets.json

@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# Outputs (regenerated each run)
+output/
+state/
+logs/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude Code
+.claude/cache/
+.claude/sessions/
+
+# Data — gitignored individual position record snapshots, but track the schema and current state
+data/positions_*.json
+data/snapshots/
+
+# Distribution
+dist/
+build/
+*.egg
+
+# Bloomberg/IB API artifacts
+blpapi_*.log
+log/

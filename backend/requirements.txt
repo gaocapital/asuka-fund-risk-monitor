@@ -1,0 +1,17 @@
+# Asuka Daily Dashboard — Python dependencies
+# Install: pip install -r requirements.txt
+
+# Price sources
+ib_insync>=0.9.86       # IB Gateway primary
+blpapi>=3.20.0          # Bloomberg fallback (requires Bloomberg Terminal license)
+requests>=2.31.0
+beautifulsoup4>=4.12.0  # Yahoo Finance Japan parser
+
+# EDINET / filings
+# (uses requests + standard lib; no extra deps for filings ingest)
+
+# News scan
+ddgs>=5.0.0             # DuckDuckGo Japan search
+
+# Data processing
+python-dateutil>=2.8
