@@ -22,7 +22,7 @@ from dashboard_core import (
     wac_delta_pct, html_escape, fmt_num,
 )
 
-PWER_FLOOR = 25.0   # target Wtd-Avg PWER floor
+PWER_FLOOR = 15.0   # per-position PWER floor — risk-view threshold
 
 CSS_STYLE = """
 *{box-sizing:border-box;margin:0;padding:0}
@@ -60,7 +60,7 @@ a{color:var(--ac);text-decoration:none}
 .dot-warn{background:var(--warn);box-shadow:0 0 6px rgba(214,165,51,.55)}
 
 /* ===== kpi strip ===== */
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px}
 .kpi{background:var(--s1);border:1px solid var(--line);border-radius:10px;
   padding:13px 15px;box-shadow:0 1px 2px rgba(0,0,0,.3)}
 .kpi-l{font-size:9.5px;font-weight:700;letter-spacing:.1em;color:var(--mut);
@@ -117,6 +117,11 @@ a{color:var(--ac);text-decoration:none}
 .bg-watch{background:rgba(77,159,255,.12);color:#6fb1ff;border:1px solid rgba(77,159,255,.34)}
 .bg-stale{background:rgba(214,165,51,.1);color:#c79b34;border:1px solid rgba(214,165,51,.3)}
 .bg-quar{background:#7f1d1d;color:#fff;border:1px solid #b91c1c}
+.tier{font-size:8.5px;font-weight:800;padding:2px 5px;border-radius:3px;letter-spacing:.03em}
+.tier-aaa{background:rgba(63,185,80,.22);color:#56c869;border:1px solid rgba(63,185,80,.55)}
+.tier-aa{background:rgba(63,185,80,.12);color:#56c869;border:1px solid rgba(63,185,80,.35)}
+.tier-a{background:rgba(77,159,255,.12);color:#6fb1ff;border:1px solid rgba(77,159,255,.35)}
+.tier-b{background:rgba(214,165,51,.1);color:#dcb04a;border:1px solid rgba(214,165,51,.3)}
 
 /* ===== tabs ===== */
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);
@@ -247,15 +252,15 @@ a{color:var(--ac);text-decoration:none}
   font-weight:800;letter-spacing:.06em}
 .sc-q small{font-weight:600;letter-spacing:.02em;font-size:8.5px;display:block;
   margin-top:2px}
-.sc-q-tl{top:0;left:0;width:41.7%;height:57.1%;background:rgba(248,81,73,.07);
+.sc-q-tl{top:0;left:0;width:25%;height:57.1%;background:rgba(248,81,73,.07);
   align-items:flex-start;justify-content:flex-start;color:#c9605b}
-.sc-q-tr{top:0;left:41.7%;right:0;height:57.1%;background:rgba(77,159,255,.06);
+.sc-q-tr{top:0;left:25%;right:0;height:57.1%;background:rgba(77,159,255,.06);
   align-items:flex-start;justify-content:flex-end;color:#5f93c9;text-align:right}
-.sc-q-bl{bottom:0;left:0;width:41.7%;height:42.9%;background:rgba(139,148,158,.05);
+.sc-q-bl{bottom:0;left:0;width:25%;height:42.9%;background:rgba(139,148,158,.05);
   align-items:flex-end;justify-content:flex-start;color:var(--dim)}
-.sc-q-br{bottom:0;left:41.7%;right:0;height:42.9%;background:rgba(63,185,80,.07);
+.sc-q-br{bottom:0;left:25%;right:0;height:42.9%;background:rgba(63,185,80,.07);
   align-items:flex-end;justify-content:flex-end;color:#4f9e5b;text-align:right}
-.sc-floor{position:absolute;top:0;bottom:0;left:41.7%;
+.sc-floor{position:absolute;top:0;bottom:0;left:25%;
   border-left:1px dashed rgba(214,165,51,.55)}
 .sc-floor span{position:absolute;top:4px;left:5px;font-size:8.5px;
   color:var(--warn);white-space:nowrap}
@@ -499,7 +504,7 @@ def _pwer_cls(pwer) -> str:
         return "pw-na"
     if pwer >= PWER_FLOOR:
         return "pw-hi"
-    if pwer >= PWER_MID:
+    if pwer >= 5:
         return "pw-mid"
     return "pw-lo"
 
@@ -623,44 +628,35 @@ def _wtd_avg_pwer(positions: list) -> float:
     return (pwsum / wsum) if wsum else 0.0
 
 
-def render_kpi_strip(positions: list) -> str:
-    mv = sum((p.get("cgsi") or {}).get("market_value") or 0 for p in positions)
-    pnl = sum((p.get("cgsi") or {}).get("unrealised_pnl") or 0 for p in positions)
-    cost = mv - pnl
-    pnl_pct = (pnl / cost * 100) if cost else 0.0
-    wpwer = _wtd_avg_pwer(positions)
-    n = len(positions)
-    n_stub = sum(1 for p in positions if p.get("needs_enrichment"))
-    weights = sorted((p.get("weight") or 0 for p in positions), reverse=True)
-    top5 = sum(weights[:5])
+def _pwer_kpi_cls(v) -> str:
+    return "pos" if v >= PWER_FLOOR else ("warn" if v >= 5 else "neg")
 
-    pnl_cls = "pos" if pnl >= 0 else "neg"
-    pnl_arrow = "▲" if pnl >= 0 else "▼"
-    wp_cls = "pos" if wpwer >= PWER_FLOOR else "warn"
-    wp_sub = ("at / above the 25% floor" if wpwer >= PWER_FLOOR
-              else f"{PWER_FLOOR - wpwer:.1f}pp below 25% floor")
+
+def render_kpi_strip(data: dict) -> str:
+    """Two PWER measures (per the old dashboard) + Holdings + Cash."""
+    positions = data.get("positions", [])
+    metrics = compute_portfolio_metrics(data)
+    avg_pwer = metrics["avg_pwer"]                 # simple mean, all scored names
+    tier_pwer = metrics["tier_weighted_avg_pwer"]  # conviction-tier-weighted (BUYs)
+    n = len(positions)
+    n_buy = metrics.get("n_buy", 0)
+    n_stub = sum(1 for p in positions if p.get("needs_enrichment"))
     stub_sub = f"{n_stub} need enrichment" if n_stub else "all enriched"
 
     return f"""
 <div class="kpis">
-  <div class="kpi"><div class="kpi-l">Book Value</div>
-    <div class="kpi-v n">{_money(mv)}</div>
-    <div class="kpi-s">CGSI market value</div></div>
-  <div class="kpi"><div class="kpi-l">Unrealized P&amp;L</div>
-    <div class="kpi-v n {pnl_cls}">{_money(pnl, sign=True)}</div>
-    <div class="kpi-s {pnl_cls}">{pnl_arrow} {pnl_pct:+.2f}%</div></div>
-  <div class="kpi"><div class="kpi-l">Wtd-Avg PWER</div>
-    <div class="kpi-v n {wp_cls}">{wpwer:.1f}%</div>
-    <div class="kpi-s {wp_cls}">{wp_sub}</div></div>
+  <div class="kpi"><div class="kpi-l">Avg PWER</div>
+    <div class="kpi-v n {_pwer_kpi_cls(avg_pwer)}">{avg_pwer:.1f}%</div>
+    <div class="kpi-s">simple mean · all {n} names</div></div>
+  <div class="kpi"><div class="kpi-l">Tier-Weighted PWER</div>
+    <div class="kpi-v n {_pwer_kpi_cls(tier_pwer)}">{tier_pwer:.1f}%</div>
+    <div class="kpi-s">conviction-weighted · {n_buy} BUYs · AAA×3 AA×2 A×1 B×½</div></div>
   <div class="kpi"><div class="kpi-l">Holdings</div>
     <div class="kpi-v n">{n}</div>
     <div class="kpi-s">{stub_sub}</div></div>
   <div class="kpi"><div class="kpi-l">Cash</div>
     <div class="kpi-v n">0.0%</div>
     <div class="kpi-s pos">● fully deployed</div></div>
-  <div class="kpi"><div class="kpi-l">Top-5 Concentration</div>
-    <div class="kpi-v n">{top5:.1f}%</div>
-    <div class="kpi-s">largest 5 of {n} names</div></div>
 </div>"""
 
 
@@ -679,8 +675,13 @@ def _act_card(p: dict, action: str) -> str:
     else:
         nums = ""
     label, cls = ACTION_BADGE.get(action, (action, "bg-hold"))
+    tier_badge = ""
+    if action == "BUY":
+        tier, _, _ = derive_buy_tier(p)
+        if tier and tier != "—":
+            tier_badge = f'<span class="tier tier-{tier.lower()}">{tier}</span>'
     return f"""<div class="act">
-  <div class="act-top"><span class="badge {cls}">{label}</span>
+  <div class="act-top"><span class="badge {cls}">{label}</span>{tier_badge}
     <span class="act-tk">{html_escape(p.get('ticker'))} {html_escape(p.get('name', ''))}</span>
     <span class="act-pw">{pw}</span></div>
   <div class="act-why">{html_escape(_action_reason(p, action))}</div>
@@ -694,7 +695,7 @@ def render_hero(positions: list, deltas: dict) -> str:
         by_action.setdefault(derive_action(p), []).append(p)
 
     deploy = sorted(by_action.get("BUY", []),
-                    key=lambda p: -(p.get("pwer") or 0))
+                    key=lambda p: -derive_buy_tier(p)[1])
     reduce = (sorted(by_action.get("SELL", []), key=lambda p: (p.get("pwer") or 0))
               + sorted(by_action.get("WEAK_HOLD", []), key=lambda p: (p.get("pwer") or 0)))
 
@@ -715,8 +716,8 @@ def render_hero(positions: list, deltas: dict) -> str:
     wpwer = _wtd_avg_pwer(positions)
     if wpwer < PWER_FLOOR:
         flags.append(("flag-w", "!", f"<b>Wtd-Avg PWER {wpwer:.1f}%</b> — "
-                      f"{PWER_FLOOR - wpwer:.1f}pp below the 25% floor. Enrich "
-                      f"or drop the un-scored stubs to lift it."))
+                      f"{PWER_FLOOR - wpwer:.1f}pp below the {PWER_FLOOR:.0f}% floor. "
+                      f"Enrich or drop the un-scored stubs to lift it."))
     stubs = [p for p in positions if p.get("needs_enrichment")]
     if stubs:
         names = ", ".join(p.get("name", "").title()[:18] for p in stubs[:3])
@@ -818,8 +819,8 @@ def render_thesis_expand(p: dict) -> str:
 
     pwer = p.get("pwer")
     pwer_txt = f"{pwer:.1f}%" if pwer is not None else "—"
-    floor_note = ("above the 25% floor" if (pwer or 0) >= PWER_FLOOR
-                  else "below the 25% floor")
+    floor_note = (f"above the {PWER_FLOOR:.0f}% floor" if (pwer or 0) >= PWER_FLOOR
+                  else f"below the {PWER_FLOOR:.0f}% floor")
 
     notes = (p.get("notes") or "").strip() or "No thesis note recorded."
     lf = p.get("last_filing") or {}
@@ -894,6 +895,11 @@ def render_position_row(p: dict, delta: dict) -> str:
     pwer_cls = _pwer_cls(pwer)
 
     action = derive_action(p)
+    tier_html = ""
+    if action == "BUY":
+        tier, _, _ = derive_buy_tier(p)
+        if tier and tier != "—":
+            tier_html = f' <span class="tier tier-{tier.lower()}">{tier}</span>'
     cat = p.get("catalyst") or ""
     cat_chip = _countdown_chip(p.get("catalyst_date"))
     if cat:
@@ -913,7 +919,7 @@ def render_position_row(p: dict, delta: dict) -> str:
   <div><div class="pc-wv n">{wv}</div><div class="pc-sub">{wsub}</div></div>
   <div><div class="pc-pv n">{pv}</div><div class="pc-sub">{psub}</div></div>
   <div><span class="pw {pwer_cls} n">{pwer_txt}</span></div>
-  <div>{_badge(action)}</div>
+  <div>{_badge(action)}{tier_html}</div>
   <div class="pc-cat">{cat_html}</div>
   <div class="chev">▸</div>
 </div>
@@ -997,7 +1003,7 @@ def render_conviction_matrix(positions: list) -> str:
       <div class="sc-q sc-q-tr">CORE<small>big · high PWER</small></div>
       <div class="sc-q sc-q-bl">ENRICH / EXIT<small>small · low PWER</small></div>
       <div class="sc-q sc-q-br">ADD<small>small · high PWER</small></div>
-      <div class="sc-floor"><span>25% floor</span></div>
+      <div class="sc-floor"><span>15% floor</span></div>
       {''.join(dots)}
     </div>
     <div class="sc-xt" style="left:50px">0%</div>
@@ -1070,14 +1076,14 @@ def render_activist_bars(positions: list) -> str:
 
 
 def render_pwer_histogram(positions: list) -> str:
-    buckets = [0, 0, 0, 0, 0, 0]  # <0, 0-10, 10-25, 25-40, 40+, n/a
+    buckets = [0, 0, 0, 0, 0, 0]  # <0, 0-15, 15-25, 25-40, 40+, n/a
     for p in positions:
         pw = p.get("pwer")
         if pw is None:
             buckets[5] += 1
         elif pw < 0:
             buckets[0] += 1
-        elif pw < 10:
+        elif pw < 15:
             buckets[1] += 1
         elif pw < 25:
             buckets[2] += 1
@@ -1086,8 +1092,8 @@ def render_pwer_histogram(positions: list) -> str:
         else:
             buckets[4] += 1
     mx = max(buckets) or 1
-    cls = ["hb-below", "hb-below", "hb-below", "hb-above", "hb-above", "hb-na"]
-    labels = ["&lt;0%", "0–10", "10–25", "25–40", "40%+", "n/a"]
+    cls = ["hb-below", "hb-below", "hb-above", "hb-above", "hb-above", "hb-na"]
+    labels = ["&lt;0%", "0–15", "15–25", "25–40", "40%+", "n/a"]
     bars = []
     for i, c in enumerate(buckets):
         cnum = f'<div class="hb-c{" dim" if i == 5 else ""}">{c}</div>'
@@ -1099,7 +1105,7 @@ def render_pwer_histogram(positions: list) -> str:
 <div class="card"><div class="card-h">
   <div class="card-t">PWER DISTRIBUTION</div></div>
   <div class="card-b"><div class="histo">
-    <div class="histo-floor" style="left:calc(50% - 5px)"><span>25% floor</span></div>
+    <div class="histo-floor" style="left:calc(33.3% - 4px)"><span>15% floor</span></div>
     {''.join(bars)}
   </div></div></div>"""
 
@@ -1124,7 +1130,7 @@ def render_tab_risk(positions: list) -> str:
   <div class="stat"><div class="stat-l">Top-5 Concentration</div>
     <div class="stat-v n">{top5:.1f}%</div>
     <div class="stat-s">Largest: {html_escape(largest_str)}</div></div>
-  <div class="stat stat-neg"><div class="stat-l">Below 25% PWER Floor</div>
+  <div class="stat stat-neg"><div class="stat-l">Below 15% PWER Floor</div>
     <div class="stat-v n warn">{below_wt:.0f}%</div>
     <div class="stat-s">{len(below)} scored names under the floor</div></div>
   <div class="stat stat-warn"><div class="stat-l">Un-enriched Exposure</div>
@@ -1408,7 +1414,7 @@ def render_dashboard(data: dict, positions: list, deltas: dict) -> str:
 </head>
 <body>
 {render_header(data, positions)}
-{render_kpi_strip(positions)}
+{render_kpi_strip(data)}
 {render_hero(positions, deltas)}
 <nav class="tabs">
   <div class="tab on" data-pane="tab-positions">Positions <span class="tab-c">{len(positions)}</span></div>

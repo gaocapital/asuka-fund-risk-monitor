@@ -40,7 +40,7 @@ a{color:var(--ac);text-decoration:none}
 .dot-warn{background:var(--warn);box-shadow:0 0 6px rgba(214,165,51,.55)}
 
 /* ===== kpi strip ===== */
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px}
 .kpi{background:var(--s1);border:1px solid var(--line);border-radius:10px;
   padding:13px 15px;box-shadow:0 1px 2px rgba(0,0,0,.3)}
 .kpi-l{font-size:9.5px;font-weight:700;letter-spacing:.1em;color:var(--mut);
@@ -97,6 +97,11 @@ a{color:var(--ac);text-decoration:none}
 .bg-watch{background:rgba(77,159,255,.12);color:#6fb1ff;border:1px solid rgba(77,159,255,.34)}
 .bg-stale{background:rgba(214,165,51,.1);color:#c79b34;border:1px solid rgba(214,165,51,.3)}
 .bg-quar{background:#7f1d1d;color:#fff;border:1px solid #b91c1c}
+.tier{font-size:8.5px;font-weight:800;padding:2px 5px;border-radius:3px;letter-spacing:.03em}
+.tier-aaa{background:rgba(63,185,80,.22);color:#56c869;border:1px solid rgba(63,185,80,.55)}
+.tier-aa{background:rgba(63,185,80,.12);color:#56c869;border:1px solid rgba(63,185,80,.35)}
+.tier-a{background:rgba(77,159,255,.12);color:#6fb1ff;border:1px solid rgba(77,159,255,.35)}
+.tier-b{background:rgba(214,165,51,.1);color:#dcb04a;border:1px solid rgba(214,165,51,.3)}
 
 /* ===== tabs ===== */
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);
@@ -227,15 +232,15 @@ a{color:var(--ac);text-decoration:none}
   font-weight:800;letter-spacing:.06em}
 .sc-q small{font-weight:600;letter-spacing:.02em;font-size:8.5px;display:block;
   margin-top:2px}
-.sc-q-tl{top:0;left:0;width:41.7%;height:57.1%;background:rgba(248,81,73,.07);
+.sc-q-tl{top:0;left:0;width:25%;height:57.1%;background:rgba(248,81,73,.07);
   align-items:flex-start;justify-content:flex-start;color:#c9605b}
-.sc-q-tr{top:0;left:41.7%;right:0;height:57.1%;background:rgba(77,159,255,.06);
+.sc-q-tr{top:0;left:25%;right:0;height:57.1%;background:rgba(77,159,255,.06);
   align-items:flex-start;justify-content:flex-end;color:#5f93c9;text-align:right}
-.sc-q-bl{bottom:0;left:0;width:41.7%;height:42.9%;background:rgba(139,148,158,.05);
+.sc-q-bl{bottom:0;left:0;width:25%;height:42.9%;background:rgba(139,148,158,.05);
   align-items:flex-end;justify-content:flex-start;color:var(--dim)}
-.sc-q-br{bottom:0;left:41.7%;right:0;height:42.9%;background:rgba(63,185,80,.07);
+.sc-q-br{bottom:0;left:25%;right:0;height:42.9%;background:rgba(63,185,80,.07);
   align-items:flex-end;justify-content:flex-end;color:#4f9e5b;text-align:right}
-.sc-floor{position:absolute;top:0;bottom:0;left:41.7%;
+.sc-floor{position:absolute;top:0;bottom:0;left:25%;
   border-left:1px dashed rgba(214,165,51,.55)}
 .sc-floor span{position:absolute;top:4px;left:5px;font-size:8.5px;
   color:var(--warn);white-space:nowrap}
@@ -381,58 +386,52 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 </header>
 
 <div class="kpis">
-  <div class="kpi"><div class="kpi-l">Book Value</div>
-    <div class="kpi-v n">¥82.71M</div>
-    <div class="kpi-s">CGSI market value</div></div>
-  <div class="kpi"><div class="kpi-l">Unrealized P&amp;L</div>
-    <div class="kpi-v n pos">+¥1.53M</div>
-    <div class="kpi-s pos">▲ +1.88%</div></div>
-  <div class="kpi"><div class="kpi-l">Wtd-Avg PWER</div>
-    <div class="kpi-v n warn">19.2%</div>
-    <div class="kpi-s warn">5.8pp below 25% floor</div></div>
+  <div class="kpi"><div class="kpi-l">Avg PWER</div>
+    <div class="kpi-v n pos">19.0%</div>
+    <div class="kpi-s">simple mean · all 21 names</div></div>
+  <div class="kpi"><div class="kpi-l">Tier-Weighted PWER</div>
+    <div class="kpi-v n pos">32.5%</div>
+    <div class="kpi-s">conviction-weighted · 7 BUYs · AAA×3 AA×2 A×1 B×½</div></div>
   <div class="kpi"><div class="kpi-l">Holdings</div>
     <div class="kpi-v n">21</div>
     <div class="kpi-s">7 need enrichment</div></div>
   <div class="kpi"><div class="kpi-l">Cash</div>
     <div class="kpi-v n">0.0%</div>
     <div class="kpi-s pos">● fully deployed</div></div>
-  <div class="kpi"><div class="kpi-l">Top-5 Concentration</div>
-    <div class="kpi-v n">44.3%</div>
-    <div class="kpi-s">largest 5 of 21 names</div></div>
 </div>
 
 <section class="hero">
   <div class="hero-head">
     <div class="hero-title">TODAY'S ACTIONS</div>
-    <div class="hero-meta">7 deploy · 5 reduce · 3 flags — fully deployed, so adds fund from reduces</div>
+    <div class="hero-meta">7 deploy · 5 reduce · 2 flags — fully deployed, so adds fund from reduces</div>
   </div>
   <div class="hero-cols">
     <div class="hcol">
       <div class="hcol-h"><span class="hd hd-add"></span>DEPLOY</div>
       <div class="act">
-  <div class="act-top"><span class="badge bg-buy">BUY</span>
-    <span class="act-tk">3401 Teijin</span>
-    <span class="act-pw">PWER 58.0%</span></div>
-  <div class="act-why">STEP UP to L2 5% NAV per AEDP v11 memo 2026-05-16</div>
-  <div class="act-nums"><span>Wt 3.05% → tgt 5.0%</span><span class="warn">-1.95pp</span></div>
-</div><div class="act">
-  <div class="act-top"><span class="badge bg-buy">BUY</span>
+  <div class="act-top"><span class="badge bg-buy">BUY</span><span class="tier tier-aaa">AAA</span>
     <span class="act-tk">3697 Shift Inc.</span>
     <span class="act-pw">PWER 30.1%</span></div>
   <div class="act-why">Quality compounder</div>
   <div class="act-nums"><span>Wt 6.84% → tgt 3.0%</span><span class="warn">+3.84pp</span></div>
 </div><div class="act">
-  <div class="act-top"><span class="badge bg-buy">BUY</span>
+  <div class="act-top"><span class="badge bg-buy">BUY</span><span class="tier tier-aa">AA</span>
+    <span class="act-tk">9987 Suzuken</span>
+    <span class="act-pw">PWER 28.5%</span></div>
+  <div class="act-why">Px ¥5,561 vs WAC ¥5,400 = +3</div>
+  <div class="act-nums"><span>Wt 2.57%</span></div>
+</div><div class="act">
+  <div class="act-top"><span class="badge bg-buy">BUY</span><span class="tier tier-aa">AA</span>
     <span class="act-tk">9684 Square Enix</span>
     <span class="act-pw">PWER 29.7%</span></div>
   <div class="act-why">At max 12% cap</div>
   <div class="act-nums"><span>Wt 12.84% → tgt 12.0%</span><span class="dim">+0.84pp</span></div>
 </div><div class="act">
-  <div class="act-top"><span class="badge bg-buy">BUY</span>
-    <span class="act-tk">9987 Suzuken</span>
-    <span class="act-pw">PWER 28.5%</span></div>
-  <div class="act-why">Px ¥5,561 vs WAC ¥5,400 = +3</div>
-  <div class="act-nums"><span>Wt 2.57%</span></div>
+  <div class="act-top"><span class="badge bg-buy">BUY</span><span class="tier tier-aa">AA</span>
+    <span class="act-tk">4613 Kansai Paint</span>
+    <span class="act-pw">PWER 24.7%</span></div>
+  <div class="act-why">Silchester 5</div>
+  <div class="act-nums"><span>Wt 2.78%</span></div>
 </div><div class="hero-empty">+3 more in the Positions tab</div>
     </div>
     <div class="hcol">
@@ -465,7 +464,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     </div>
     <div class="hcol">
       <div class="hcol-h"><span class="hd hd-flg"></span>FLAGS &amp; CHANGES</div>
-      <div class="flag flag-w"><span class="flag-i">!</span><div><b>Wtd-Avg PWER 19.2%</b> — 5.8pp below the 25% floor. Enrich or drop the un-scored stubs to lift it.</div></div><div class="flag flag-w"><span class="flag-i">7</span><div><b>7 holdings un-enriched</b> — Ricoh Ord, Cyber Security C O, Mitsui Osk Lines O +4. No thesis or PWER yet.</div></div><div class="flag flag-r"><span class="flag-i">⛔</span><div><b>QOL Holdings (3034)</b> — data quarantine; fields cannot be trusted until re-verified.</div></div>
+      <div class="flag flag-w"><span class="flag-i">7</span><div><b>7 holdings un-enriched</b> — Ricoh Ord, Cyber Security C O, Mitsui Osk Lines O +4. No thesis or PWER yet.</div></div><div class="flag flag-r"><span class="flag-i">⛔</span><div><b>QOL Holdings (3034)</b> — data quarantine; fields cannot be trusted until re-verified.</div></div>
     </div>
   </div>
 </section>
@@ -495,7 +494,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><div class="pc-wv n">12.84%</div><div class="pc-sub">tgt 12.0% · <span class="dim">+0.84</span></div></div>
   <div><div class="pc-pv n">¥2,713</div><div class="pc-sub">WAC ¥2,900 · -6%</div></div>
   <div><span class="pw pw-hi n">29.7%</span></div>
-  <div><span class="badge bg-buy">BUY</span></div>
+  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
   <div class="pc-cat">June 2026 AGM 3D board contest<br><span class="cat-d">25 Jun · 36d</span></div>
   <div class="chev">▸</div>
 </div>
@@ -504,7 +503,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-26.7%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#5a8a52"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+3.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+40.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#56d364"></div></div><span class="scen-p">20%</span><span class="scen-r pos">+102.7%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>29.7%</b> · above the 25% floor</div>
+      <b>29.7%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -529,7 +528,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-19.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:100%;background:#3fb950"></div></div><span class="scen-p">50%</span><span class="scen-r pos">+31.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+54.8%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:11%;background:#56d364"></div></div><span class="scen-p">5%</span><span class="scen-r pos">+88.4%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>29.9%</b> · above the 25% floor</div>
+      <b>29.9%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -554,7 +553,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:99%;background:#f85149"></div></div><span class="scen-p">45%</span><span class="scen-r neg">-19.1%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#5a8a52"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+1.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+21.5%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:11%;background:#3fb950"></div></div><span class="scen-p">5%</span><span class="scen-r pos">+41.7%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>-2.8%</b> · below the 25% floor</div>
+      <b>-2.8%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -569,7 +568,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">4.98%</div><div class="pc-sub">tgt 4.0% · <span class="dim">+0.98</span></div></div>
   <div><div class="pc-pv n">¥1,280</div><div class="pc-sub">WAC ¥1,720 · -26%</div></div>
-  <div><span class="pw pw-lo n">8.6%</span></div>
+  <div><span class="pw pw-mid n">8.6%</span></div>
   <div><span class="badge bg-weak">WEAK HOLD</span></div>
   <div class="pc-cat">June 2026 AGM — binary on Oasis proposals (if filed) +<br><span class="cat-d">25 Jun · 36d</span></div>
   <div class="chev">▸</div>
@@ -579,7 +578,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#f85149"></div></div><span class="scen-p">35%</span><span class="scen-r neg">-10.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+25.0%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+52.3%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-29.7%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>8.6%</b> · below the 25% floor</div>
+      <b>8.6%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -594,8 +593,8 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">4.83%</div><div class="pc-sub">tgt 1.5% · <span class="warn">+3.33</span></div></div>
   <div><div class="pc-pv n">¥2,095</div><div class="pc-sub">WAC ¥2,233 · -6%</div></div>
-  <div><span class="pw pw-mid n">21.4%</span></div>
-  <div><span class="badge bg-buy">BUY</span></div>
+  <div><span class="pw pw-hi n">21.4%</span></div>
+  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-a">A</span></div>
   <div class="pc-cat">AGM cycle (basket)<br><span class="cat-d">25 Jun · 36d</span></div>
   <div class="chev">▸</div>
 </div>
@@ -604,7 +603,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-9.4%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+17.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+33.2%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+49.2%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>21.4%</b> · below the 25% floor</div>
+      <b>21.4%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -629,7 +628,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#5a8a52"></div></div><span class="scen-p">25%</span><span class="scen-r pos">0.0%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:100%;background:#5a8a52"></div></div><span class="scen-p">50%</span><span class="scen-r pos">0.0%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#5a8a52"></div></div><span class="scen-p">20%</span><span class="scen-r pos">0.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:11%;background:#5a8a52"></div></div><span class="scen-p">5%</span><span class="scen-r pos">0.0%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>0.0%</b> · below the 25% floor</div>
+      <b>0.0%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -644,7 +643,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">3.72%</div><div class="pc-sub">tgt 2.5% · <span class="dim">+1.22</span></div></div>
   <div><div class="pc-pv n">¥4,495</div><div class="pc-sub">WAC ¥2,100 · +114%</div></div>
-  <div><span class="pw pw-lo n">7.5%</span></div>
+  <div><span class="pw pw-mid n">7.5%</span></div>
   <div><span class="badge bg-weak">WEAK HOLD</span></div>
   <div class="pc-cat">Q2 FY26 earnings — decisive beat of management's conse<br><span class="cat-d">15 Aug · 87d</span></div>
   <div class="chev">▸</div>
@@ -654,7 +653,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#f85149"></div></div><span class="scen-p">25%</span><span class="scen-r neg">-37.6%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:100%;background:#5a8a52"></div></div><span class="scen-p">50%</span><span class="scen-r pos">+7.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+52.9%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:4%;background:#5a8a52"></div></div><span class="scen-p">0%</span><span class="scen-r pos">0.0%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>7.5%</b> · below the 25% floor</div>
+      <b>7.5%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -670,7 +669,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><div class="pc-wv n">3.05%</div><div class="pc-sub">tgt 5.0% · <span class="warn">-1.95</span></div></div>
   <div><div class="pc-pv n">¥1,636</div><div class="pc-sub">WAC ¥1,350 · +21%</div></div>
   <div><span class="pw pw-hi n">58.0%</span></div>
-  <div><span class="badge bg-buy">BUY</span></div>
+  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
   <div class="pc-cat">Mode 2 threshold crossing — Effissimo at 19.26%, ~0.74<br><span class="cat-d">30 Jun · 41d</span></div>
   <div class="chev">▸</div>
 </div>
@@ -679,7 +678,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:26%;background:#f85149"></div></div><span class="scen-p">12%</span><span class="scen-r neg">-14.4%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:59%;background:#3fb950"></div></div><span class="scen-p">27%</span><span class="scen-r pos">+22.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#56d364"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+62.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:68%;background:#56d364"></div></div><span class="scen-p">31%</span><span class="scen-r pos">+113.3%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>58.0%</b> · above the 25% floor</div>
+      <b>58.0%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -695,7 +694,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><div class="pc-wv n">2.79%</div><div class="pc-sub">tgt 4.0% · <span class="dim">-1.21</span></div></div>
   <div><div class="pc-pv n">¥3,749</div><div class="pc-sub">WAC ¥3,050 · +23%</div></div>
   <div><span class="pw pw-hi n">26.0%</span></div>
-  <div><span class="badge bg-buy">BUY</span></div>
+  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-b">B</span></div>
   <div class="pc-cat">Aug 2026 AGM (binary): Items 5/6 (cap-return) + Item 3<br><span class="cat-d">31 Aug · 103d</span></div>
   <div class="chev">▸</div>
 </div>
@@ -704,7 +703,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-12.0%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#5a8a52"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+12.0%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+28.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#56d364"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+60.0%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>26.0%</b> · above the 25% floor</div>
+      <b>26.0%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -739,7 +738,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><div class="pc-wv n">6.84%</div><div class="pc-sub">tgt 3.0% · <span class="warn">+3.84</span></div></div>
   <div><div class="pc-pv n">¥664</div><div class="pc-sub">WAC ¥738 · -10%</div></div>
   <div><span class="pw pw-hi n">30.1%</span></div>
-  <div><span class="badge bg-buy">BUY</span></div>
+  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aaa">AAA</span></div>
   <div class="pc-cat">Apr 14 Q1 print (post-print verify) · 2 AI launches<br><span class="cat-d past">14 Apr</span></div>
   <div class="chev">▸</div>
 </div>
@@ -748,7 +747,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-26.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#5a8a52"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+13.1%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+47.6%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#56d364"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+96.7%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>30.1%</b> · above the 25% floor</div>
+      <b>30.1%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -792,7 +791,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-15.5%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:99%;background:#5a8a52"></div></div><span class="scen-p">45%</span><span class="scen-r pos">+0.8%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+15.2%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#3fb950"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+34.3%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>4.5%</b> · below the 25% floor</div>
+      <b>4.5%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -845,8 +844,8 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">2.78%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
   <div><div class="pc-pv n">¥2,304</div><div class="pc-sub">WAC ¥2,511 · -8%</div></div>
-  <div><span class="pw pw-mid n">24.7%</span></div>
-  <div><span class="badge bg-buy">BUY</span></div>
+  <div><span class="pw pw-hi n">24.7%</span></div>
+  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
   <div class="pc-cat">May 11 earnings · TSE PBR reform pressure · India biz <br><span class="cat-d past">11 May</span></div>
   <div class="chev">▸</div>
 </div>
@@ -855,7 +854,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#f85149"></div></div><span class="scen-p">25%</span><span class="scen-r neg">-12.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:88%;background:#3fb950"></div></div><span class="scen-p">40%</span><span class="scen-r pos">+23.9%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+44.6%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#56d364"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+70.4%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>24.7%</b> · below the 25% floor</div>
+      <b>24.7%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -871,7 +870,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div><div class="pc-wv n">2.57%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
   <div><div class="pc-pv n">¥5,399</div><div class="pc-sub">WAC ¥5,500 · -2%</div></div>
   <div><span class="pw pw-hi n">28.5%</span></div>
-  <div><span class="badge bg-buy">BUY</span></div>
+  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
   <div class="pc-cat">May 2026 full-year results + new MTMP announcement<br><span class="cat-d past">15 May</span></div>
   <div class="chev">▸</div>
 </div>
@@ -880,7 +879,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:40%;background:#f85149"></div></div><span class="scen-p">18%</span><span class="scen-r neg">-12.4%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:92%;background:#3fb950"></div></div><span class="scen-p">42%</span><span class="scen-r pos">+23.6%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+44.2%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#56d364"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+75.1%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>28.5%</b> · above the 25% floor</div>
+      <b>28.5%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -962,7 +961,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#5a8a52"></div></div><span class="scen-p">25%</span><span class="scen-r pos">0.0%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:100%;background:#5a8a52"></div></div><span class="scen-p">50%</span><span class="scen-r pos">0.0%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#5a8a52"></div></div><span class="scen-p">20%</span><span class="scen-r pos">0.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:11%;background:#5a8a52"></div></div><span class="scen-p">5%</span><span class="scen-r pos">0.0%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>0.0%</b> · below the 25% floor</div>
+      <b>0.0%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -975,9 +974,9 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div class="stat"><div class="stat-l">Top-5 Concentration</div>
     <div class="stat-v n">44.3%</div>
     <div class="stat-s">Largest: Square Enix 12.8%</div></div>
-  <div class="stat stat-neg"><div class="stat-l">Below 25% PWER Floor</div>
-    <div class="stat-v n warn">36%</div>
-    <div class="stat-s">8 scored names under the floor</div></div>
+  <div class="stat stat-neg"><div class="stat-l">Below 15% PWER Floor</div>
+    <div class="stat-v n warn">29%</div>
+    <div class="stat-s">6 scored names under the floor</div></div>
   <div class="stat stat-warn"><div class="stat-l">Un-enriched Exposure</div>
     <div class="stat-v n warn">27%</div>
     <div class="stat-s">7 names — no thesis or PWER</div></div>
@@ -1000,7 +999,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <div class="sc-q sc-q-tr">CORE<small>big · high PWER</small></div>
       <div class="sc-q sc-q-bl">ENRICH / EXIT<small>small · low PWER</small></div>
       <div class="sc-q sc-q-br">ADD<small>small · high PWER</small></div>
-      <div class="sc-floor"><span>25% floor</span></div>
+      <div class="sc-floor"><span>15% floor</span></div>
       <div class="sc-dot sc-l1" style="left:49.5%;bottom:91.7%;width:21px;height:21px"><span class="sc-tag">9684 Square Enix</span></div><div class="sc-dot sc-l2" style="left:49.8%;bottom:58.7%;width:17px;height:17px"><span class="sc-tag">3182 Oisix ra da</span></div><div class="sc-dot sc-l2" style="left:0.0%;bottom:55.8%;width:16px;height:16px"><span class="sc-tag">9308 Inui Global</span></div><div class="sc-dot sc-l3" style="left:50.2%;bottom:48.9%;width:15px;height:15px"></div><div class="sc-dot sc-l2" style="left:14.3%;bottom:35.6%;width:14px;height:14px"></div><div class="sc-dot sc-l2" style="left:35.7%;bottom:34.5%;width:14px;height:14px"></div><div class="sc-dot sc-l3" style="left:7.5%;bottom:33.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" style="left:0.0%;bottom:29.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" style="left:12.5%;bottom:26.6%;width:13px;height:13px"></div><div class="sc-dot sc-lp" style="left:0.0%;bottom:24.3%;width:12px;height:12px"></div><div class="sc-dot sc-l2" style="left:96.7%;bottom:21.8%;width:12px;height:12px"></div><div class="sc-dot sc-l2" style="left:43.3%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" style="left:41.2%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" style="left:47.5%;bottom:18.4%;width:11px;height:11px"></div>
     </div>
     <div class="sc-xt" style="left:50px">0%</div>
@@ -1034,8 +1033,8 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 <div class="card"><div class="card-h">
   <div class="card-t">PWER DISTRIBUTION</div></div>
   <div class="card-b"><div class="histo">
-    <div class="histo-floor" style="left:calc(50% - 5px)"><span>25% floor</span></div>
-    <div class="hb"><div class="hb-c">1</div><div class="hb-bar hb-below" style="height:14%"></div><div class="hb-l">&lt;0%</div></div><div class="hb"><div class="hb-c">5</div><div class="hb-bar hb-below" style="height:71%"></div><div class="hb-l">0–10</div></div><div class="hb"><div class="hb-c">2</div><div class="hb-bar hb-below" style="height:29%"></div><div class="hb-l">10–25</div></div><div class="hb"><div class="hb-c">5</div><div class="hb-bar hb-above" style="height:71%"></div><div class="hb-l">25–40</div></div><div class="hb"><div class="hb-c">1</div><div class="hb-bar hb-above" style="height:14%"></div><div class="hb-l">40%+</div></div><div class="hb"><div class="hb-c dim">7</div><div class="hb-bar hb-na" style="height:100%"></div><div class="hb-l">n/a</div></div>
+    <div class="histo-floor" style="left:calc(33.3% - 4px)"><span>15% floor</span></div>
+    <div class="hb"><div class="hb-c">1</div><div class="hb-bar hb-below" style="height:14%"></div><div class="hb-l">&lt;0%</div></div><div class="hb"><div class="hb-c">5</div><div class="hb-bar hb-below" style="height:71%"></div><div class="hb-l">0–15</div></div><div class="hb"><div class="hb-c">2</div><div class="hb-bar hb-above" style="height:29%"></div><div class="hb-l">15–25</div></div><div class="hb"><div class="hb-c">5</div><div class="hb-bar hb-above" style="height:71%"></div><div class="hb-l">25–40</div></div><div class="hb"><div class="hb-c">1</div><div class="hb-bar hb-above" style="height:14%"></div><div class="hb-l">40%+</div></div><div class="hb"><div class="hb-c dim">7</div><div class="hb-bar hb-na" style="height:100%"></div><div class="hb-l">n/a</div></div>
   </div></div></div>
 </div></section>
   <section class="tabpane" id="tab-catalysts" hidden>
@@ -1277,7 +1276,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 </div></section>
 </main>
 <footer>
-  Asuka Fund Risk Monitor · rendered 20 May 2026 18:36 · 21 holdings ·
+  Asuka Fund Risk Monitor · rendered 20 May 2026 19:02 · 21 holdings ·
   book as of 2026-05-19 · Bloomberg · EDINET · TDNet · Asuka_EDINET pipeline<br>
   PWER recomputed at live spot · deltas vs the previous snapshot ·
   Wtd-Avg PWER floor 25%.
