@@ -9,6 +9,7 @@ broker-email position updater; run this file standalone to inspect any CSV.
 import csv
 import os
 import sys
+from datetime import datetime
 
 
 def _f(v) -> float:
@@ -17,6 +18,20 @@ def _f(v) -> float:
         return float(str(v).replace(",", "").strip())
     except (ValueError, AttributeError):
         return 0.0
+
+
+def _date(v) -> str:
+    """Normalize a CGSI date cell (e.g. '5/15/2026 12:00:00 AM') to ISO 'YYYY-MM-DD'."""
+    s = (v or "").strip()
+    if not s:
+        return s
+    datepart = s.split()[0]  # drop any time component
+    for fmt in ("%m/%d/%Y", "%Y-%m-%d", "%d/%m/%Y"):
+        try:
+            return datetime.strptime(datepart, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    return datepart
 
 
 def parse_position_csv(path: str) -> dict:
@@ -74,7 +89,7 @@ def parse_position_csv(path: str) -> dict:
     holdings.sort(key=lambda x: -x["market_value"])
 
     return {
-        "as_of": (head.get("Business Date") or "").strip(),
+        "as_of": _date(head.get("Business Date")),
         "account": (head.get("Account Code") or "").strip(),
         "account_name": (head.get("Account Name") or "").strip(),
         "holdings": holdings,
