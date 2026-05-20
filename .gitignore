@@ -47,3 +47,6 @@ logs/
 
 # Broker-email downloads (real position data — fetched fresh each run)
 broker/inbox/
+
+# Brainstorming visual-companion mockups (local only)
+.superpowers/
