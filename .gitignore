@@ -44,3 +44,6 @@ logs/
 # Source spreadsheets (PM working copies)
 *.xlsx
 *.xlsm
+
+# Broker-email downloads (real position data — fetched fresh each run)
+broker/inbox/
