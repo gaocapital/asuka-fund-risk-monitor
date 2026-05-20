@@ -1,0 +1,1185 @@
+{
+  "audit_date": "2026-05-16",
+  "audit_time": "2026-05-16T22:24:06.238424",
+  "scorecards": [
+    {
+      "ticker": "3034",
+      "name": "QOL Holdings",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 3,
+          "evidence": "no activist_wac_source field"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 22 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 9,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac_source field)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "3182",
+      "name": "Oisix ra daichi",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 20 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "3401",
+      "name": "Teijin",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 21 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 14,
+      "grade": "F",
+      "n_verified": 3,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 2,
+      "flags": [
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "3549",
+      "name": "Kusuri no Aoki Holdings",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 21 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 14,
+      "grade": "F",
+      "n_verified": 3,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 2,
+      "flags": [
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "3697",
+      "name": "Shift Inc.",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 18 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "3863",
+      "name": "Nippon Paper Industries",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 20 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 14,
+      "grade": "F",
+      "n_verified": 3,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 2,
+      "flags": [
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "4194",
+      "name": "Visional",
+      "fields": {
+        "price": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no price_source field"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 22 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 18,
+      "grade": "F",
+      "n_verified": 2,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 3,
+      "flags": [
+        "price: UNKNOWN (no price_source field)",
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "4229",
+      "name": "Gun Ei Chemical",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 20 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "4246",
+      "name": "DaikyoNishikawa",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "EDINET 取得資金 extraction"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 19 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "4404",
+      "name": "Miyoshi Oil & Fat",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 22 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "4417",
+      "name": "Global Security Experts",
+      "fields": {
+        "price": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no price_source field"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 22 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 18,
+      "grade": "F",
+      "n_verified": 2,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 3,
+      "flags": [
+        "price: UNKNOWN (no price_source field)",
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "4613",
+      "name": "Kansai Paint",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 3,
+          "evidence": "no wac_source field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "Silchester International Investors LLP · EDINET filing record present"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 22 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 1,
+      "n_unknown": 2,
+      "flags": [
+        "asuka_wac: UNKNOWN (no wac_source field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "4849",
+      "name": "en Japan / en Inc.",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "EDINET 取得資金 extraction"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 18 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "6151",
+      "name": "Nitto Kohki",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 21 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 14,
+      "grade": "F",
+      "n_verified": 3,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 2,
+      "flags": [
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "6594",
+      "name": "Nidec",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 20 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "6914",
+      "name": "Optex Group",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 22 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "9006",
+      "name": "Keikyu",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 21 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 14,
+      "grade": "F",
+      "n_verified": 3,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 2,
+      "flags": [
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "9069",
+      "name": "Senko Group Holdings",
+      "fields": {
+        "price": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no price_source field"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 22 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 18,
+      "grade": "F",
+      "n_verified": 2,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 3,
+      "flags": [
+        "price: UNKNOWN (no price_source field)",
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "9308",
+      "name": "Inui Global Logistics",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 21 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "9684",
+      "name": "Square Enix",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "verified"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 22 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 10,
+      "grade": "D",
+      "n_verified": 4,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "9982",
+      "name": "Takihyo",
+      "fields": {
+        "price": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no price_source field"
+        },
+        "asuka_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no wac field"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 18 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 18,
+      "grade": "F",
+      "n_verified": 2,
+      "n_manual": 0,
+      "n_estimated": 0,
+      "n_proxy": 2,
+      "n_unknown": 3,
+      "flags": [
+        "price: UNKNOWN (no price_source field)",
+        "asuka_wac: UNKNOWN (no wac field)",
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    },
+    {
+      "ticker": "9987",
+      "name": "Suzuken",
+      "fields": {
+        "price": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "yahoo_intraday · LIVE print"
+        },
+        "asuka_wac": {
+          "class": "ESTIMATED",
+          "severity": 2,
+          "evidence": "PM-confirmed Silchester cost basis ~¥5,500 (refines prior estimate ¥5,400)"
+        },
+        "activist_wac": {
+          "class": "UNKNOWN",
+          "severity": 4,
+          "evidence": "no activist_wac field — capture gap unable to compute"
+        },
+        "filings": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "verified_filings_date stamped without complete last_filing record"
+        },
+        "tdnet": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "TDNet scan completed"
+        },
+        "news": {
+          "class": "VERIFIED",
+          "severity": 0,
+          "evidence": "news_scan returned HIGH severity, 21 hits"
+        },
+        "scenarios": {
+          "class": "PROXY",
+          "severity": 3,
+          "evidence": "scenarios present but no price_anchor — STALE_SCEN check disabled"
+        }
+      },
+      "total_severity": 12,
+      "grade": "D",
+      "n_verified": 3,
+      "n_manual": 0,
+      "n_estimated": 1,
+      "n_proxy": 2,
+      "n_unknown": 1,
+      "flags": [
+        "activist_wac: UNKNOWN (no activist_wac field — capture gap unable to compute)",
+        "filings: PROXY (verified_filings_date stamped without complete last_filing record)",
+        "scenarios: PROXY (scenarios present but no price_anchor — STALE_SCEN check disabled)"
+      ]
+    }
+  ]
+}

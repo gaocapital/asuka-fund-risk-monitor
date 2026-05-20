@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Virtual envs
+venv/
+.venv/
+env/
+
+# Secrets / credentials
+.env
+.env.local
+*.pem
+*.key
+credentials.json
+secrets.json
+client_secret*.json
+token*.json
+*token.json
+gmail*.json
+
+# IDE / editors / Claude Code local config
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Backups / temp
+*.bak
+*.corrupt-*
+*.tmp
+
+# Source spreadsheets (PM working copies)
+*.xlsx
+*.xlsm

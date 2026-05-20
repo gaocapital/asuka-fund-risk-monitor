@@ -1,0 +1,132 @@
+[
+  {
+    "label": "1878 Daito Trust × 大東建託株式会社",
+    "ticker": "1878",
+    "issuer_E": "E04878",
+    "filer_E": "E00218",
+    "filer_name": "大東建託株式会社",
+    "doc_id": "S100XTVK",
+    "submit_date": "2026-03-31",
+    "doc_description": "変更報告書",
+    "total_acquisition_cost_jpy": 14418312000,
+    "own_funds_jpy": null,
+    "borrowings_jpy": null,
+    "shares_held": 31805100,
+    "holding_ratio_pct": 0.3357,
+    "implied_wac_per_share": 453.33,
+    "raw_xml_extract": {
+      "TotalAmountOfFundingForAcquisition": [
+        "14418312000"
+      ],
+      "TotalNumberOfStocksEtcHeld": [
+        "31805100"
+      ],
+      "HoldingRatioOfShareCertificatesEtc": [
+        "0.3357"
+      ],
+      "HoldingRatioOfShareCertificatesEtcPerLastReport": [
+        "0.3750"
+      ]
+    }
+  },
+  {
+    "label": "3863 Nippon Paper Industries × 日本製紙株式会社",
+    "ticker": "3863",
+    "issuer_E": "E01370",
+    "filer_E": "E11873",
+    "filer_name": "日本製紙株式会社",
+    "doc_id": "S100XE9T",
+    "submit_date": "2026-01-16",
+    "doc_description": "変更報告書",
+    "total_acquisition_cost_jpy": null,
+    "own_funds_jpy": null,
+    "borrowings_jpy": null,
+    "shares_held": 950770,
+    "holding_ratio_pct": 0.0429,
+    "implied_wac_per_share": null,
+    "raw_xml_extract": {
+      "TotalNumberOfStocksEtcHeld": [
+        "950770"
+      ],
+      "HoldingRatioOfShareCertificatesEtc": [
+        "0.0429"
+      ],
+      "HoldingRatioOfShareCertificatesEtcPerLastReport": [
+        "0.0569"
+      ],
+      "_diagnostic_hint": "No 取得資金 / acquisition-fund tags matched. Run wac_xbrl_dump.py --doc <docID> to enumerate actual tags, then add them to ACQUISITION_FUND_TAGS."
+    }
+  },
+  {
+    "label": "4194 Visional × ビジョナル株式会社",
+    "ticker": "4194",
+    "issuer_E": "E35790",
+    "filer_E": "E36484",
+    "filer_name": "ビジョナル株式会社",
+    "doc_id": "S100XLPV",
+    "submit_date": "2026-02-25",
+    "doc_description": "変更報告書",
+    "total_acquisition_cost_jpy": 260909000,
+    "own_funds_jpy": null,
+    "borrowings_jpy": null,
+    "shares_held": 418200,
+    "holding_ratio_pct": 0.0609,
+    "implied_wac_per_share": 623.89,
+    "raw_xml_extract": {
+      "TotalAmountOfFundingForAcquisition": [
+        "260909000"
+      ],
+      "TotalNumberOfStocksEtcHeld": [
+        "418200"
+      ],
+      "HoldingRatioOfShareCertificatesEtc": [
+        "0.0609"
+      ],
+      "HoldingRatioOfShareCertificatesEtcPerLastReport": [
+        "0.0501"
+      ]
+    }
+  },
+  {
+    "label": "9069 Senko Group Holdings × センコーグループホールディングス株式会社",
+    "ticker": "9069",
+    "issuer_E": "E04182",
+    "filer_E": "E04179",
+    "filer_name": "センコーグループホールディングス株式会社",
+    "doc_id": "S100XPFF",
+    "submit_date": "2026-03-06",
+    "doc_description": "変更報告書",
+    "total_acquisition_cost_jpy": 15644187000,
+    "own_funds_jpy": null,
+    "borrowings_jpy": null,
+    "shares_held": 27755766,
+    "holding_ratio_pct": 0.9582,
+    "implied_wac_per_share": 563.64,
+    "raw_xml_extract": {
+      "TotalAmountOfFundingForAcquisition": [
+        "15644187000"
+      ],
+      "TotalNumberOfStocksEtcHeld": [
+        "16713918",
+        "11041848",
+        "27755766",
+        "16713918",
+        "11041848",
+        "27755766"
+      ],
+      "HoldingRatioOfShareCertificatesEtc": [
+        "0.5770",
+        "0.3812",
+        "0.9582",
+        "0.5770",
+        "0.3812",
+        "0.9582"
+      ],
+      "HoldingRatioOfShareCertificatesEtcPerLastReport": [
+        "0.0079",
+        "0.3812",
+        "0.3891"
+      ]
+    }
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Saxa × AVI No.2",
+    "ticker": "6675",
+    "issuer_E": "E01874",
+    "filer_E": "E34595",
+    "doc_id": "S100XQ1M",
+    "submit_date": "2026-03-16",
+    "doc_description": "変更報告書",
+    "total_acquisition_cost_jpy": null,
+    "own_funds_jpy": null,
+    "borrowings_jpy": null,
+    "shares_held": null,
+    "holding_ratio_pct": 0.0737,
+    "implied_wac_per_share": null,
+    "raw_xml_extract": {
+      "HoldingRatioOfShareCertificatesEtc": [
+        "0.0737"
+      ]
+    }
+  }
+]
