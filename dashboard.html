@@ -486,6 +486,31 @@ table.positions tr.new-filing td { box-shadow: inset 3px 0 0 var(--gold); }
   .top-buy-row { grid-template-columns: 1fr; gap: 4px; }
 }
 
+/* Stocks to Reduce / Exit panel — PM at-a-glance (mirror of the BUY ranking) */
+.top-sells-panel { border-left: 3px solid var(--red); }
+.sells-empty { font-size: 13px; color: var(--text-muted); padding: 6px 0 2px; }
+.sell-block { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+.sell-block:first-of-type { margin-top: 14px; padding-top: 0; border-top: none; }
+.sell-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.sell-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; padding: 4px 10px; border-radius: 2px; }
+.sell-badge.sell-exit { background: rgba(239,68,68,0.16); color: var(--red); border: 1px solid var(--red); }
+.sell-badge.sell-trim { background: rgba(245,158,11,0.10); color: var(--amber); border: 1px solid rgba(245,158,11,0.5); }
+.sell-desc { font-size: 12px; color: var(--text-muted); flex: 1; }
+.sell-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+.sell-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.top-sell-row { display: grid; grid-template-columns: 1.7fr 2.1fr 2.6fr; gap: 12px; align-items: center;
+  padding: 8px 12px; border-radius: 3px; background: rgba(239,68,68,0.03); border: 1px solid var(--border); }
+.top-sell-tk { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.top-sell-tk strong { color: var(--text); font-weight: 500; }
+.top-sell-stats { display: flex; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text-muted); flex-wrap: wrap; }
+.top-sell-stats strong { color: var(--text); }
+.top-sell-reason { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+@media (max-width: 900px) {
+  .top-sell-row { grid-template-columns: 1fr; gap: 4px; }
+}
+
 footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; line-height: 1.7; }
 footer .row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 footer p { margin-bottom: 6px; }
@@ -611,7 +636,7 @@ footer p { margin-bottom: 6px; }
     <div class="kpi">
       <div class="kpi-label">Theses Tracked</div>
       <div class="kpi-value">22</div>
-      <div class="kpi-sub">+ 7 watch list</div>
+      <div class="kpi-sub">+ 6 watch list</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Buy</div>
@@ -819,6 +844,59 @@ footer p { margin-bottom: 6px; }
 
 
 
+  <div class="panel top-sells-panel">
+    <h3>Stocks to Reduce / Exit <span class="signal-count">4 flagged · 2 exit · 2 trim</span></h3>
+
+  <div class="sell-block">
+    <div class="sell-header"><span class="sell-badge sell-exit">EXIT</span> <span class="sell-desc">Thesis broken — reduce to zero / cut</span> <span class="sell-count">2 names</span></div>
+    <ul class="sell-list">
+    <li class="top-sell-row">
+      <div class="top-sell-tk"><span class="ticker">9308</span> <strong>Inui Global Logistics</strong></div>
+      <div class="top-sell-stats">
+        <span class="stat-pwer">PWER <strong>-2.8%</strong></span>
+        <span class="stat-wac">vs WAC +5.7%</span>
+        <span class="stat-wt">Wt <strong>1.5%</strong></span>
+      </div>
+      <div class="top-sell-reason">Failed-campaign pattern — thesis broken</div>
+    </li>
+    <li class="top-sell-row">
+      <div class="top-sell-tk"><span class="ticker">6594</span> <strong>Nidec</strong></div>
+      <div class="top-sell-stats">
+        <span class="stat-pwer">PWER <strong>4.4%</strong></span>
+        <span class="stat-wac">vs WAC +16.6%</span>
+        <span class="stat-wt">Wt <strong>2.5%</strong></span>
+      </div>
+      <div class="top-sell-reason">PWER 4.4% — below the 5% floor</div>
+    </li>
+    </ul>
+  </div>
+  <div class="sell-block">
+    <div class="sell-header"><span class="sell-badge sell-trim">TRIM</span> <span class="sell-desc">Sub-threshold PWER — trim to fund higher conviction</span> <span class="sell-count">2 names</span></div>
+    <ul class="sell-list">
+    <li class="top-sell-row">
+      <div class="top-sell-tk"><span class="ticker">6914</span> <strong>Optex Group</strong></div>
+      <div class="top-sell-stats">
+        <span class="stat-pwer">PWER <strong>7.5%</strong></span>
+        <span class="stat-wac">vs WAC +114.0%</span>
+        <span class="stat-wt">Wt <strong>5.0%</strong></span>
+      </div>
+      <div class="top-sell-reason">PWER 7.5% — sub-threshold (5-15% band); trim to fund higher conviction</div>
+    </li>
+    <li class="top-sell-row">
+      <div class="top-sell-tk"><span class="ticker">4849</span> <strong>en Japan / en Inc.</strong></div>
+      <div class="top-sell-stats">
+        <span class="stat-pwer">PWER <strong>8.6%</strong></span>
+        <span class="stat-wac">vs WAC -25.6%</span>
+        <span class="stat-wt">Wt <strong>7.0%</strong></span>
+      </div>
+      <div class="top-sell-reason">PWER 8.6% — sub-threshold (5-15% band); trim to fund higher conviction</div>
+    </li>
+    </ul>
+  </div>
+  </div>
+
+
+
 
 
 <section class="priority">
@@ -985,7 +1063,7 @@ footer p { margin-bottom: 6px; }
             <div class="mos-num mos-prem">-100.0% <span class="mos-caveat" title="IP/content company; book value understates franchise value">⚠</span></div>
             <div class="mos-iv" title="IP/content company; book value understates franchise value">PBR 2.20x</div>
           </td>
-          <td><span class="action add">Buy</span> <span class="tier-badge tier-aa" style="font-size: 9px; padding: 2px 5px;">AA<span class="cushion-mod mod-bolt" title="Pure catalyst execution — no accounting cushion. Source: IP. Trade lives on activist forcing function.">⚡</span></span> <a class="memo-chip memo-stale" href="memos/9684.md" title="Auto memo · 1.7d old · At max 12% cap" target="_blank">📝</a></td>
+          <td><span class="action add">Buy</span> <span class="tier-badge tier-aa" style="font-size: 9px; padding: 2px 5px;">AA<span class="cushion-mod mod-bolt" title="Pure catalyst execution — no accounting cushion. Source: IP. Trade lives on activist forcing function.">⚡</span></span> <a class="memo-chip memo-stale" href="memos/9684.md" title="Auto memo · 1.8d old · At max 12% cap" target="_blank">📝</a></td>
           <td class="notes">At max 12% cap. June AGM 3D board contest binary in 8 weeks. Px ¥2,488 vs 3D WAC ¥2,900 = -14.2% below WAC → co-investment edge fully intact. Morningstar FV ¥6,662. Do not add above ¥2,400 (size cap, not WAC). [2026-05-01 NEWS-AUDIT] ?: Wolf Pack (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] ?: 任天堂【7974】、今期経常は21％減益、前期配当増額も今期減配 | 決算... (減配)<span class="filing ">2026-03-15 · 変更報告書 · 3D Investment Partners</span></td>
         </tr>
 
@@ -1103,7 +1181,7 @@ footer p { margin-bottom: 6px; }
             <div class="mos-num mos-deep">+20.0% </div>
             <div class="mos-iv" title="Sub-1x; Ueshima/DOE5% asset unlock thesis">PBR 0.80x</div>
           </td>
-          <td><span class="action add">Buy</span> <span class="tier-badge tier-aaa" style="font-size: 9px; padding: 2px 5px;">AAA<span class="cushion-mod mod-shield" title="Cushion-supported: Asset-MoS +20% · SUB (defensive source)">🛡</span></span> <a class="memo-chip memo-stale" href="memos/4229.md" title="Auto memo · 1.7d old · DOE5% AGM demand basket" target="_blank">📝</a></td>
+          <td><span class="action add">Buy</span> <span class="tier-badge tier-aaa" style="font-size: 9px; padding: 2px 5px;">AAA<span class="cushion-mod mod-shield" title="Cushion-supported: Asset-MoS +20% · SUB (defensive source)">🛡</span></span> <a class="memo-chip memo-stale" href="memos/4229.md" title="Auto memo · 1.8d old · DOE5% AGM demand basket" target="_blank">📝</a></td>
           <td class="notes">DOE5% AGM demand basket. Vehicle name signals demand: 5% Dividend on Equity. [2026-05-01 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配信 (全ての上場会社を提供) (決算発表, 業績) [2026-05-16 NEWS-AUDIT] ?: 変更報告書を提出しました。 - 那須電機鉄工株式会社 (変更報告書, 株主総会) [2026-05-18 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E08957] 三井住友DS... (大量保有報告)<span class="filing ">2026-02-10 · 大量保有報告書 · DOE5% Co., Ltd.</span></td>
         </tr>
 
@@ -1241,7 +1319,7 @@ footer p { margin-bottom: 6px; }
             <div class="mos-num mos-mod">+15.0% </div>
             <div class="mos-iv" title="Sub-book Ueshima target; PBR ~0.85x (estimate)">PBR 0.85x</div>
           </td>
-          <td><span class="action add">Buy</span> <span class="tier-badge tier-a" style="font-size: 9px; padding: 2px 5px;">A<span class="cushion-mod mod-shield" title="Cushion-supported: Asset-MoS +15% · SUB (defensive source)">🛡</span></span> <a class="memo-chip memo-stale" href="memos/4404.md" title="Auto memo · 1.7d old · Liquidity-capped (micro-cap)" target="_blank">📝</a></td>
+          <td><span class="action add">Buy</span> <span class="tier-badge tier-a" style="font-size: 9px; padding: 2px 5px;">A<span class="cushion-mod mod-shield" title="Cushion-supported: Asset-MoS +15% · SUB (defensive source)">🛡</span></span> <a class="memo-chip memo-stale" href="memos/4404.md" title="Auto memo · 1.8d old · Liquidity-capped (micro-cap)" target="_blank">📝</a></td>
           <td class="notes">Liquidity-capped (micro-cap). Treat Ueshima/DOE5% basket as single correlated exposure. [2026-05-01 NEWS-AUDIT] ?: Wolf Pack (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: ミヨシ油脂(4404) ニュース - 株探（かぶたん） (決算発表)<span class="filing ">2026-01-25 · 大量保有報告書 · DOE5% Co., Ltd.</span></td>
         </tr>
 
@@ -1355,7 +1433,7 @@ footer p { margin-bottom: 6px; }
             <div class="mos-num mos-prem">-55.0% </div>
             <div class="mos-iv" title="Motors; modest premium to book">PBR 1.55x</div>
           </td>
-          <td><span class="action cut">Sell</span> <a class="memo-chip memo-stale" href="memos/6594.md" title="Auto memo · 1.7d old · OASIS FRESH ACCUMULATION confirmed - step 1→2 transition" target="_blank">📝</a></td>
+          <td><span class="action cut">Sell</span> <a class="memo-chip memo-stale" href="memos/6594.md" title="Auto memo · 1.8d old · OASIS FRESH ACCUMULATION confirmed - step 1→2 transition" target="_blank">📝</a></td>
           <td class="notes">OASIS FRESH ACCUMULATION confirmed - step 1→2 transition. Bear case still binding (TSE accounting investigation tail risk) but activist conviction increased. Oasis playbook: public letter/campaign site likely within 4-8 weeks. Apr 29 earnings = first forcing event. Verify exact stake increase on EDINET. Action HOLD; consider ADD if Oasis files public letter or stake crosses 10%. [2026-05-01 NEWS-AUDIT] ?: bloomberg.com/jp/news/articles/2010-06-13/L3Z7YS1A74E901 (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] ?: 【ニデック】 [6594]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)<span class="filing ">2026-04-27 · 変更報告書 · Oasis Management</span></td>
         </tr>
 
@@ -1379,7 +1457,7 @@ footer p { margin-bottom: 6px; }
           </td>
           <td class="num mos-cell"><span class="mos-na">—</span></td>
           <td class="num mos-cell"><span class="mos-na">—</span></td>
-          <td><span class="action cut">Sell</span> <a class="memo-chip memo-stale" href="memos/6151.md" title="Auto memo · 1.7d old · Stub created 2026-05-16 from May152026Asuka" target="_blank">📝</a></td>
+          <td><span class="action cut">Sell</span> <a class="memo-chip memo-stale" href="memos/6151.md" title="Auto memo · 1.8d old · Stub created 2026-05-16 from May152026Asuka" target="_blank">📝</a></td>
           <td class="notes">Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: 2015年02月23日（月）に提出されたEDINET... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-18: 日東工器 (6151) : ニュース・適時開示 [NITTO KOHKI] - みんかぶ (減配)</td>
         </tr>
 
@@ -1409,7 +1487,7 @@ footer p { margin-bottom: 6px; }
             <div class="mos-num mos-mod">+10.0% </div>
             <div class="mos-iv" title="Logistics sub-1x">PBR 0.90x</div>
           </td>
-          <td><span class="action cut">Sell</span> <a class="memo-chip memo-stale" href="memos/9308.md" title="Auto memo · 1.7d old · ALPHALEO IS PRIMARY ACTIVIST (not LIM)" target="_blank">📝</a></td>
+          <td><span class="action cut">Sell</span> <a class="memo-chip memo-stale" href="memos/9308.md" title="Auto memo · 1.8d old · ALPHALEO IS PRIMARY ACTIVIST (not LIM)" target="_blank">📝</a></td>
           <td class="notes">ALPHALEO IS PRIMARY ACTIVIST (not LIM). Dual-entity structure: Alphaleo Holdings GK (Tokyo SPV) + AlphaLeo Capital Advisors Limited (DIFC Dubai investment manager). 5+yr aggressive campaign 2019-present produced lawsuits, EGM convocations, but Inui family bloc ~22% won every contested vote. Alphaleo reducing 21.86% → 8.13% = primary activist incrementally exiting. HOKUETSU PATTERN. CUT call REINFORCED on structural grounds. [2026-05-01 NEWS-AUDIT] ?: bloomberg.com/jp/news/articles/2010-06-13/L3Z7YS1A74E901 (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: ５％ルール大量保有報告書 マネーフォワード(3994)... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E08957] 三井住友DS... (大量保有報告)<span class="filing ">2026-04-27 · Manual desk note · Alphaleo Holdings GK + LIM Advisors</span></td>
         </tr>
       </tbody>
@@ -1476,7 +1554,7 @@ footer p { margin-bottom: 6px; }
             <div class="mos-num mos-prem">-100.0% <span class="mos-caveat" title="IT services growth; intangibles dominant">⚠</span></div>
             <div class="mos-iv" title="IT services growth; intangibles dominant">PBR 3.50x</div>
           </td>
-          <td><span class="action add">Buy</span> <span class="tier-badge tier-aaa" style="font-size: 9px; padding: 2px 5px;">AAA<span class="cushion-mod mod-bolt" title="Pure catalyst execution — no accounting cushion. Source: FWD. Trade lives on activist forcing function.">⚡</span></span> <a class="memo-chip memo-stale" href="memos/3697.md" title="Auto memo · 1.7d old · Quality compounder" target="_blank">📝</a></td>
+          <td><span class="action add">Buy</span> <span class="tier-badge tier-aaa" style="font-size: 9px; padding: 2px 5px;">AAA<span class="cushion-mod mod-bolt" title="Pure catalyst execution — no accounting cushion. Source: FWD. Trade lives on activist forcing function.">⚡</span></span> <a class="memo-chip memo-stale" href="memos/3697.md" title="Auto memo · 1.8d old · Quality compounder" target="_blank">📝</a></td>
           <td class="notes">Quality compounder. Founder 30.62% controlling stake caps upside variance. Q1 print Apr 14 - verify thesis intact post-print. [2026-05-01 NEWS-AUDIT] ?: Dream Incubator Inc. (大量保有報告, 変更報告書) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne &gt; [8804]... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: SHIFT(3697) ニュース - 株探（かぶたん） (決算発表)<span class="filing ">2026-04-08 · 大量保有報告書 · Arcus Investment</span></td>
         </tr>
 
@@ -1506,7 +1584,7 @@ footer p { margin-bottom: 6px; }
             <div class="mos-num mos-deep">+25.0% </div>
             <div class="mos-iv" title="Pharma wholesale sub-1x; Silchester re-accumulation thesis">PBR 0.75x</div>
           </td>
-          <td><span class="action add">Buy</span> <span class="tier-badge tier-aa" style="font-size: 9px; padding: 2px 5px;">AA<span class="cushion-mod mod-shield" title="Cushion-supported: Asset-MoS +25% · SUB (defensive source)">🛡</span></span> <a class="memo-chip memo-stale" href="memos/9987.md" title="Auto memo · 1.7d old · Px ¥5,561 vs WAC ¥5,400 = +3" target="_blank">📝</a></td>
+          <td><span class="action add">Buy</span> <span class="tier-badge tier-aa" style="font-size: 9px; padding: 2px 5px;">AA<span class="cushion-mod mod-shield" title="Cushion-supported: Asset-MoS +25% · SUB (defensive source)">🛡</span></span> <a class="memo-chip memo-stale" href="memos/9987.md" title="Auto memo · 1.8d old · Px ¥5,561 vs WAC ¥5,400 = +3" target="_blank">📝</a></td>
           <td class="notes">Px ¥5,561 vs WAC ¥5,400 = +3.0% (close to NEUTRAL edge — clean shadow entry zone). Existing Alfresa 2% in book aligns with sector thesis - DON'T trim Alfresa to fund Suzuken. Multi-year compounding horizon (not binary AGM trade). Sector tailwind: 3-name coordinated capital return campaign is materially more probable than 3 separate trajectories. [2026-04-30 VERIFICATION-AUDIT] Silchester International Investors LLP at 8.25% (per Silchester Japan portfolio: Sumitomo Osaka Cement 19.43%, Alfresa 12.11%, Medipal 11.71%, Daito 9.22%, Suzuken 8.25%). LATE-CYCLE FLAG: Δ vs WAC +20.1% — past +15% co-investment gate. PWER 5.0% near WEAK_HOLD floor. Consider trim if Δ vs WAC crosses +25%. [2026-05-01 NEWS-AUDIT] ?: Ｍ＆Ａの世界へようこそ！ 大量保有報告制度について (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 2015年02月23日（月）に提出されたEDINET... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] ?: 【スズケン】 [9987]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)<span class="filing ">2026-04-15 · 変更報告書 (Re-accumulation past prior peak) · Silchester International Investors</span></td>
         </tr>
 
@@ -1536,7 +1614,7 @@ footer p { margin-bottom: 6px; }
             <div class="mos-num mos-prem">-65.0% </div>
             <div class="mos-iv" title="Specialty paint; modest premium">PBR 1.65x</div>
           </td>
-          <td><span class="action add">Buy</span> <span class="tier-badge tier-aa" style="font-size: 9px; padding: 2px 5px;">AA<span class="cushion-mod mod-bolt" title="Pure catalyst execution — no accounting cushion. Source: SOTP. Trade lives on activist forcing function.">⚡</span></span> <a class="memo-chip memo-stale" href="memos/4613.md" title="Auto memo · 1.7d old · Silchester 5" target="_blank">📝</a></td>
+          <td><span class="action add">Buy</span> <span class="tier-badge tier-aa" style="font-size: 9px; padding: 2px 5px;">AA<span class="cushion-mod mod-bolt" title="Pure catalyst execution — no accounting cushion. Source: SOTP. Trade lives on activist forcing function.">⚡</span></span> <a class="memo-chip memo-stale" href="memos/4613.md" title="Auto memo · 1.8d old · Silchester 5" target="_blank">📝</a></td>
           <td class="notes">Silchester 5.05% disclosed Mar 2026, WAC ¥2,511. Tier 2 LONG-ONLY style (NOT Tier 1 activist) - thesis must stand on fundamentals + TSE reform. P/E 11.5x vs global peers 17-25x, 4.47% yield. India growth (Kansai Nerolac) hidden asset. Px below WAC = clean shadow co-investment. Entered Apr 1 2026 funded from Daito Trust trim. Patient 24-36mo horizon. [2026-04-30 VERIFICATION-AUDIT] Silchester (E24872) filed initial 5.05% on Apr 1, 2026 (stock +7% on news to ¥2,496). Filing language unusually activist for Silchester: explicit demands include 増配, 自己株式買い入れ, 金庫株消却, 資本政策の変更. Voting reservations on M&amp;A, director appointments. Departs from Silchester's typical quiet-accumulator stylebook. Cross-reference Silchester's 65 Japan holdings: most are mature 8-19% multi-year ratchets (e.g., Sumitomo Osaka Cement 19.43%, Alfresa 12.11%, Suzuken 8.25%, Daito Trust 9.22%) — Kansai Paint is at the start of that pattern. Next catalyst: May 11 2026 earnings. No new filings/news past 7 days. [2026-05-01 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E08957] 三井住友DS... (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne &gt; [8804]... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: 関西ペイント(4613)、3期連続の｢増配｣を発表して、配当利回り4.9％... (増配)<span class="filing ">2026-04-01 · 大量保有報告書 (initial 5%+) · Silchester International Investors LLP</span></td>
         </tr>
 
@@ -2296,7 +2374,7 @@ footer p { margin-bottom: 6px; }
   <div class="layer-header">
     <span class="layer-tag watch">WATCH</span>
     <h2>Tracked · No Position</h2>
-    <span class="layer-meta">7 names monitored</span>
+    <span class="layer-meta">6 names monitored</span>
   </div>
   <div class="table-wrap">
     <table class="positions">
@@ -2354,18 +2432,6 @@ footer p { margin-bottom: 6px; }
           <td class="notes"><strong>Trigger:</strong> Strategic Capital co-filing on EDINET OR price retrace to ¥2,600-2,750<br/>PWER below threshold at current price. Limit order zone ¥2,600-2,750.</td>
         </tr>
         <tr>
-          <td><span class="ticker">3401</span></td>
-          <td><span class="name">Teijin Limited</span><span class="activist">Effissimo Capital Management <span class="source-chip src-sotp" style="background: #06B6D41A; color: #06B6D4; border: 1px solid #06B6D466;" title="Conglomerate breakup / parts unlock — Healthcare segment hidden value; Effissimo Mode 1→2">SOTP</span></span></td>
-          <td class="num stake">19.26</td>
-          <td class="num">
-            <div class="px-line">1,636</div>
-            <span class="freshness-stamp fresh-na" title="src: TradingView Apr 28">parse err</span>
-          </td>
-          <td class="num pwer-cell"><div class="pwer-num high">36.5%</div></td>
-          <td><span class="action watch">Watch</span></td>
-          <td class="notes"><strong>Trigger:</strong> PRIMARY: stake crossing 20% (Mode 2 confirmation). SECONDARY: 25%+ (forced strategic review power). May 7 earnings catalyst.<br/>Stake +2.82pp in 12 days = extreme velocity (vs normal 1%/quarter ratchet). WAC ¥1,350 CONFIRMED - true Δ vs WAC +25.1% means co-investment edge CLOSED for new shadow buyers. Effissimo deeply in profit (+25%) - approaching Mode 2 threshold.</td>
-        </tr>
-        <tr>
           <td><span class="ticker">3941</span></td>
           <td><span class="name">Rengo</span><span class="activist">Murakami group (Aya Nomura + ATRA + C&amp;I) <span class="source-chip src-sub" style="background: #16A34A1A; color: #16A34A; border: 1px solid #16A34A66;" title="Sub-book PBR&lt;1x asset unlock — PBR 0.60x packaging; Murakami fresh entry stage 1-2">SUB</span></span></td>
           <td class="num stake">5.00</td>
@@ -2414,7 +2480,7 @@ footer p { margin-bottom: 6px; }
 
 <footer>
   <div class="row">
-    <p>Asuka Active Book Daily Risk · v3.0 · Auto-generated 2026-05-20 14:56 · 22 positions · 0 filings in feed</p>
+    <p>Asuka Active Book Daily Risk · v3.0 · Auto-generated 2026-05-20 16:46 · 22 positions · 0 filings in feed</p>
     <p>Data: Bloomberg · EDINET · TDNet · Asuka_EDINET pipeline</p>
   </div>
   <p style="margin-top: 12px; color: var(--text-dim);">Deltas computed against previous state file. Δ chips ▲▼ = day-over-day change. Gold highlight on row = new filing detected. WAC cross-check: red &gt;+15% above activist WAC = co-investment edge closed. PWER threshold 20%.</p>

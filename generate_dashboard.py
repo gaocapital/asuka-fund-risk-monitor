@@ -1142,6 +1142,31 @@ table.positions tr.new-filing td { box-shadow: inset 3px 0 0 var(--gold); }
   .top-buy-row { grid-template-columns: 1fr; gap: 4px; }
 }
 
+/* Stocks to Reduce / Exit panel — PM at-a-glance (mirror of the BUY ranking) */
+.top-sells-panel { border-left: 3px solid var(--red); }
+.sells-empty { font-size: 13px; color: var(--text-muted); padding: 6px 0 2px; }
+.sell-block { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+.sell-block:first-of-type { margin-top: 14px; padding-top: 0; border-top: none; }
+.sell-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.sell-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; padding: 4px 10px; border-radius: 2px; }
+.sell-badge.sell-exit { background: rgba(239,68,68,0.16); color: var(--red); border: 1px solid var(--red); }
+.sell-badge.sell-trim { background: rgba(245,158,11,0.10); color: var(--amber); border: 1px solid rgba(245,158,11,0.5); }
+.sell-desc { font-size: 12px; color: var(--text-muted); flex: 1; }
+.sell-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+.sell-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.top-sell-row { display: grid; grid-template-columns: 1.7fr 2.1fr 2.6fr; gap: 12px; align-items: center;
+  padding: 8px 12px; border-radius: 3px; background: rgba(239,68,68,0.03); border: 1px solid var(--border); }
+.top-sell-tk { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.top-sell-tk strong { color: var(--text); font-weight: 500; }
+.top-sell-stats { display: flex; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text-muted); flex-wrap: wrap; }
+.top-sell-stats strong { color: var(--text); }
+.top-sell-reason { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+@media (max-width: 900px) {
+  .top-sell-row { grid-template-columns: 1fr; gap: 4px; }
+}
+
 footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; line-height: 1.7; }
 footer .row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 footer p { margin-bottom: 6px; }
@@ -3139,6 +3164,95 @@ def render_top_buys_panel(positions: list) -> str:
 """
 
 
+def _sell_reason(p: dict, action: str) -> str:
+    """One-line plain-English reason a position is flagged to reduce or exit."""
+    notes_upper = (p.get("notes") or "").upper()
+    pwer = p.get("pwer")
+    price, wac = p.get("price"), p.get("wac")
+    wac_d = ((price - wac) / wac * 100) if (price and wac) else None
+    if action == "SELL":
+        if "HOKUETSU" in notes_upper or "FAILED CAMPAIGN" in notes_upper:
+            return "Failed-campaign pattern — thesis broken"
+        if "PROFIT WARNING" in notes_upper:
+            return "Profit warning — fundamental break"
+        if "ACTIVIST EXITING" in notes_upper:
+            return "Anchor activist exiting — co-investment edge gone"
+        if pwer is not None and pwer < 5:
+            return f"PWER {pwer:.1f}% — below the 5% floor"
+        if wac_d is not None and wac_d > 25:
+            return f"Price +{wac_d:.0f}% above activist WAC — alpha extracted"
+        return "Thesis no longer viable at the current price"
+    if pwer is not None:
+        return f"PWER {pwer:.1f}% — sub-threshold (5-15% band); trim to fund higher conviction"
+    return "Sub-threshold conviction — trim candidate"
+
+
+def render_top_sells_panel(positions: list) -> str:
+    """At-a-glance: stocks to reduce or exit. The risk-off mirror of the BUY ranking."""
+    sells, trims = [], []
+    for p in positions:
+        if (p.get("weight") or 0) <= 0:
+            continue  # not a held position — a zero-weight watch/screen entry can't be "sold"
+        a = derive_action(p)
+        if a == "SELL":
+            sells.append(p)
+        elif a == "WEAK_HOLD":
+            trims.append(p)
+    if not sells and not trims:
+        return """
+  <div class="panel top-sells-panel">
+    <h3>Stocks to Reduce / Exit <span class="signal-count">at a glance</span></h3>
+    <p class="sells-empty">No exit or trim signals today — the book is clean on the sell side.</p>
+  </div>
+"""
+
+    def _row(p: dict, action: str) -> str:
+        pwer = p.get("pwer")
+        pwer_str = f"{pwer:.1f}%" if pwer is not None else "—"
+        price, wac = p.get("price"), p.get("wac")
+        wac_d = ((price - wac) / wac * 100) if (price and wac) else None
+        wac_str = f"{wac_d:+.1f}%" if wac_d is not None else "—"
+        wt = p.get("weight") or 0
+        return f'''
+    <li class="top-sell-row">
+      <div class="top-sell-tk"><span class="ticker">{p["ticker"]}</span> <strong>{html_escape(p["name"])}</strong></div>
+      <div class="top-sell-stats">
+        <span class="stat-pwer">PWER <strong>{pwer_str}</strong></span>
+        <span class="stat-wac">vs WAC {wac_str}</span>
+        <span class="stat-wt">Wt <strong>{wt:.1f}%</strong></span>
+      </div>
+      <div class="top-sell-reason">{html_escape(_sell_reason(p, action))}</div>
+    </li>'''
+
+    blocks = []
+    if sells:
+        n = len(sells)
+        rows = "".join(_row(p, "SELL") for p in sorted(sells, key=lambda x: x.get("pwer") or 0))
+        blocks.append(f'''
+  <div class="sell-block">
+    <div class="sell-header"><span class="sell-badge sell-exit">EXIT</span> <span class="sell-desc">Thesis broken — reduce to zero / cut</span> <span class="sell-count">{n} name{"" if n == 1 else "s"}</span></div>
+    <ul class="sell-list">{rows}
+    </ul>
+  </div>''')
+    if trims:
+        n = len(trims)
+        rows = "".join(_row(p, "WEAK_HOLD") for p in sorted(trims, key=lambda x: x.get("pwer") or 0))
+        blocks.append(f'''
+  <div class="sell-block">
+    <div class="sell-header"><span class="sell-badge sell-trim">TRIM</span> <span class="sell-desc">Sub-threshold PWER — trim to fund higher conviction</span> <span class="sell-count">{n} name{"" if n == 1 else "s"}</span></div>
+    <ul class="sell-list">{rows}
+    </ul>
+  </div>''')
+
+    total = len(sells) + len(trims)
+    return f"""
+  <div class="panel top-sells-panel">
+    <h3>Stocks to Reduce / Exit <span class="signal-count">{total} flagged · {len(sells)} exit · {len(trims)} trim</span></h3>
+{''.join(blocks)}
+  </div>
+"""
+
+
 def render_priority_actions(positions: list, deltas: dict) -> str:
     """Auto-derive priority actions from data: SELL signals, BUY signals, action changes, new filings."""
     items = []
@@ -3283,6 +3397,8 @@ def generate(data_path: str, output_path: str, state_dir: str = STATE_DIR) -> di
 {render_signal_changes(positions, deltas, data.get('watch_list', []))}
 
 {render_top_buys_panel(positions)}
+
+{render_top_sells_panel(positions)}
 
 {render_filings_section(data.get('todays_filings', []), position_tickers)}
 

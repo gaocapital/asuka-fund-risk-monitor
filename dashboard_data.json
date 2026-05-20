@@ -2096,62 +2096,6 @@
       "strategic_source_rationale": "UGS governance reform; capital efficiency thesis"
     },
     {
-      "ticker": "3401",
-      "name": "Teijin Limited",
-      "activist": "Effissimo Capital Management",
-      "stake_pct": 19.26,
-      "wac": 1350,
-      "price": 1636.0,
-      "pwer": 36.5,
-      "activist_pwer": 70.8,
-      "layer": "Watch",
-      "status": "EFFISSIMO 19.26% MODE 2 SURGE - WAC ¥1,350 CONFIRMED, edge closed for shadow buyers",
-      "thesis": "Effissimo Mode 1->Mode 2 transition. Approaching 20% threshold for forced strategic review. Healthcare segment hidden asset within Materials conglomerate = classic Effissimo SOTP target. Mode 2 = Healthcare carve-out / IPO.",
-      "trigger": "PRIMARY: stake crossing 20% (Mode 2 confirmation). SECONDARY: 25%+ (forced strategic review power). May 7 earnings catalyst.",
-      "notes": "Stake +2.82pp in 12 days = extreme velocity (vs normal 1%/quarter ratchet). WAC ¥1,350 CONFIRMED - true Δ vs WAC +25.1% means co-investment edge CLOSED for new shadow buyers. Effissimo deeply in profit (+25%) - approaching Mode 2 threshold.",
-      "pwer_scenarios": {
-        "bear": {
-          "prob": 0.15,
-          "target_jpy": 1351,
-          "rationale": "Stalemate / Healthcare segment monetization delayed",
-          "return_pct": -20.0
-        },
-        "base": {
-          "prob": 0.35,
-          "target_jpy": 2027,
-          "rationale": "Capital return + Healthcare strategic review",
-          "return_pct": 20.0
-        },
-        "bull": {
-          "prob": 0.35,
-          "target_jpy": 2533,
-          "rationale": "Healthcare spin-off / IPO + Materials restructuring",
-          "return_pct": 49.9
-        },
-        "xbull": {
-          "prob": 0.15,
-          "target_jpy": 3379,
-          "rationale": "Mode 2 forced strategic review / asset sale",
-          "return_pct": 100.0
-        },
-        "calibrated_at_price": 1689.5
-      },
-      "added_to_watch_date": "2026-04-28T03:20:14.385608",
-      "price_date": "2026-05-19",
-      "price_source": "TradingView Apr 28",
-      "mos": 19.3,
-      "mos_iv": 2016.0,
-      "mos_method": "pe_normalised",
-      "mos_pe_ttm": 11.0,
-      "mos_cycle_adj": 1.05,
-      "mos_note": "Polyester+healthcare",
-      "asset_mos": 35.0,
-      "asset_mos_pbr": 0.65,
-      "asset_mos_note": "Sub-book conglomerate; Effissimo target",
-      "strategic_source": "SOTP",
-      "strategic_source_rationale": "Healthcare segment hidden value; Effissimo Mode 1→2"
-    },
-    {
       "ticker": "3941",
       "name": "Rengo",
       "activist": "Murakami group (Aya Nomura + ATRA + C&I)",
@@ -2274,22 +2218,10 @@
       "reason": "Rotation - capital redeployed; Effissimo cluster reduced"
     },
     {
-      "ticker": "3401",
-      "name": "Teijin",
-      "exit_date": "2026-04-27",
-      "reason": "Rotation - Effissimo cluster reduced"
-    },
-    {
       "ticker": "4027",
       "name": "Tayca Corp",
       "exit_date": "2026-04-27",
       "reason": "Rotation - Ueshima basket trim"
-    },
-    {
-      "ticker": "4613",
-      "name": "Kansai Paint",
-      "exit_date": "2026-04-27",
-      "reason": "Rotation - Silchester exposure eliminated"
     },
     {
       "ticker": "6516",
