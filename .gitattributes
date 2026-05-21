@@ -1,0 +1,12 @@
+# Line-ending normalization — every clone (local, Cowork, CI) agrees, so the
+# daily reasoning-layer commits don't carry phantom CRLF churn.
+# Text files are stored and checked out as LF; Windows scripts stay CRLF.
+* text=auto eol=lf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.pdf   binary
+*.xlsx  binary
+*.xlsm  binary
