@@ -21,6 +21,7 @@ client_secret*.json
 token*.json
 *token.json
 gmail*.json
+.github-pat
 
 # IDE / editors / Claude Code local config
 .vscode/
