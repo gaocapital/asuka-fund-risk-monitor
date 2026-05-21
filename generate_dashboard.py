@@ -109,6 +109,29 @@ a{color:var(--ac);text-decoration:none}
 .flag-r .flag-i{background:rgba(248,81,73,.16);color:var(--neg)}
 .flag-b .flag-i{background:rgba(77,159,255,.16);color:var(--ac)}
 .flag b{color:var(--tx);font-weight:700}
+.flag-g{border-left-color:var(--pos)}
+.flag-g .flag-i{background:rgba(63,185,80,.16);color:var(--pos)}
+
+/* ===== day-over-day deltas · freshness · draft state ===== */
+.dlt{font-size:9px;font-weight:800;white-space:nowrap;margin-left:5px}
+.dlt-up{color:var(--pos)}
+.dlt-down{color:var(--neg)}
+.rchip{font-size:8px;font-weight:800;letter-spacing:.04em;padding:1.5px 5px;
+  border-radius:3px;white-space:nowrap;margin-left:6px;vertical-align:1px}
+.rchip-new{background:rgba(77,159,255,.16);color:#6fb1ff;
+  border:1px solid rgba(77,159,255,.4)}
+.rchip-file{background:rgba(63,185,80,.14);color:#56c869;
+  border:1px solid rgba(63,185,80,.4)}
+.flip{color:var(--warn);font-weight:700}
+.draftb{font-size:8.5px;font-weight:800;letter-spacing:.04em;color:#6fb1ff;
+  background:rgba(77,159,255,.12);border:1px solid rgba(77,159,255,.34);
+  padding:2px 6px;border-radius:3px}
+.draft-banner{background:rgba(77,159,255,.1);border:1px solid rgba(77,159,255,.3);
+  border-radius:7px;padding:8px 11px;margin-bottom:14px;font-size:11px;
+  color:#6fb1ff;font-weight:600}
+.chg-sub{font-size:8.5px;font-weight:800;letter-spacing:.11em;color:var(--dim);
+  margin:14px 0 8px;text-transform:uppercase}
+.chg-sub:first-child{margin-top:2px}
 
 /* ===== badges ===== */
 .badge{font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:4px;
@@ -744,11 +767,23 @@ def render_header(data: dict, positions: list) -> str:
             account = ""
     acct_str = f" · CGSI {html_escape(account)}" if account else ""
 
-    dates = [p.get("price_date") for p in positions if p.get("price_date")]
-    newest = max(dates) if dates else None
-    label, cls, days = compute_price_freshness(newest)
-    dot = "dot-ok" if (days is not None and days <= 3) else "dot-warn"
-    fresh = f"Prices {label}" if newest else "Prices —"
+    # price-freshness spread across the held book
+    f_fresh = f_stale = 0
+    for p in positions:
+        _, _fc, _fd = compute_price_freshness(p.get("price_date"))
+        if _fd is None:
+            continue
+        if _fd <= 3:
+            f_fresh += 1
+        else:
+            f_stale += 1
+    n_priced = f_fresh + f_stale
+    if not n_priced:
+        fresh, dot = "Prices —", "dot-warn"
+    elif f_stale:
+        fresh, dot = f"Prices · {f_fresh} fresh · {f_stale} stale", "dot-warn"
+    else:
+        fresh, dot = f"Prices · all {n_priced} fresh", "dot-ok"
 
     return f"""
 <header class="topbar">
@@ -787,7 +822,8 @@ def render_kpi_strip(data: dict) -> str:
     tier_pwer = metrics["tier_weighted_avg_pwer"]  # conviction-tier-weighted (BUYs)
     n = len(positions)
     n_buy = metrics.get("n_buy", 0)
-    n_stub = sum(1 for p in positions if p.get("needs_enrichment"))
+    n_stub = sum(1 for p in positions if p.get("needs_enrichment")
+                 and p.get("enrichment_status") != "draft")
     stub_sub = f"{n_stub} need enrichment" if n_stub else "all enriched"
 
     return f"""
@@ -836,6 +872,95 @@ def _act_card(p: dict, action: str) -> str:
 </div>"""
 
 
+def _flag(cls: str, icon: str, text: str) -> str:
+    return (f'<div class="flag {cls}"><span class="flag-i">{icon}</span>'
+            f'<div>{text}</div></div>')
+
+
+def render_changes_col(positions: list, deltas: dict) -> str:
+    """The hero's third column — what changed since the last snapshot, then
+    standing portfolio flags."""
+    by_tk = {p.get("ticker"): p for p in positions}
+    changes: list[tuple] = []
+
+    for tk, d in deltas.items():
+        if not d.get("action_changed"):
+            continue
+        p = by_tk.get(tk)
+        if not p:
+            continue
+        prev = ACTION_BADGE.get(d.get("prev_action"),
+                                (d.get("prev_action") or "?", ""))[0]
+        now = ACTION_BADGE.get(derive_action(p), (derive_action(p), ""))[0]
+        changes.append(("flag-b", "Δ",
+            f"<b>{html_escape(tk)} {html_escape((p.get('name') or '')[:16])}</b> "
+            f"— verdict {html_escape(prev)} → {html_escape(now)}"))
+
+    filed = [tk for tk, d in deltas.items() if d.get("new_filing")]
+    if filed:
+        changes.append(("flag-g", "✦",
+            f"<b>{len(filed)} new filing{'s' if len(filed) != 1 else ''}</b> "
+            f"— {html_escape(', '.join(filed[:6]))}"))
+
+    newp = [tk for tk, d in deltas.items() if d.get("new")]
+    if newp:
+        changes.append(("flag-b", "+",
+            f"<b>{len(newp)} new holding{'s' if len(newp) != 1 else ''}</b> "
+            f"— {html_escape(', '.join(newp[:6]))}"))
+
+    pmoves = sorted(((tk, d["pwer_pp"]) for tk, d in deltas.items()
+                     if d.get("pwer_pp") is not None and abs(d["pwer_pp"]) >= 0.5),
+                    key=lambda x: -abs(x[1]))
+    for tk, pp in pmoves[:2]:
+        p = by_tk.get(tk) or {}
+        cls, ic = ("flag-g", "▲") if pp > 0 else ("flag-w", "▼")
+        changes.append((cls, ic, f"<b>{html_escape(tk)} "
+            f"{html_escape((p.get('name') or '')[:16])}</b> — PWER {pp:+.1f}pp at spot"))
+
+    xmoves = sorted(((tk, d["price_pct"]) for tk, d in deltas.items()
+                     if d.get("price_pct") is not None and abs(d["price_pct"]) >= 3),
+                    key=lambda x: -abs(x[1]))
+    for tk, pc in xmoves[:2]:
+        p = by_tk.get(tk) or {}
+        cls, ic = ("flag-g", "▲") if pc > 0 else ("flag-w", "▼")
+        changes.append((cls, ic, f"<b>{html_escape(tk)} "
+            f"{html_escape((p.get('name') or '')[:16])}</b> — price {pc:+.1f}%"))
+
+    # standing flags
+    flags: list[tuple] = []
+    wpwer = _wtd_avg_pwer(positions)
+    if wpwer < PWER_FLOOR:
+        flags.append(("flag-w", "!",
+            f"<b>Wtd-Avg PWER {wpwer:.1f}%</b> — below the {PWER_FLOOR:.0f}% floor"))
+    stubs = [p for p in positions if p.get("needs_enrichment")
+             and p.get("enrichment_status") != "draft"]
+    if stubs:
+        flags.append(("flag-w", str(len(stubs)),
+            f"<b>{len(stubs)} holdings un-enriched</b> — no thesis or PWER yet"))
+    drafts = [p for p in positions if p.get("enrichment_status") == "draft"]
+    if drafts:
+        flags.append(("flag-b", "D",
+            f"<b>{len(drafts)} draft thes{'es' if len(drafts) != 1 else 'is'}</b> "
+            f"— reasoning-layer drafts awaiting your approval"))
+    for p in positions:
+        if derive_action(p) == "DATA_QUARANTINE":
+            flags.append(("flag-r", "⛔",
+                f"<b>{html_escape(p.get('name'))}</b> — data quarantine"))
+
+    parts: list[str] = []
+    if changes:
+        parts += [_flag(c, i, t) for c, i, t in changes[:6]]
+        if len(changes) > 6:
+            parts.append(f'<div class="hero-empty">+{len(changes) - 6} more '
+                         f'in the Positions tab</div>')
+    else:
+        parts.append('<div class="hero-empty">Quiet — no overnight changes.</div>')
+    if flags:
+        parts.append('<div class="chg-sub">Standing Flags</div>')
+        parts += [_flag(c, i, t) for c, i, t in flags]
+    return "".join(parts)
+
+
 def render_hero(positions: list, deltas: dict) -> str:
     by_action: dict[str, list] = {}
     for p in positions:
@@ -858,41 +983,13 @@ def render_hero(positions: list, deltas: dict) -> str:
     deploy_html = _col(deploy, lambda p: "BUY")
     reduce_html = _col(reduce, lambda p: derive_action(p))
 
-    # Flags
-    flags = []
-    wpwer = _wtd_avg_pwer(positions)
-    if wpwer < PWER_FLOOR:
-        flags.append(("flag-w", "!", f"<b>Wtd-Avg PWER {wpwer:.1f}%</b> — "
-                      f"{PWER_FLOOR - wpwer:.1f}pp below the {PWER_FLOOR:.0f}% floor. "
-                      f"Enrich or drop the un-scored stubs to lift it."))
-    stubs = [p for p in positions if p.get("needs_enrichment")]
-    if stubs:
-        names = ", ".join(p.get("name", "").title()[:18] for p in stubs[:3])
-        more = f" +{len(stubs) - 3}" if len(stubs) > 3 else ""
-        flags.append(("flag-w", str(len(stubs)),
-                      f"<b>{len(stubs)} holdings un-enriched</b> — {html_escape(names)}{more}. "
-                      f"No thesis or PWER yet."))
-    quar = by_action.get("DATA_QUARANTINE", [])
-    for p in quar:
-        flags.append(("flag-r", "⛔", f"<b>{html_escape(p.get('name'))} "
-                      f"({html_escape(p.get('ticker'))})</b> — data quarantine; "
-                      f"fields cannot be trusted until re-verified."))
-    n_changed = sum(1 for d in deltas.values() if d.get("action_changed"))
-    if n_changed:
-        flags.append(("flag-b", "Δ", f"<b>{n_changed} verdict "
-                      f"{'flip' if n_changed == 1 else 'flips'} overnight</b> — "
-                      f"see the action badges in Positions."))
-    if not flags:
-        flags.append(("flag-b", "✓", "<b>No portfolio-level flags.</b> "
-                      "Book is clean on enrichment and data integrity."))
-    flags_html = "".join(
-        f'<div class="flag {c}"><span class="flag-i">{i}</span><div>{t}</div></div>'
-        for c, i, t in flags)
+    changes_html = render_changes_col(positions, deltas)
 
     n_deploy, n_reduce = len(deploy), len(reduce)
-    meta = (f"{n_deploy} deploy · {n_reduce} reduce · {len(flags)} "
-            f"flag{'s' if len(flags) != 1 else ''} — fully deployed, so adds "
-            f"fund from reduces")
+    n_changed = sum(1 for d in deltas.values()
+                    if d.get("action_changed") or d.get("new_filing") or d.get("new"))
+    meta = (f"{n_deploy} to deploy · {n_reduce} to reduce · "
+            f"{n_changed} changed overnight")
 
     return f"""
 <section class="hero">
@@ -910,8 +1007,8 @@ def render_hero(positions: list, deltas: dict) -> str:
       {reduce_html}
     </div>
     <div class="hcol">
-      <div class="hcol-h"><span class="hd hd-flg"></span>FLAGS &amp; CHANGES</div>
-      {flags_html}
+      <div class="hcol-h"><span class="hd hd-flg"></span>SINCE YESTERDAY</div>
+      {changes_html}
     </div>
   </div>
 </section>"""
@@ -927,7 +1024,8 @@ def render_thesis_expand(p: dict) -> str:
     sc = p.get("pwer_scenarios") or {}
     has_scen = bool(sc) and any(isinstance(sc.get(k), dict)
                                 for k in ("bear", "base", "bull", "xbull"))
-    if p.get("needs_enrichment") or not has_scen:
+    is_draft = p.get("enrichment_status") == "draft"
+    if (p.get("needs_enrichment") and not is_draft) or not has_scen:
         return f"""<div class="pexp"><div class="pexp-stub">
       <b>This holding has no thesis yet.</b> It entered the book from the CGSI
       broker sync and is flagged for enrichment — activist, PWER scenarios and
@@ -988,7 +1086,11 @@ def render_thesis_expand(p: dict) -> str:
     kv = "".join(f'<div class="kv-i"><span class="kv-k">{k}</span>'
                  f'<span class="kv-v">{v}</span></div>' for k, v in facts)
 
-    return f"""<div class="pexp"><div class="pexp-grid">
+    draft_banner = ('<div class="draft-banner">⚠ DRAFT THESIS — generated by '
+                    'the reasoning layer, pending your approval. Scenarios and '
+                    'targets are inference, not confirmed.</div>'
+                    if is_draft else "")
+    return f"""<div class="pexp">{draft_banner}<div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen">{''.join(rows)}</div>
@@ -1007,14 +1109,27 @@ def render_position_row(p: dict, delta: dict) -> str:
     tk = p.get("ticker", "")
     name = p.get("name", "")
     layer = p.get("layer") or "L3"
-    enrich = bool(p.get("needs_enrichment"))
+    is_draft = p.get("enrichment_status") == "draft"
+    is_stub = bool(p.get("needs_enrichment")) and not is_draft
     activist = (p.get("activist") or "").strip()
-    if enrich:
+    if is_stub:
         by = '<span class="enrich">NEEDS ENRICHMENT</span>'
+    elif is_draft:
+        by = ('<span class="draftb">DRAFT THESIS</span>'
+              + (f' <span class="dim">{html_escape(activist[:28])}</span>'
+                 if activist else ''))
     elif activist:
         by = html_escape(activist[:40])
     else:
         by = '<span class="dim">—</span>'
+
+    # day-over-day change chip on the name line
+    if delta.get("new"):
+        chip = '<span class="rchip rchip-new">NEW</span>'
+    elif delta.get("new_filing"):
+        chip = '<span class="rchip rchip-file">NEW FILING</span>'
+    else:
+        chip = ""
 
     w = p.get("weight")
     tgt = p.get("weight_target")
@@ -1033,16 +1148,41 @@ def render_position_row(p: dict, delta: dict) -> str:
     eod_tag = (' <span class="src-eod" title="Broker mark from the CGSI '
                'Position file — Yahoo live quote was unavailable">EOD</span>'
                if p.get("price_source") == "cgsi_broker" else "")
-    pv = f"¥{fmt_num(price)}{eod_tag}" if price else "—"
+    pc = delta.get("price_pct")
+    if pc is not None and abs(pc) >= 0.05:
+        price_dlt = (f'<span class="dlt {"dlt-up" if pc > 0 else "dlt-down"}">'
+                     f'{"▲" if pc > 0 else "▼"}{abs(pc):.1f}%</span>')
+    else:
+        price_dlt = ""
+    pv = f"¥{fmt_num(price)}{eod_tag}{price_dlt}" if price else "—"
+
+    _, _fcls, fdays = compute_price_freshness(p.get("price_date"))
+    if fdays is None:
+        fresh_bit = ""
+    elif fdays <= 1:
+        fresh_bit = ' · <span class="dim">today</span>'
+    elif fdays <= 3:
+        fresh_bit = f' · <span class="dim">{fdays}d ago</span>'
+    else:
+        fresh_bit = (f' · <span class="{"neg" if fdays > 7 else "warn"}">'
+                     f'{fdays}d old</span>')
     if wac:
         d = wac_delta_pct(price, wac)
         psub = f"WAC ¥{fmt_num(wac)}" + (f" · {d:+.0f}%" if d is not None else "")
     else:
         psub = "WAC —"
+    psub += fresh_bit
 
     pwer = p.get("pwer")
     pwer_txt = f"{pwer:.1f}%" if pwer is not None else "—"
     pwer_cls = _pwer_cls(pwer)
+    ppp = delta.get("pwer_pp")
+    if ppp is not None and abs(ppp) >= 0.1:
+        pwer_dlt = (f'<div class="pc-sub"><span class="dlt '
+                    f'{"dlt-up" if ppp > 0 else "dlt-down"}">'
+                    f'{"▲" if ppp > 0 else "▼"}{abs(ppp):.1f}pp</span></div>')
+    else:
+        pwer_dlt = ""
 
     action = derive_action(p)
     tier_html = ""
@@ -1050,12 +1190,19 @@ def render_position_row(p: dict, delta: dict) -> str:
         tier, _, _ = derive_buy_tier(p)
         if tier and tier != "—":
             tier_html = f' <span class="tier tier-{tier.lower()}">{tier}</span>'
+    if delta.get("action_changed") and delta.get("prev_action"):
+        prev_lbl = ACTION_BADGE.get(delta["prev_action"],
+                                   (delta["prev_action"], ""))[0]
+        flip_html = f'<div class="pc-sub flip">was {html_escape(prev_lbl)}</div>'
+    else:
+        flip_html = ""
+
     cat = p.get("catalyst") or ""
     cat_chip = _countdown_chip(p.get("catalyst_date"))
     if cat:
         cat_html = f"{html_escape(cat[:54])}<br>{cat_chip}" if cat_chip \
             else html_escape(cat[:54])
-    elif enrich:
+    elif is_stub:
         cat_html = '<span class="dim">No thesis — new from CGSI sync</span>'
     else:
         cat_html = '<span class="dim">—</span>'
@@ -1069,15 +1216,15 @@ def render_position_row(p: dict, delta: dict) -> str:
     sv_c = f"{_cd}" if (_cd is not None and _cd >= 0) else ""
 
     return f"""
-<div class="grid8 prow" data-layer="{html_escape(layer)}" data-enrich="{'1' if enrich else '0'}" data-name="{html_escape((tk + ' ' + name).lower())}" data-sort-weight="{sv_w}" data-sort-price="{sv_p}" data-sort-pwer="{sv_pw}" data-sort-action="{sv_a}" data-sort-catalyst="{sv_c}">
+<div class="grid8 prow" data-layer="{html_escape(layer)}" data-enrich="{'1' if is_stub else '0'}" data-name="{html_escape((tk + ' ' + name).lower())}" data-sort-weight="{sv_w}" data-sort-price="{sv_p}" data-sort-pwer="{sv_pw}" data-sort-action="{sv_a}" data-sort-catalyst="{sv_c}">
   <div class="pc-name"><span class="pc-tk">{html_escape(tk)}</span>
-    <div style="min-width:0"><div class="pc-nm">{html_escape(name)}</div>
+    <div style="min-width:0"><div class="pc-nm">{html_escape(name)}{chip}</div>
       <div class="pc-by">{by}</div></div></div>
   <div><span class="lb {LAYER_CLS.get(layer, 'lb-l3')}">{html_escape('PAH' if layer == 'L3-PAH' else layer)}</span></div>
   <div><div class="pc-wv n">{wv}</div><div class="pc-sub">{wsub}</div></div>
   <div><div class="pc-pv n">{pv}</div><div class="pc-sub">{psub}</div></div>
-  <div><span class="pw {pwer_cls} n">{pwer_txt}</span></div>
-  <div>{_badge(action)}{tier_html}</div>
+  <div><span class="pw {pwer_cls} n">{pwer_txt}</span>{pwer_dlt}</div>
+  <div>{_badge(action)}{tier_html}{flip_html}</div>
   <div class="pc-cat">{cat_html}</div>
   <div class="chev">▸</div>
 </div>
@@ -1085,7 +1232,8 @@ def render_position_row(p: dict, delta: dict) -> str:
 
 
 def render_tab_positions(positions: list, deltas: dict) -> str:
-    n_stub = sum(1 for p in positions if p.get("needs_enrichment"))
+    n_stub = sum(1 for p in positions if p.get("needs_enrichment")
+                 and p.get("enrichment_status") != "draft")
     chips = [("all", f"All {len(positions)}"), ("L1", "L1"), ("L2", "L2"),
              ("L3", "L3"), ("enrich", f"Stubs · {n_stub}")]
     chips_html = "".join(

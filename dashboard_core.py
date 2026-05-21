@@ -414,12 +414,9 @@ def compute_price_freshness(price_date_str: str | None) -> tuple[str, str, int |
         from datetime import datetime
         pd = datetime.fromisoformat(price_date_str.split('T')[0]).date()
         days_old = (_today() - pd).days
-        date_label = pd.strftime('%b %-d') if hasattr(pd, 'strftime') else str(pd)
-        # Account for cross-platform strftime
-        try:
-            date_label = pd.strftime('%b %-d')
-        except Exception:
-            date_label = pd.strftime('%b %d').replace(' 0', ' ')
+        # %-d is not portable (it raises on Windows) — strip the leading
+        # zero from the day by hand instead.
+        date_label = pd.strftime('%b %d').replace(' 0', ' ')
         if days_old <= 1:
             cls = 'fresh-today'
         elif days_old <= 3:
