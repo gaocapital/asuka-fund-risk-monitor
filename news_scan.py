@@ -4,7 +4,7 @@ news_scan.py
 DuckDuckGo-based news scanner for Asuka active book positions.
 Closes the news-verification loop on the refresh discipline rule.
 
-For each tracked position in dashboard_data.json:
+For each tracked name (held position + PM watch-list) in dashboard_data.json:
   1. Run 3 DuckDuckGo queries (TDNet adhoc, general news, filings news)
   2. Filter results to past 7 days
   3. Classify detected events by severity (HIGH/MEDIUM/LOW)
@@ -30,7 +30,7 @@ Integration with daily orchestrator:
 
 Rate limit hygiene:
     - 0.8s sleep between queries (DuckDuckGo throttles if faster)
-    - 3 queries per ticker × 29 positions = 87 queries × 0.8s = ~70 seconds total
+    - 3 queries per ticker × ~35 names = ~105 queries × 0.8s = ~85 seconds total
     - Includes graceful fallback on rate-limit errors (skip and log)
 """
 from __future__ import annotations
@@ -44,6 +44,16 @@ import time
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Optional
+
+# Windows consoles default to cp1252 and choke on the glyphs this script prints
+# (the HIGH-alert siren, check marks, warning signs). Force UTF-8 on the standard
+# streams so a standalone run — one outside run_broker_sync's PYTHONUTF8
+# environment — does not crash mid-output with UnicodeEncodeError.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8")  # type: ignore[union-attr]
+    except (AttributeError, ValueError):
+        pass
 
 
 def _atomic_write_json(path, data) -> None:
@@ -294,14 +304,19 @@ def main():
     with open(DASHBOARD_PATH, encoding="utf-8") as f:
         dashboard = json.load(f)
 
-    # Filter target positions
+    # Scan held positions AND the PM watch-list — both carry ticker + name.
+    book = (dashboard.get("positions") or []) + (dashboard.get("watch_list") or [])
+    seen = set()
+    book = [x for x in book if x.get("ticker")
+            and not (x["ticker"] in seen or seen.add(x["ticker"]))]
     if args.tickers:
         target_tks = set(args.tickers.split(","))
-        positions = [p for p in dashboard["positions"] if p["ticker"] in target_tks]
+        positions = [p for p in book if p["ticker"] in target_tks]
     else:
-        positions = dashboard["positions"]
+        positions = book
 
-    print(f"News scan — {len(positions)} positions, lookback {args.lookback_days} days")
+    print(f"News scan — {len(positions)} names (positions + watch-list), "
+          f"lookback {args.lookback_days} days")
     print("=" * 75)
 
     today_iso = date.today().isoformat()
