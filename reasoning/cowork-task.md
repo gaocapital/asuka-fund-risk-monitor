@@ -65,6 +65,24 @@ inside the memo — not defer them:
 - Remaining flagged items go in a "Carried forward" list — but that list must
   SHRINK run over run, never grow.
 
+STUB AUTO-ENRICHMENT — draft theses for un-enriched holdings:
+Some positions enter the book from the CGSI broker sync as bare stubs
+(needs_enrichment=true, no pwer_scenarios). Every run, for EACH such stub:
+- Research the name: its EDINET 大量保有報告書 / 変更報告書 history, the activist
+  and any 共同保有者, valuation (SOTP / asset / earnings lens), the catalyst path.
+- Author a DRAFT thesis and write it onto the position in dashboard_data.json:
+  the four pwer_scenarios (Bear / Base / Bull / X-Bull, each with a probability
+  and a ¥ target_jpy), hard stops, strategic_source tag, layer, catalyst +
+  catalyst_date, activist + activist_pwer, and wac if recoverable from filings.
+- Stamp the position with enrichment_status: "draft" and needs_enrichment:
+  false. Add a notes line dated today that explicitly tags every generated
+  number as INFERENCE. Do NOT clear the "draft" flag yourself — only the PM
+  clears it on approval.
+- In the sweep memo, list each stub you drafted with a one-line rationale so the
+  PM can review. A drafted stub is no longer an open enrichment item, but it
+  stays visibly DRAFT on the dashboard until the PM signs off.
+Commit the updated dashboard_data.json together with the memo.
+
 OUTPUT FORMAT — reproduce framework/08-worked-example.md exactly:
 1. Boxed header (ASUKA FUND — DAILY SWEEP MEMO; as-of; pipeline line; last-sweep).
 2. Top-of-Page Summary — a tight narrative of the day's headline.
