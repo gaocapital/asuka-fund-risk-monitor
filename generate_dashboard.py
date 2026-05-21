@@ -320,6 +320,28 @@ a{color:var(--ac);text-decoration:none}
 .histo-floor span{position:absolute;top:-3px;left:6px;font-size:8.5px;
   color:var(--warn);white-space:nowrap}
 
+/* ===== interactivity — tooltips & sortable headers ===== */
+.charttip{position:fixed;z-index:60;pointer-events:none;max-width:252px;
+  background:#0b0e13;border:1px solid var(--line);border-radius:7px;
+  padding:8px 11px;font-size:10.5px;line-height:1.55;color:var(--mut);
+  box-shadow:0 8px 26px rgba(0,0,0,.6)}
+.charttip[hidden]{display:none}
+.charttip b{color:var(--tx);font-weight:700;font-size:11px}
+.sc-dot{transition:transform .1s ease,box-shadow .1s ease}
+.sc-dot:hover{transform:translate(-50%,50%) scale(1.4);border-color:var(--tx);
+  box-shadow:0 4px 13px rgba(0,0,0,.75);cursor:pointer;z-index:6}
+.hb{cursor:pointer}
+.hb-bar{transition:filter .1s ease}
+.hb:hover .hb-bar{filter:brightness(1.28)}
+.hbar{cursor:pointer}
+.hbar-f{transition:filter .1s ease}
+.hbar:hover .hbar-f{filter:brightness(1.22)}
+.pthead>div.sortable{cursor:pointer;user-select:none;display:flex;
+  align-items:center;gap:4px;transition:color .1s ease}
+.pthead>div.sortable:hover{color:var(--tx)}
+.pthead>div.sort-on{color:var(--ac)}
+.sort-ar{font-size:7px;line-height:1}
+
 /* ===== catalysts tab ===== */
 .tl{padding:10px 6px 4px}
 .tl-months{position:relative;height:18px;margin-bottom:5px}
@@ -447,6 +469,109 @@ DASHBOARD_JS = """
   var sb=document.getElementById('psearch');
   if(sb) sb.addEventListener('input',applyFilter);
 })();
+
+/* ---- chart tooltips (conviction matrix, histogram, activist bars) ---- */
+(function(){
+  var tip=document.createElement('div');
+  tip.className='charttip'; tip.hidden=true;
+  document.body.appendChild(tip);
+  function place(e){
+    var off=14, x=e.clientX+off, y=e.clientY+off;
+    var w=tip.offsetWidth, h=tip.offsetHeight;
+    if(x+w>window.innerWidth-8) x=e.clientX-w-off;
+    if(y+h>window.innerHeight-8) y=e.clientY-h-off;
+    tip.style.left=(x<8?8:x)+'px';
+    tip.style.top=(y<8?8:y)+'px';
+  }
+  function show(el){
+    var lines=(el.getAttribute('data-tip')||'').split('\\n');
+    tip.textContent='';
+    lines.forEach(function(ln,i){
+      if(i) tip.appendChild(document.createElement('br'));
+      if(i===0){
+        var b=document.createElement('b'); b.textContent=ln; tip.appendChild(b);
+      } else {
+        tip.appendChild(document.createTextNode(ln));
+      }
+    });
+    tip.hidden=false;
+  }
+  document.querySelectorAll('[data-tip]').forEach(function(el){
+    el.addEventListener('mouseenter',function(){show(el);});
+    el.addEventListener('mousemove',place);
+    el.addEventListener('mouseleave',function(){tip.hidden=true;});
+  });
+})();
+
+/* ---- positions-table column sort (sorts within each layer group) ---- */
+(function(){
+  var heads=document.querySelectorAll('.pthead>div.sortable');
+  if(!heads.length) return;
+  var state={col:'weight',dir:-1};   // matches the server-side default order
+
+  function defaultDir(col){
+    return (col==='name'||col==='action'||col==='catalyst')?1:-1;
+  }
+  function missing(row,col){
+    if(col==='name') return !row.dataset.name;
+    var v=row.getAttribute('data-sort-'+col);
+    return v===null||v===''||isNaN(parseFloat(v));
+  }
+  function key(row,col){
+    if(col==='name') return row.dataset.name||'';
+    return parseFloat(row.getAttribute('data-sort-'+col));
+  }
+  function sortNow(){
+    var table=document.querySelector('.ptable'); if(!table) return;
+    var col=state.col, dir=state.dir, pthead=null, segs=[], cur=null;
+    Array.prototype.slice.call(table.children).forEach(function(el){
+      if(el.classList.contains('pthead')){ pthead=el; }
+      else if(el.classList.contains('plgroup')){ cur={head:el,pairs:[]}; segs.push(cur); }
+      else if(el.classList.contains('prow') && cur){
+        var ex=el.nextElementSibling;
+        ex=(ex && ex.classList.contains('pexp-row'))?ex:null;
+        cur.pairs.push({row:el,exp:ex});
+      }
+    });
+    segs.forEach(function(seg){
+      seg.pairs.sort(function(a,b){
+        var am=missing(a.row,col), bm=missing(b.row,col);
+        if(am&&bm) return 0;
+        if(am) return 1;
+        if(bm) return -1;
+        var av=key(a.row,col), bv=key(b.row,col);
+        if(av<bv) return -dir;
+        if(av>bv) return dir;
+        return 0;
+      });
+    });
+    if(pthead) table.appendChild(pthead);
+    segs.forEach(function(seg){
+      table.appendChild(seg.head);
+      seg.pairs.forEach(function(pr){
+        table.appendChild(pr.row);
+        if(pr.exp) table.appendChild(pr.exp);
+      });
+    });
+  }
+  function carets(){
+    heads.forEach(function(h){
+      var on=(h.getAttribute('data-sort')===state.col);
+      h.classList.toggle('sort-on',on);
+      var ar=h.querySelector('.sort-ar');
+      if(ar) ar.textContent=on?(state.dir<0?'▼':'▲'):'';
+    });
+  }
+  heads.forEach(function(h){
+    h.addEventListener('click',function(){
+      var col=h.getAttribute('data-sort');
+      if(state.col===col){ state.dir=-state.dir; }
+      else { state.col=col; state.dir=defaultDir(col); }
+      sortNow(); carets();
+    });
+  });
+  carets();   // reflect the initial weight-descending order
+})();
 """
 
 # ============================================================================
@@ -462,6 +587,11 @@ ACTION_BADGE = {
     "STALE_INPUTS": ("STALE", "bg-stale"),
     "STALE_SCEN": ("STALE SCEN", "bg-stale"),
     "DATA_QUARANTINE": ("QUARANTINE", "bg-quar"),
+}
+# Action priority for the positions-table column sort — BUYs first, dead names last.
+ACTION_SORT_RANK = {
+    "BUY": 0, "HOLD": 1, "WEAK_HOLD": 2, "SELL": 3, "WATCH": 4,
+    "STALE_INPUTS": 5, "STALE_SCEN": 6, "DATA_QUARANTINE": 7,
 }
 LAYER_CLS = {"L1": "lb-l1", "L2": "lb-l2", "L3": "lb-l3",
              "L3-PAH": "lb-lp", "L4": "lb-l4"}
@@ -480,6 +610,16 @@ LAYER_TITLE = {
 def _badge(action: str) -> str:
     label, cls = ACTION_BADGE.get(action, (action, "bg-hold"))
     return f'<span class="badge {cls}">{label}</span>'
+
+
+def _tip(*lines) -> str:
+    """Pack tooltip lines into a data-tip attribute value.
+
+    Each line is HTML-escaped, then lines are joined with the newline entity so
+    the whole tooltip rides in one attribute. The shared tooltip handler in
+    DASHBOARD_JS reads data-tip, splits on the newline, and renders line 1 bold.
+    """
+    return "&#10;".join(html_escape(str(ln)) for ln in lines)
 
 
 def _money(v, sign: bool = False) -> str:
@@ -910,8 +1050,16 @@ def render_position_row(p: dict, delta: dict) -> str:
     else:
         cat_html = '<span class="dim">—</span>'
 
+    # sort keys for the positions-table column sort (JS reads the data-sort-* attrs)
+    sv_w = "" if w is None else f"{w}"
+    sv_p = "" if price is None else f"{price}"
+    sv_pw = "" if pwer is None else f"{pwer}"
+    sv_a = ACTION_SORT_RANK.get(action, 9)
+    _cd = _days_to(p.get("catalyst_date"))
+    sv_c = f"{_cd}" if (_cd is not None and _cd >= 0) else ""
+
     return f"""
-<div class="grid8 prow" data-layer="{html_escape(layer)}" data-enrich="{'1' if enrich else '0'}" data-name="{html_escape((tk + ' ' + name).lower())}">
+<div class="grid8 prow" data-layer="{html_escape(layer)}" data-enrich="{'1' if enrich else '0'}" data-name="{html_escape((tk + ' ' + name).lower())}" data-sort-weight="{sv_w}" data-sort-price="{sv_p}" data-sort-pwer="{sv_pw}" data-sort-action="{sv_a}" data-sort-catalyst="{sv_c}">
   <div class="pc-name"><span class="pc-tk">{html_escape(tk)}</span>
     <div style="min-width:0"><div class="pc-nm">{html_escape(name)}</div>
       <div class="pc-by">{by}</div></div></div>
@@ -934,10 +1082,15 @@ def render_tab_positions(positions: list, deltas: dict) -> str:
         f'<span class="pchip{" on" if c == "all" else ""}" data-layer="{c}">{html_escape(lbl)}</span>'
         for c, lbl in chips)
 
-    head = """
+    def _th(label, key):
+        if key is None:
+            return f"<div>{label}</div>"
+        return (f'<div class="sortable" data-sort="{key}" title="Sort by {label}">'
+                f'{label}<span class="sort-ar"></span></div>')
+
+    head = f"""
 <div class="grid8 pthead">
-  <div>Holding</div><div>Layer</div><div>Weight</div><div>Price</div>
-  <div>PWER</div><div>Action</div><div>Catalyst</div><div></div>
+  {_th('Holding', 'name')}{_th('Layer', None)}{_th('Weight', 'weight')}{_th('Price', 'price')}{_th('PWER', 'pwer')}{_th('Action', 'action')}{_th('Catalyst', 'catalyst')}<div></div>
 </div>"""
 
     body = [head]
@@ -984,8 +1137,16 @@ def render_conviction_matrix(positions: list) -> str:
         if p.get("ticker") in top_tk:
             tag = (f'<span class="sc-tag">{html_escape(p.get("ticker"))} '
                    f'{html_escape((p.get("name") or "")[:11])}</span>')
+        dlayer = p.get("layer") or "L3"
+        dltitle = LAYER_TITLE.get(dlayer, "")
+        tip = _tip(
+            f"{p.get('ticker', '')} · {p.get('name', '')}",
+            dlayer + (f" — {dltitle.title()}" if dltitle else ""),
+            f"PWER {p.get('pwer'):.1f}%    ·    Weight {p.get('weight') or 0:.2f}%",
+            f"Action — {derive_action(p).replace('_', ' ')}",
+        )
         dots.append(
-            f'<div class="sc-dot {scls}" style="left:{left:.1f}%;'
+            f'<div class="sc-dot {scls}" data-tip="{tip}" style="left:{left:.1f}%;'
             f'bottom:{bottom:.1f}%;width:{size:.0f}px;height:{size:.0f}px">{tag}</div>')
 
     return f"""
@@ -1052,20 +1213,30 @@ def render_layer_donut(positions: list) -> str:
 
 def render_activist_bars(positions: list) -> str:
     sums: dict[str, float] = {}
+    counts: dict[str, int] = {}
     for p in positions:
         k = _activist_key(p.get("activist"))
         sums[k] = sums.get(k, 0) + (p.get("weight") or 0)
+        counts[k] = counts.get(k, 0) + 1
     ranked = sorted(sums.items(), key=lambda kv: -kv[1])
     top = ranked[:7]
     rest = ranked[7:]
+    rest_count = sum(counts.get(k, 0) for k, _ in rest)
     if rest:
         top.append((f"{len(rest)} others", sum(v for _, v in rest)))
     mx = max((v for _, v in top), default=1.0) or 1.0
     bars = []
     for name, val in top:
         amber = " amber" if name == "No activist" else ""
+        if rest and name == f"{len(rest)} others":
+            sub = f"{rest_count} positions across {len(rest)} activists"
+        else:
+            c = counts.get(name, 0)
+            sub = f"{c} position{'' if c == 1 else 's'}"
+        tip = _tip(name, f"{val:.1f}% of book weight", sub)
         bars.append(
-            f'<div class="hbar"><div class="hbar-l">{html_escape(name)}</div>'
+            f'<div class="hbar" data-tip="{tip}">'
+            f'<div class="hbar-l">{html_escape(name)}</div>'
             f'<div class="hbar-tr"><div class="hbar-f{amber}" '
             f'style="width:{val / mx * 100:.0f}%"></div></div>'
             f'<div class="hbar-v">{val:.1f}</div></div>')
@@ -1077,28 +1248,35 @@ def render_activist_bars(positions: list) -> str:
 
 def render_pwer_histogram(positions: list) -> str:
     buckets = [0, 0, 0, 0, 0, 0]  # <0, 0-15, 15-25, 25-40, 40+, n/a
+    members: list[list[str]] = [[], [], [], [], [], []]
     for p in positions:
         pw = p.get("pwer")
         if pw is None:
-            buckets[5] += 1
+            idx = 5
         elif pw < 0:
-            buckets[0] += 1
+            idx = 0
         elif pw < 15:
-            buckets[1] += 1
+            idx = 1
         elif pw < 25:
-            buckets[2] += 1
+            idx = 2
         elif pw < 40:
-            buckets[3] += 1
+            idx = 3
         else:
-            buckets[4] += 1
+            idx = 4
+        buckets[idx] += 1
+        members[idx].append(p.get("ticker") or "?")
     mx = max(buckets) or 1
     cls = ["hb-below", "hb-below", "hb-above", "hb-above", "hb-above", "hb-na"]
     labels = ["&lt;0%", "0–15", "15–25", "25–40", "40%+", "n/a"]
+    tip_range = ["PWER below 0%", "PWER 0–15%", "PWER 15–25%",
+                 "PWER 25–40%", "PWER 40% and above", "PWER not scored"]
     bars = []
     for i, c in enumerate(buckets):
         cnum = f'<div class="hb-c{" dim" if i == 5 else ""}">{c}</div>'
+        tk_list = ", ".join(members[i]) if members[i] else "—"
+        tip = _tip(tip_range[i], f"{c} holding{'' if c == 1 else 's'}", tk_list)
         bars.append(
-            f'<div class="hb">{cnum}'
+            f'<div class="hb" data-tip="{tip}">{cnum}'
             f'<div class="hb-bar {cls[i]}" style="height:{c / mx * 100:.0f}%"></div>'
             f'<div class="hb-l">{labels[i]}</div></div>')
     return f"""

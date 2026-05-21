@@ -300,6 +300,28 @@ a{color:var(--ac);text-decoration:none}
 .histo-floor span{position:absolute;top:-3px;left:6px;font-size:8.5px;
   color:var(--warn);white-space:nowrap}
 
+/* ===== interactivity — tooltips & sortable headers ===== */
+.charttip{position:fixed;z-index:60;pointer-events:none;max-width:252px;
+  background:#0b0e13;border:1px solid var(--line);border-radius:7px;
+  padding:8px 11px;font-size:10.5px;line-height:1.55;color:var(--mut);
+  box-shadow:0 8px 26px rgba(0,0,0,.6)}
+.charttip[hidden]{display:none}
+.charttip b{color:var(--tx);font-weight:700;font-size:11px}
+.sc-dot{transition:transform .1s ease,box-shadow .1s ease}
+.sc-dot:hover{transform:translate(-50%,50%) scale(1.4);border-color:var(--tx);
+  box-shadow:0 4px 13px rgba(0,0,0,.75);cursor:pointer;z-index:6}
+.hb{cursor:pointer}
+.hb-bar{transition:filter .1s ease}
+.hb:hover .hb-bar{filter:brightness(1.28)}
+.hbar{cursor:pointer}
+.hbar-f{transition:filter .1s ease}
+.hbar:hover .hbar-f{filter:brightness(1.22)}
+.pthead>div.sortable{cursor:pointer;user-select:none;display:flex;
+  align-items:center;gap:4px;transition:color .1s ease}
+.pthead>div.sortable:hover{color:var(--tx)}
+.pthead>div.sort-on{color:var(--ac)}
+.sort-ar{font-size:7px;line-height:1}
+
 /* ===== catalysts tab ===== */
 .tl{padding:10px 6px 4px}
 .tl-months{position:relative;height:18px;margin-bottom:5px}
@@ -483,10 +505,9 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 </div>
 <div class="ptable">
 <div class="grid8 pthead">
-  <div>Holding</div><div>Layer</div><div>Weight</div><div>Price</div>
-  <div>PWER</div><div>Action</div><div>Catalyst</div><div></div>
+  <div class="sortable" data-sort="name" title="Sort by Holding">Holding<span class="sort-ar"></span></div><div>Layer</div><div class="sortable" data-sort="weight" title="Sort by Weight">Weight<span class="sort-ar"></span></div><div class="sortable" data-sort="price" title="Sort by Price">Price<span class="sort-ar"></span></div><div class="sortable" data-sort="pwer" title="Sort by PWER">PWER<span class="sort-ar"></span></div><div class="sortable" data-sort="action" title="Sort by Action">Action<span class="sort-ar"></span></div><div class="sortable" data-sort="catalyst" title="Sort by Catalyst">Catalyst<span class="sort-ar"></span></div><div></div>
 </div><div class="plgroup" data-layer="L1"><span class="pl-t">L1 · CORE CONVICTION</span><span class="pl-m">1 name · 12.8%</span><span class="pl-line"></span></div>
-<div class="grid8 prow" data-layer="L1" data-enrich="0" data-name="9684 square enix">
+<div class="grid8 prow" data-layer="L1" data-enrich="0" data-name="9684 square enix" data-sort-weight="12.84" data-sort-price="2713.5" data-sort-pwer="29.7" data-sort-action="0" data-sort-catalyst="35">
   <div class="pc-name"><span class="pc-tk">9684</span>
     <div style="min-width:0"><div class="pc-nm">Square Enix</div>
       <div class="pc-by">3D Investment Partners</div></div></div>
@@ -511,7 +532,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">3D Investment Partners</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">17.5%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">15 Mar · 変更報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,900</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L1</span></div></div>
   </div>
 </div></div></div><div class="plgroup" data-layer="L2"><span class="pl-t">L2 · ACTIVE CATALYST</span><span class="pl-m">8 names · 39.5%</span><span class="pl-line"></span></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3182 oisix ra daichi">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3182 oisix ra daichi" data-sort-weight="8.22" data-sort-price="1486.0" data-sort-pwer="29.9" data-sort-action="1" data-sort-catalyst="76">
   <div class="pc-name"><span class="pc-tk">3182</span>
     <div style="min-width:0"><div class="pc-nm">Oisix ra daichi</div>
       <div class="pc-by">GMO-Usonian (E03287) 10.48% · Tier R 純投資</div></div></div>
@@ -536,7 +557,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">GMO-Usonian (E03287) 10.48% · Ti</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">10.48%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">2026-04 · 変更報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,576</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">5 Aug</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="9308 inui global logistics">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="9308 inui global logistics" data-sort-weight="7.81" data-sort-price="1574.0" data-sort-pwer="-2.8" data-sort-action="3" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9308</span>
     <div style="min-width:0"><div class="pc-nm">Inui Global Logistics</div>
       <div class="pc-by">Alphaleo Holdings GK (8.13%, primary 5+y</div></div></div>
@@ -561,7 +582,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Alphaleo Holdings GK (8.13%, pri</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.13%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">27 Apr · Manual desk note</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,489</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">27 Apr</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="4849 en japan / en inc.">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="4849 en japan / en inc." data-sort-weight="4.98" data-sort-price="1280.0" data-sort-pwer="8.6" data-sort-action="2" data-sort-catalyst="35">
   <div class="pc-name"><span class="pc-tk">4849</span>
     <div style="min-width:0"><div class="pc-nm">en Japan / en Inc.</div>
       <div class="pc-by">Oasis Management 7.93%</div></div></div>
@@ -586,7 +607,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Oasis Management 7.93%</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">7.93%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">19 May · 臨時報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,720</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="4404 miyoshi oil &amp; fat">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="4404 miyoshi oil &amp; fat" data-sort-weight="4.83" data-sort-price="2095.0" data-sort-pwer="21.4" data-sort-action="0" data-sort-catalyst="35">
   <div class="pc-name"><span class="pc-tk">4404</span>
     <div style="min-width:0"><div class="pc-nm">Miyoshi Oil &amp; Fat</div>
       <div class="pc-by">Ueshima wolf-pack (Ueshima + Naturali + </div></div></div>
@@ -611,7 +632,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Ueshima wolf-pack (Ueshima + Nat</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">6.59%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">25 Jan · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,233</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="6151 nitto kohki">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="6151 nitto kohki" data-sort-weight="4.11" data-sort-price="1642.0" data-sort-pwer="0.0" data-sort-action="3" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">6151</span>
     <div style="min-width:0"><div class="pc-nm">Nitto Kohki</div>
       <div class="pc-by">Symphony Financial Group — significant s</div></div></div>
@@ -636,7 +657,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Symphony Financial Group — signi</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="6914 optex group">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="6914 optex group" data-sort-weight="3.72" data-sort-price="4495.0" data-sort-pwer="7.5" data-sort-action="2" data-sort-catalyst="86">
   <div class="pc-name"><span class="pc-tk">6914</span>
     <div style="min-width:0"><div class="pc-nm">Optex Group</div>
       <div class="pc-by">GMO-Usonian 5.55% (Feb 17 2026 crossing)</div></div></div>
@@ -661,7 +682,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">GMO-Usonian 5.55% (Feb 17 2026 c</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">5.55%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">17 Feb · 大量保有報告書 (initial 5%+ crossing)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,100</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">15 Aug</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3401 teijin">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3401 teijin" data-sort-weight="3.05" data-sort-price="1636.0" data-sort-pwer="58.0" data-sort-action="0" data-sort-catalyst="40">
   <div class="pc-name"><span class="pc-tk">3401</span>
     <div style="min-width:0"><div class="pc-nm">Teijin</div>
       <div class="pc-by">Effissimo Capital Management (Tier 1 har</div></div></div>
@@ -686,7 +707,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Effissimo Capital Management (Ti</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">19.26%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">14 Apr · 変更報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,350</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">30 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3549 kusuri no aoki holdings">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3549 kusuri no aoki holdings" data-sort-weight="2.79" data-sort-price="3749.0" data-sort-pwer="26.0" data-sort-action="0" data-sort-catalyst="102">
   <div class="pc-name"><span class="pc-tk">3549</span>
     <div style="min-width:0"><div class="pc-nm">Kusuri no Aoki Holdings</div>
       <div class="pc-by">Oasis Management Company Ltd. (E31883) ·</div></div></div>
@@ -711,7 +732,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Oasis Management Company Ltd. (E</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">14.05%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">13 May · 変更報告書 (保有目的の変更)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥3,050</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">31 Aug</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div><div class="plgroup" data-layer="L3"><span class="pl-t">L3 · BUILD / MONITOR</span><span class="pl-m">11 names · 44.2%</span><span class="pl-line"></span></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="7752 ricoh ord">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="7752 ricoh ord" data-sort-weight="8.59" data-sort-price="1421.5" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">7752</span>
     <div style="min-width:0"><div class="pc-nm">RICOH ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
@@ -730,7 +751,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       ¥1,421, portfolio weight
       8.59%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="3697 shift inc.">
+<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="3697 shift inc." data-sort-weight="6.84" data-sort-price="664.1" data-sort-pwer="30.1" data-sort-action="0" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">3697</span>
     <div style="min-width:0"><div class="pc-nm">Shift Inc.</div>
       <div class="pc-by">Arcus Investment</div></div></div>
@@ -755,7 +776,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Arcus Investment</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">7.14%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">8 Apr · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥738</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">14 Apr</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="4493 cyber security c ord">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="4493 cyber security c ord" data-sort-weight="5.57" data-sort-price="1646.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">4493</span>
     <div style="min-width:0"><div class="pc-nm">CYBER SECURITY C ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
@@ -774,7 +795,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       ¥1,646, portfolio weight
       5.57%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="3034 qol holdings">
+<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="3034 qol holdings" data-sort-weight="4.67" data-sort-price="1861.0" data-sort-pwer="4.5" data-sort-action="7" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">3034</span>
     <div style="min-width:0"><div class="pc-nm">QOL Holdings</div>
       <div class="pc-by">Will Field Capital Pte Ltd (+ Shino Fumi</div></div></div>
@@ -799,7 +820,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Will Field Capital Pte Ltd (+ Sh</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.69%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">21 Oct · 変更報告書 (joint)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,860</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9104 mitsui osk lines ord">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9104 mitsui osk lines ord" data-sort-weight="4.25" data-sort-price="5863.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9104</span>
     <div style="min-width:0"><div class="pc-nm">MITSUI OSK LINES ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
@@ -818,7 +839,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       ¥5,863, portfolio weight
       4.25%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9115 meiji shipping ord">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9115 meiji shipping ord" data-sort-weight="2.97" data-sort-price="1227.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9115</span>
     <div style="min-width:0"><div class="pc-nm">MEIJI SHIPPING ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
@@ -837,7 +858,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       ¥1,227, portfolio weight
       2.97%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="4613 kansai paint">
+<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="4613 kansai paint" data-sort-weight="2.78" data-sort-price="2304.5" data-sort-pwer="24.7" data-sort-action="0" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">4613</span>
     <div style="min-width:0"><div class="pc-nm">Kansai Paint</div>
       <div class="pc-by">Silchester International Investors</div></div></div>
@@ -862,7 +883,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Silchester International Investo</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">5.05%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">1 Apr · 大量保有報告書 (initial 5%+)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,511</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">11 May</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="9987 suzuken">
+<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="9987 suzuken" data-sort-weight="2.57" data-sort-price="5399.0" data-sort-pwer="28.5" data-sort-action="0" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9987</span>
     <div style="min-width:0"><div class="pc-nm">Suzuken</div>
       <div class="pc-by">Silchester International Investors</div></div></div>
@@ -887,7 +908,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Silchester International Investo</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.25%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">15 Apr · 変更報告書 (Re-accumulation past prior peak)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥5,500</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">15 May</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9722 fujita kanko ord">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9722 fujita kanko ord" data-sort-weight="2.3" data-sort-price="1905.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9722</span>
     <div style="min-width:0"><div class="pc-nm">FUJITA KANKO ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
@@ -906,7 +927,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       ¥1,905, portfolio weight
       2.30%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="5930 bunka shutter ord">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="5930 bunka shutter ord" data-sort-weight="2.2" data-sort-price="1820.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">5930</span>
     <div style="min-width:0"><div class="pc-nm">BUNKA SHUTTER ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
@@ -925,7 +946,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       ¥1,820, portfolio weight
       2.20%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="3776 broadband tower ord">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="3776 broadband tower ord" data-sort-weight="1.51" data-sort-price="250.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">3776</span>
     <div style="min-width:0"><div class="pc-nm">BROADBAND TOWER ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
@@ -944,7 +965,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       ¥250, portfolio weight
       1.51%.
     </div></div></div><div class="plgroup" data-layer="L3-PAH"><span class="pl-t">L3-PAH · PRE-ACTIVIST SCREEN</span><span class="pl-m">1 name · 3.4%</span><span class="pl-line"></span></div>
-<div class="grid8 prow" data-layer="L3-PAH" data-enrich="0" data-name="4417 global security experts">
+<div class="grid8 prow" data-layer="L3-PAH" data-enrich="0" data-name="4417 global security experts" data-sort-weight="3.4" data-sort-price="2890.0" data-sort-pwer="0.0" data-sort-action="3" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">4417</span>
     <div style="min-width:0"><div class="pc-nm">Global Security Experts</div>
       <div class="pc-by">PAH-A pre-activist screen — no Tier 1 fi</div></div></div>
@@ -1000,7 +1021,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <div class="sc-q sc-q-bl">ENRICH / EXIT<small>small · low PWER</small></div>
       <div class="sc-q sc-q-br">ADD<small>small · high PWER</small></div>
       <div class="sc-floor"><span>15% floor</span></div>
-      <div class="sc-dot sc-l1" style="left:49.5%;bottom:91.7%;width:21px;height:21px"><span class="sc-tag">9684 Square Enix</span></div><div class="sc-dot sc-l2" style="left:49.8%;bottom:58.7%;width:17px;height:17px"><span class="sc-tag">3182 Oisix ra da</span></div><div class="sc-dot sc-l2" style="left:0.0%;bottom:55.8%;width:16px;height:16px"><span class="sc-tag">9308 Inui Global</span></div><div class="sc-dot sc-l3" style="left:50.2%;bottom:48.9%;width:15px;height:15px"></div><div class="sc-dot sc-l2" style="left:14.3%;bottom:35.6%;width:14px;height:14px"></div><div class="sc-dot sc-l2" style="left:35.7%;bottom:34.5%;width:14px;height:14px"></div><div class="sc-dot sc-l3" style="left:7.5%;bottom:33.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" style="left:0.0%;bottom:29.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" style="left:12.5%;bottom:26.6%;width:13px;height:13px"></div><div class="sc-dot sc-lp" style="left:0.0%;bottom:24.3%;width:12px;height:12px"></div><div class="sc-dot sc-l2" style="left:96.7%;bottom:21.8%;width:12px;height:12px"></div><div class="sc-dot sc-l2" style="left:43.3%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" style="left:41.2%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" style="left:47.5%;bottom:18.4%;width:11px;height:11px"></div>
+      <div class="sc-dot sc-l1" data-tip="9684 · Square Enix&#10;L1 — Core Conviction&#10;PWER 29.7%    ·    Weight 12.84%&#10;Action — BUY" style="left:49.5%;bottom:91.7%;width:21px;height:21px"><span class="sc-tag">9684 Square Enix</span></div><div class="sc-dot sc-l2" data-tip="3182 · Oisix ra daichi&#10;L2 — Active Catalyst&#10;PWER 29.9%    ·    Weight 8.22%&#10;Action — HOLD" style="left:49.8%;bottom:58.7%;width:17px;height:17px"><span class="sc-tag">3182 Oisix ra da</span></div><div class="sc-dot sc-l2" data-tip="9308 · Inui Global Logistics&#10;L2 — Active Catalyst&#10;PWER -2.8%    ·    Weight 7.81%&#10;Action — SELL" style="left:0.0%;bottom:55.8%;width:16px;height:16px"><span class="sc-tag">9308 Inui Global</span></div><div class="sc-dot sc-l3" data-tip="3697 · Shift Inc.&#10;L3 — Build / Monitor&#10;PWER 30.1%    ·    Weight 6.84%&#10;Action — BUY" style="left:50.2%;bottom:48.9%;width:15px;height:15px"></div><div class="sc-dot sc-l2" data-tip="4849 · en Japan / en Inc.&#10;L2 — Active Catalyst&#10;PWER 8.6%    ·    Weight 4.98%&#10;Action — WEAK HOLD" style="left:14.3%;bottom:35.6%;width:14px;height:14px"></div><div class="sc-dot sc-l2" data-tip="4404 · Miyoshi Oil &amp; Fat&#10;L2 — Active Catalyst&#10;PWER 21.4%    ·    Weight 4.83%&#10;Action — BUY" style="left:35.7%;bottom:34.5%;width:14px;height:14px"></div><div class="sc-dot sc-l3" data-tip="3034 · QOL Holdings&#10;L3 — Build / Monitor&#10;PWER 4.5%    ·    Weight 4.67%&#10;Action — DATA QUARANTINE" style="left:7.5%;bottom:33.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" data-tip="6151 · Nitto Kohki&#10;L2 — Active Catalyst&#10;PWER 0.0%    ·    Weight 4.11%&#10;Action — SELL" style="left:0.0%;bottom:29.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" data-tip="6914 · Optex Group&#10;L2 — Active Catalyst&#10;PWER 7.5%    ·    Weight 3.72%&#10;Action — WEAK HOLD" style="left:12.5%;bottom:26.6%;width:13px;height:13px"></div><div class="sc-dot sc-lp" data-tip="4417 · Global Security Experts&#10;L3-PAH — Pre-Activist Screen&#10;PWER 0.0%    ·    Weight 3.40%&#10;Action — SELL" style="left:0.0%;bottom:24.3%;width:12px;height:12px"></div><div class="sc-dot sc-l2" data-tip="3401 · Teijin&#10;L2 — Active Catalyst&#10;PWER 58.0%    ·    Weight 3.05%&#10;Action — BUY" style="left:96.7%;bottom:21.8%;width:12px;height:12px"></div><div class="sc-dot sc-l2" data-tip="3549 · Kusuri no Aoki Holdings&#10;L2 — Active Catalyst&#10;PWER 26.0%    ·    Weight 2.79%&#10;Action — BUY" style="left:43.3%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" data-tip="4613 · Kansai Paint&#10;L3 — Build / Monitor&#10;PWER 24.7%    ·    Weight 2.78%&#10;Action — BUY" style="left:41.2%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" data-tip="9987 · Suzuken&#10;L3 — Build / Monitor&#10;PWER 28.5%    ·    Weight 2.57%&#10;Action — BUY" style="left:47.5%;bottom:18.4%;width:11px;height:11px"></div>
     </div>
     <div class="sc-xt" style="left:50px">0%</div>
     <div class="sc-xt" style="left:25%">15%</div>
@@ -1028,13 +1049,13 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   
 <div class="card"><div class="card-h">
   <div class="card-t">ACTIVIST CONCENTRATION</div></div>
-  <div class="card-b"><div class="hbars"><div class="hbar"><div class="hbar-l">No activist</div><div class="hbar-tr"><div class="hbar-f amber" style="width:100%"></div></div><div class="hbar-v">27.4</div></div><div class="hbar"><div class="hbar-l">3D Investment Partners</div><div class="hbar-tr"><div class="hbar-f" style="width:47%"></div></div><div class="hbar-v">12.8</div></div><div class="hbar"><div class="hbar-l">GMO-Usonian</div><div class="hbar-tr"><div class="hbar-f" style="width:44%"></div></div><div class="hbar-v">11.9</div></div><div class="hbar"><div class="hbar-l">Alphaleo Holdings GK</div><div class="hbar-tr"><div class="hbar-f" style="width:29%"></div></div><div class="hbar-v">7.8</div></div><div class="hbar"><div class="hbar-l">Arcus Investment</div><div class="hbar-tr"><div class="hbar-f" style="width:25%"></div></div><div class="hbar-v">6.8</div></div><div class="hbar"><div class="hbar-l">Silchester Internation</div><div class="hbar-tr"><div class="hbar-f" style="width:20%"></div></div><div class="hbar-v">5.3</div></div><div class="hbar"><div class="hbar-l">Oasis Management</div><div class="hbar-tr"><div class="hbar-f" style="width:18%"></div></div><div class="hbar-v">5.0</div></div><div class="hbar"><div class="hbar-l">6 others</div><div class="hbar-tr"><div class="hbar-f" style="width:83%"></div></div><div class="hbar-v">22.9</div></div></div></div></div>
+  <div class="card-b"><div class="hbars"><div class="hbar" data-tip="No activist&#10;27.4% of book weight&#10;7 positions"><div class="hbar-l">No activist</div><div class="hbar-tr"><div class="hbar-f amber" style="width:100%"></div></div><div class="hbar-v">27.4</div></div><div class="hbar" data-tip="3D Investment Partners&#10;12.8% of book weight&#10;1 position"><div class="hbar-l">3D Investment Partners</div><div class="hbar-tr"><div class="hbar-f" style="width:47%"></div></div><div class="hbar-v">12.8</div></div><div class="hbar" data-tip="GMO-Usonian&#10;11.9% of book weight&#10;2 positions"><div class="hbar-l">GMO-Usonian</div><div class="hbar-tr"><div class="hbar-f" style="width:44%"></div></div><div class="hbar-v">11.9</div></div><div class="hbar" data-tip="Alphaleo Holdings GK&#10;7.8% of book weight&#10;1 position"><div class="hbar-l">Alphaleo Holdings GK</div><div class="hbar-tr"><div class="hbar-f" style="width:29%"></div></div><div class="hbar-v">7.8</div></div><div class="hbar" data-tip="Arcus Investment&#10;6.8% of book weight&#10;1 position"><div class="hbar-l">Arcus Investment</div><div class="hbar-tr"><div class="hbar-f" style="width:25%"></div></div><div class="hbar-v">6.8</div></div><div class="hbar" data-tip="Silchester Internation&#10;5.3% of book weight&#10;2 positions"><div class="hbar-l">Silchester Internation</div><div class="hbar-tr"><div class="hbar-f" style="width:20%"></div></div><div class="hbar-v">5.3</div></div><div class="hbar" data-tip="Oasis Management&#10;5.0% of book weight&#10;1 position"><div class="hbar-l">Oasis Management</div><div class="hbar-tr"><div class="hbar-f" style="width:18%"></div></div><div class="hbar-v">5.0</div></div><div class="hbar" data-tip="6 others&#10;22.9% of book weight&#10;6 positions across 6 activists"><div class="hbar-l">6 others</div><div class="hbar-tr"><div class="hbar-f" style="width:83%"></div></div><div class="hbar-v">22.9</div></div></div></div></div>
   
 <div class="card"><div class="card-h">
   <div class="card-t">PWER DISTRIBUTION</div></div>
   <div class="card-b"><div class="histo">
     <div class="histo-floor" style="left:calc(33.3% - 4px)"><span>15% floor</span></div>
-    <div class="hb"><div class="hb-c">1</div><div class="hb-bar hb-below" style="height:14%"></div><div class="hb-l">&lt;0%</div></div><div class="hb"><div class="hb-c">5</div><div class="hb-bar hb-below" style="height:71%"></div><div class="hb-l">0–15</div></div><div class="hb"><div class="hb-c">2</div><div class="hb-bar hb-above" style="height:29%"></div><div class="hb-l">15–25</div></div><div class="hb"><div class="hb-c">5</div><div class="hb-bar hb-above" style="height:71%"></div><div class="hb-l">25–40</div></div><div class="hb"><div class="hb-c">1</div><div class="hb-bar hb-above" style="height:14%"></div><div class="hb-l">40%+</div></div><div class="hb"><div class="hb-c dim">7</div><div class="hb-bar hb-na" style="height:100%"></div><div class="hb-l">n/a</div></div>
+    <div class="hb" data-tip="PWER below 0%&#10;1 holding&#10;9308"><div class="hb-c">1</div><div class="hb-bar hb-below" style="height:14%"></div><div class="hb-l">&lt;0%</div></div><div class="hb" data-tip="PWER 0–15%&#10;5 holdings&#10;4849, 3034, 6151, 6914, 4417"><div class="hb-c">5</div><div class="hb-bar hb-below" style="height:71%"></div><div class="hb-l">0–15</div></div><div class="hb" data-tip="PWER 15–25%&#10;2 holdings&#10;4404, 4613"><div class="hb-c">2</div><div class="hb-bar hb-above" style="height:29%"></div><div class="hb-l">15–25</div></div><div class="hb" data-tip="PWER 25–40%&#10;5 holdings&#10;9684, 3182, 3697, 3549, 9987"><div class="hb-c">5</div><div class="hb-bar hb-above" style="height:71%"></div><div class="hb-l">25–40</div></div><div class="hb" data-tip="PWER 40% and above&#10;1 holding&#10;3401"><div class="hb-c">1</div><div class="hb-bar hb-above" style="height:14%"></div><div class="hb-l">40%+</div></div><div class="hb" data-tip="PWER not scored&#10;7 holdings&#10;7752, 4493, 9104, 9115, 9722, 5930, 3776"><div class="hb-c dim">7</div><div class="hb-bar hb-na" style="height:100%"></div><div class="hb-l">n/a</div></div>
   </div></div></div>
 </div></section>
   <section class="tabpane" id="tab-catalysts" hidden>
@@ -1279,7 +1300,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 </div></section>
 </main>
 <footer>
-  Asuka Fund Risk Monitor · rendered 21 May 2026 15:24 · 21 holdings ·
+  Asuka Fund Risk Monitor · rendered 21 May 2026 15:46 · 21 holdings ·
   book as of Thu May 21 · Bloomberg · EDINET · TDNet · Asuka_EDINET pipeline<br>
   PWER recomputed at live spot · deltas vs the previous snapshot ·
   Wtd-Avg PWER floor 25%.
@@ -1339,6 +1360,109 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   });
   var sb=document.getElementById('psearch');
   if(sb) sb.addEventListener('input',applyFilter);
+})();
+
+/* ---- chart tooltips (conviction matrix, histogram, activist bars) ---- */
+(function(){
+  var tip=document.createElement('div');
+  tip.className='charttip'; tip.hidden=true;
+  document.body.appendChild(tip);
+  function place(e){
+    var off=14, x=e.clientX+off, y=e.clientY+off;
+    var w=tip.offsetWidth, h=tip.offsetHeight;
+    if(x+w>window.innerWidth-8) x=e.clientX-w-off;
+    if(y+h>window.innerHeight-8) y=e.clientY-h-off;
+    tip.style.left=(x<8?8:x)+'px';
+    tip.style.top=(y<8?8:y)+'px';
+  }
+  function show(el){
+    var lines=(el.getAttribute('data-tip')||'').split('\n');
+    tip.textContent='';
+    lines.forEach(function(ln,i){
+      if(i) tip.appendChild(document.createElement('br'));
+      if(i===0){
+        var b=document.createElement('b'); b.textContent=ln; tip.appendChild(b);
+      } else {
+        tip.appendChild(document.createTextNode(ln));
+      }
+    });
+    tip.hidden=false;
+  }
+  document.querySelectorAll('[data-tip]').forEach(function(el){
+    el.addEventListener('mouseenter',function(){show(el);});
+    el.addEventListener('mousemove',place);
+    el.addEventListener('mouseleave',function(){tip.hidden=true;});
+  });
+})();
+
+/* ---- positions-table column sort (sorts within each layer group) ---- */
+(function(){
+  var heads=document.querySelectorAll('.pthead>div.sortable');
+  if(!heads.length) return;
+  var state={col:'weight',dir:-1};   // matches the server-side default order
+
+  function defaultDir(col){
+    return (col==='name'||col==='action'||col==='catalyst')?1:-1;
+  }
+  function missing(row,col){
+    if(col==='name') return !row.dataset.name;
+    var v=row.getAttribute('data-sort-'+col);
+    return v===null||v===''||isNaN(parseFloat(v));
+  }
+  function key(row,col){
+    if(col==='name') return row.dataset.name||'';
+    return parseFloat(row.getAttribute('data-sort-'+col));
+  }
+  function sortNow(){
+    var table=document.querySelector('.ptable'); if(!table) return;
+    var col=state.col, dir=state.dir, pthead=null, segs=[], cur=null;
+    Array.prototype.slice.call(table.children).forEach(function(el){
+      if(el.classList.contains('pthead')){ pthead=el; }
+      else if(el.classList.contains('plgroup')){ cur={head:el,pairs:[]}; segs.push(cur); }
+      else if(el.classList.contains('prow') && cur){
+        var ex=el.nextElementSibling;
+        ex=(ex && ex.classList.contains('pexp-row'))?ex:null;
+        cur.pairs.push({row:el,exp:ex});
+      }
+    });
+    segs.forEach(function(seg){
+      seg.pairs.sort(function(a,b){
+        var am=missing(a.row,col), bm=missing(b.row,col);
+        if(am&&bm) return 0;
+        if(am) return 1;
+        if(bm) return -1;
+        var av=key(a.row,col), bv=key(b.row,col);
+        if(av<bv) return -dir;
+        if(av>bv) return dir;
+        return 0;
+      });
+    });
+    if(pthead) table.appendChild(pthead);
+    segs.forEach(function(seg){
+      table.appendChild(seg.head);
+      seg.pairs.forEach(function(pr){
+        table.appendChild(pr.row);
+        if(pr.exp) table.appendChild(pr.exp);
+      });
+    });
+  }
+  function carets(){
+    heads.forEach(function(h){
+      var on=(h.getAttribute('data-sort')===state.col);
+      h.classList.toggle('sort-on',on);
+      var ar=h.querySelector('.sort-ar');
+      if(ar) ar.textContent=on?(state.dir<0?'▼':'▲'):'';
+    });
+  }
+  heads.forEach(function(h){
+    h.addEventListener('click',function(){
+      var col=h.getAttribute('data-sort');
+      if(state.col===col){ state.dir=-state.dir; }
+      else { state.col=col; state.dir=defaultDir(col); }
+      sortNow(); carets();
+    });
+  });
+  carets();   // reflect the initial weight-descending order
 })();
 </script>
 </body>
