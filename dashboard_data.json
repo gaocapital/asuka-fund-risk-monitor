@@ -156,7 +156,8 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
-      "needs_enrichment": true
+      "needs_enrichment": true,
+      "price_source": "cgsi_broker"
     },
     {
       "ticker": "3182",
@@ -504,7 +505,8 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
-      "needs_enrichment": true
+      "needs_enrichment": true,
+      "price_source": "cgsi_broker"
     },
     {
       "ticker": "4849",
@@ -926,7 +928,8 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
-      "needs_enrichment": true
+      "needs_enrichment": true,
+      "price_source": "cgsi_broker"
     },
     {
       "ticker": "6151",
@@ -1313,7 +1316,8 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
-      "needs_enrichment": true
+      "needs_enrichment": true,
+      "price_source": "cgsi_broker"
     },
     {
       "ticker": "3549",
@@ -1675,7 +1679,8 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
-      "needs_enrichment": true
+      "needs_enrichment": true,
+      "price_source": "cgsi_broker"
     },
     {
       "ticker": "5930",
@@ -1726,7 +1731,8 @@
           "stake_after": null,
           "purpose": ""
         }
-      ]
+      ],
+      "price_source": "cgsi_broker"
     },
     {
       "ticker": "3776",
@@ -1760,7 +1766,8 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
-      "needs_enrichment": true
+      "needs_enrichment": true,
+      "price_source": "cgsi_broker"
     }
   ],
   "watch_list": [
@@ -1949,5 +1956,6 @@
   "calendar": [],
   "todays_filings_truncated": true,
   "last_price_pull": "2026-05-21T16:24:58.492891+09:00",
-  "last_price_source": "yahoo_intraday"
+  "last_price_source": "yahoo_intraday",
+  "last_price_fallback": "2026-05-21T17:43:36.405344+09:00"
 }

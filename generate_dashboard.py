@@ -192,6 +192,9 @@ a{color:var(--ac);text-decoration:none}
 .enrich{font-size:8.5px;font-weight:800;letter-spacing:.04em;color:var(--warn);
   background:rgba(214,165,51,.12);border:1px solid rgba(214,165,51,.32);
   padding:2px 6px;border-radius:3px}
+.src-eod{font-size:7.5px;font-weight:800;letter-spacing:.03em;color:var(--warn);
+  background:rgba(214,165,51,.13);border:1px solid rgba(214,165,51,.3);
+  padding:1px 4px;border-radius:3px;vertical-align:middle}
 
 /* ===== expanded thesis ===== */
 .pexp-row[hidden]{display:none}
@@ -1023,7 +1026,10 @@ def render_position_row(p: dict, delta: dict) -> str:
 
     price = p.get("price")
     wac = p.get("wac")
-    pv = f"¥{fmt_num(price)}" if price else "—"
+    eod_tag = (' <span class="src-eod" title="Broker mark from the CGSI '
+               'Position file — Yahoo live quote was unavailable">EOD</span>'
+               if p.get("price_source") == "cgsi_broker" else "")
+    pv = f"¥{fmt_num(price)}{eod_tag}" if price else "—"
     if wac:
         d = wac_delta_pct(price, wac)
         psub = f"WAC ¥{fmt_num(wac)}" + (f" · {d:+.0f}%" if d is not None else "")

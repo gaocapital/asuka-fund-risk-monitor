@@ -160,6 +160,7 @@
         "as_of": "2026-05-15"
       },
       "needs_enrichment": true,
+      "price_source": "cgsi_broker",
       "_freshness_audit": {
         "price_age_days": 6,
         "filings_age_days": 999,
@@ -522,6 +523,7 @@
         "as_of": "2026-05-15"
       },
       "needs_enrichment": true,
+      "price_source": "cgsi_broker",
       "_freshness_audit": {
         "price_age_days": 6,
         "filings_age_days": 999,
@@ -957,6 +959,7 @@
         "as_of": "2026-05-15"
       },
       "needs_enrichment": true,
+      "price_source": "cgsi_broker",
       "_freshness_audit": {
         "price_age_days": 6,
         "filings_age_days": 999,
@@ -1365,6 +1368,7 @@
         "as_of": "2026-05-15"
       },
       "needs_enrichment": true,
+      "price_source": "cgsi_broker",
       "_freshness_audit": {
         "price_age_days": 6,
         "filings_age_days": 999,
@@ -1740,6 +1744,7 @@
         "as_of": "2026-05-15"
       },
       "needs_enrichment": true,
+      "price_source": "cgsi_broker",
       "_freshness_audit": {
         "price_age_days": 6,
         "filings_age_days": 999,
@@ -1796,6 +1801,7 @@
           "purpose": ""
         }
       ],
+      "price_source": "cgsi_broker",
       "_freshness_audit": {
         "price_age_days": 6,
         "filings_age_days": 999,
@@ -1835,6 +1841,7 @@
         "as_of": "2026-05-15"
       },
       "needs_enrichment": true,
+      "price_source": "cgsi_broker",
       "_freshness_audit": {
         "price_age_days": 6,
         "filings_age_days": 999,
@@ -2028,5 +2035,6 @@
   "calendar": [],
   "todays_filings_truncated": true,
   "last_price_pull": "2026-05-21T16:24:58.492891+09:00",
-  "last_price_source": "yahoo_intraday"
+  "last_price_source": "yahoo_intraday",
+  "last_price_fallback": "2026-05-21T17:43:36.405344+09:00"
 }
