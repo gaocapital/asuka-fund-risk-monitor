@@ -26,6 +26,9 @@ PWER_FLOOR = 15.0   # per-position PWER floor — risk-view threshold
 
 CSS_STYLE = """
 *{box-sizing:border-box;margin:0;padding:0}
+/* hidden must always win — author display rules (.grid8/.plgroup) otherwise
+   override the UA [hidden] rule, which silently breaks the Positions filter. */
+[hidden]{display:none!important}
 :root{
   --bg:#0d1117;--s1:#161b22;--s2:#1c2433;--s3:#12171f;--line:#2a313c;--lsoft:#1c232c;
   --tx:#e6edf3;--mut:#8b949e;--dim:#6e7681;
@@ -351,22 +354,23 @@ a{color:var(--ac);text-decoration:none}
 .tl-months span{position:absolute;font-size:9.5px;font-weight:700;
   color:var(--mut);letter-spacing:.04em}
 .tl-track{position:relative;height:9px;background:var(--s3);border-radius:5px;
-  margin-bottom:96px}
+  margin-bottom:40px}
 .tl-grid{position:absolute;top:-5px;bottom:-5px;border-left:1px solid var(--line)}
-.tl-today{position:absolute;top:-11px;bottom:-86px;border-left:2px solid var(--ac)}
+.tl-today{position:absolute;top:-11px;bottom:-32px;border-left:2px solid var(--ac)}
 .tl-today span{position:absolute;top:-16px;left:-17px;font-size:8.5px;
   font-weight:800;color:var(--ac);letter-spacing:.06em}
-.tl-ev{position:absolute;top:5px}
-.tl-dot{position:absolute;top:1px;left:-5px;width:11px;height:11px;
-  border-radius:50%;background:var(--ac);border:2px solid var(--bg)}
+.tl-ev{position:absolute;top:0}
+.tl-dot{position:absolute;top:-1px;left:-5.5px;width:11px;height:11px;
+  border-radius:50%;background:var(--ac);border:2px solid var(--bg);
+  cursor:pointer;transition:transform .1s ease}
 .tl-dot.soon{background:var(--warn)}
-.tl-pill{position:absolute;top:20px;transform:translateX(-50%);width:148px;
-  background:var(--s2);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
-.tl-pill.soon{border-color:rgba(214,165,51,.4)}
-.tl-d{font-size:9px;font-weight:800;color:var(--ac);letter-spacing:.03em}
-.tl-d.soon{color:var(--warn)}
-.tl-x{font-size:10.5px;font-weight:700;margin-top:2px}
-.tl-w{font-size:9px;color:var(--dim);margin-top:2px;line-height:1.35}
+.tl-dot:hover{transform:scale(1.4)}
+.tl-lbl{position:absolute;top:13px;left:0;transform:translateX(-50%);
+  font-size:8px;font-weight:700;color:var(--mut);white-space:nowrap;
+  letter-spacing:.02em}
+.tl-lbl.lane2{top:25px}
+.tl-lbl.edge-l{transform:translateX(0)}
+.tl-lbl.edge-r{transform:translateX(-100%)}
 .clist{display:flex;flex-direction:column}
 .cl-row{display:grid;grid-template-columns:60px minmax(150px,1.4fr) 2fr 70px;
   gap:13px;align-items:center;padding:11px;border-bottom:1px solid var(--lsoft)}
@@ -1392,32 +1396,34 @@ def render_catalyst_timeline(positions: list) -> str:
         else:
             groups.append([(days, p)])
 
+    # one dot per group, positioned by date — detail on hover (shared tooltip).
+    # Date labels alternate between two lanes so neighbours never collide; the
+    # dot position is clamped so an edge marker never clips the track.
     evs = []
-    for g in groups:
+    for i, g in enumerate(groups):
         d0 = g[0][0]
-        off = d0 / span * 100
+        off = max(2.0, min(d0 / span * 100, 98.0))
         soon = " soon" if d0 <= 30 else ""
-        names = " · ".join(f"{html_escape(p.get('ticker'))}" for _, p in g)
+        tickers = " · ".join((p.get("ticker") or "") for _, p in g)
         if len(g) == 1:
             p = g[0][1]
-            title = html_escape((p.get("name") or "")[:20])
-            dd = _short_date(p.get("catalyst_date")).upper()
+            lbl = _short_date(p.get("catalyst_date"))
+            tip = _tip(lbl, (p.get("name") or "")[:44], tickers)
         else:
-            title = f"Catalyst cluster — {len(g)}"
-            dd = (_short_date(g[0][1].get("catalyst_date"))
-                  + " – " + _short_date(g[-1][1].get("catalyst_date"))).upper()
-        evs.append(f"""<div class="tl-ev" style="left:{off:.1f}%">
-  <div class="tl-dot{soon}"></div>
-  <div class="tl-pill{soon}">
-    <div class="tl-d{soon}">{dd}</div>
-    <div class="tl-x">{title}</div>
-    <div class="tl-w">{names}</div>
-  </div></div>""")
+            lbl = (_short_date(g[0][1].get("catalyst_date")) + "–"
+                   + _short_date(g[-1][1].get("catalyst_date")))
+            tip = _tip(lbl, f"{len(g)} catalysts clustered", tickers)
+        lane = " lane2" if i % 2 else ""
+        edge = " edge-l" if off <= 10 else (" edge-r" if off >= 90 else "")
+        evs.append(
+            f'<div class="tl-ev" style="left:{off:.1f}%">'
+            f'<div class="tl-dot{soon}" data-tip="{tip}"></div>'
+            f'<div class="tl-lbl{lane}{edge}">{html_escape(lbl)}</div></div>')
 
     return f"""
 <div class="card">
   <div class="card-h"><div class="card-t">CATALYST TIMELINE</div>
-    <div class="card-sub">next {span} days · binary events from position catalyst dates</div></div>
+    <div class="card-sub">next {span} days · hover a marker for detail</div></div>
   <div class="card-b"><div class="tl">
     <div class="tl-months">{mlabels}</div>
     <div class="tl-track">
