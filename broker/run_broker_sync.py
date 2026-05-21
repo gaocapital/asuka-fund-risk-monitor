@@ -7,7 +7,7 @@ prices, re-render dashboard.html, and push the day's data to GitHub so the
 Cowork reasoning layer sees it.
 
   fetch_cgsi.py -> apply_cgsi_update.py -> filing_parser.py ->
-  edinet_filings_ingest.py -> yahoo_intraday_price_pull.py ->
+  edinet_filings_ingest.py -> news_scan.py -> yahoo_intraday_price_pull.py ->
   generate_dashboard.py -> git push
 
 This is the script a daily scheduled task should call. Exit code 0 only if
@@ -116,6 +116,8 @@ def main() -> int:
                 "--days", "3"])
     _step_soft("ingest EDINET filings",
                [sys.executable, os.path.join(REPO, "edinet_filings_ingest.py")])
+    _step_soft("scan news (DuckDuckGo)",
+               [sys.executable, os.path.join(REPO, "news_scan.py")])
     _step_soft("refresh prices (Yahoo intraday)",
                [sys.executable, os.path.join(REPO, "yahoo_intraday_price_pull.py")])
     _step("re-render dashboard",

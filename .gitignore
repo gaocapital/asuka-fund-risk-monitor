@@ -49,5 +49,8 @@ logs/
 # Broker-email downloads (real position data — fetched fresh each run)
 broker/inbox/
 
+# News-scan audit output (regenerated each run)
+news_scan_output/
+
 # Brainstorming visual-companion mockups (local only)
 .superpowers/
