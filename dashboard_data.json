@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-05-21T10:30:03.382142",
+  "as_of": "Thu May 21 2026 · 16:24 JST",
   "product": "Asuka Active Book Daily Risk",
   "version": "3.0",
   "schema_version": "1.0",
@@ -575,7 +575,7 @@
           "rationale": "Extreme bear (NOT bull) — Oasis trims; FY27 guide is transformation year #2 with continued OP decline; segment-transfer / governance defensive action. Floor: net cash ~¥730/sh + PB/B/S floor ~¥900-1000"
         },
         "rationale": "Mid-band reference price ¥1,400 (Asuka PWER -0.8% from mid). At current ¥1,177 the bear-case target is already nearly tagged; PWER improves materially below ¥1,100 entry. Tripwires fired (FY26 guidance break + anchor underwater) override the original Mar-31 +22% PWER calc.",
-        "calculated_at": "2026-05-21T10:30:03.405781"
+        "calculated_at": "2026-05-21T15:19:29.936702"
       },
       "mos": -10.0,
       "asset_mos": -33.0,
@@ -624,6 +624,23 @@
           "old_pwer": -0.8,
           "new_pwer": 8.6,
           "delta_pp": 9.4,
+          "hokuetsu_reversed": false,
+          "ticker": "4849",
+          "name": "en Japan / en Inc."
+        },
+        {
+          "timestamp": "2026-05-21T15:19:29.936694",
+          "trigger": "臨時報告書",
+          "filer": "エン株式会社",
+          "rules_applied": [
+            "extraordinary_report"
+          ],
+          "reasons": [
+            "  → extraordinary_report: Extraordinary report - human review needed"
+          ],
+          "old_pwer": 8.6,
+          "new_pwer": 8.6,
+          "delta_pp": 0.0,
           "hokuetsu_reversed": false,
           "ticker": "4849",
           "name": "en Japan / en Inc."
@@ -1912,40 +1929,6 @@
   ],
   "todays_filings": [
     {
-      "received_at": "2026-05-18 11:00",
-      "ticker": "1878",
-      "name": "Daito Trust",
-      "doc_type": "大量保有報告書",
-      "doc_subtype": "変更報告書",
-      "filer": "大東建託株式会社",
-      "edinet_code": "E00218",
-      "stake_before": null,
-      "stake_after": null,
-      "delta_pp": 0.0,
-      "purpose": "",
-      "edinet_url": "https://disclosure.edinet-fsa.go.jp/E01EW/download?type=2&id=S100Y4D3",
-      "is_position": false,
-      "alert_priority": "LOW",
-      "summary": "大量保有報告書 · stake 0.00%."
-    },
-    {
-      "received_at": "2026-05-18 15:11",
-      "ticker": "5930",
-      "name": "BUNKA SHUTTER ORD",
-      "doc_type": "臨時報告書",
-      "doc_subtype": "臨時報告書",
-      "filer": "文化シヤッター株式会社",
-      "edinet_code": "E01413",
-      "stake_before": null,
-      "stake_after": null,
-      "delta_pp": 0.0,
-      "purpose": "",
-      "edinet_url": "https://disclosure.edinet-fsa.go.jp/E01EW/download?type=2&id=S100Y4CP",
-      "is_position": true,
-      "alert_priority": "HIGH",
-      "summary": "Extraordinary report — material disclosure. Verify thesis impact."
-    },
-    {
       "received_at": "2026-05-19 13:07",
       "ticker": "4849",
       "name": "en Japan / en Inc.",
@@ -1964,5 +1947,7 @@
     }
   ],
   "calendar": [],
-  "todays_filings_truncated": true
+  "todays_filings_truncated": true,
+  "last_price_pull": "2026-05-21T16:24:58.492891+09:00",
+  "last_price_source": "yahoo_intraday"
 }
