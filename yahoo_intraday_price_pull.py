@@ -23,7 +23,7 @@ Yahoo data is delayed ~20 minutes for TSE Tokyo equities — fine for a daily
 dashboard refresh. For tighter tolerance use ib_gateway_price_pull.py or
 bloomberg_price_pull.py.
 
-Pure stdlib — no pip install needed. Only urllib + json + datetime.
+Pure stdlib — no pip install needed. Only urllib, http.cookiejar, json, datetime.
 
 Usage
 -----
@@ -37,14 +37,27 @@ Usage
 from __future__ import annotations
 
 import argparse
+import http.cookiejar
 import json
 import os
+import random
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone, timedelta
 from typing import Any
+
+# Windows consoles default to cp1252 and choke on the glyphs this script prints
+# (arrows, check marks, yen sign). Force UTF-8 on the standard streams so a
+# standalone run — one outside run_broker_sync's PYTHONUTF8 environment — does
+# not crash mid-output with UnicodeEncodeError.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8")  # type: ignore[union-attr]
+    except (AttributeError, ValueError):
+        pass
 
 
 def _atomic_write_json(path: str, data: Any) -> None:
@@ -69,7 +82,12 @@ DEFAULT_RANGE = "1d"
 DEFAULT_RETRIES = 3
 DEFAULT_BACKOFF_SEC = 1.5
 DEFAULT_TIMEOUT_SEC = 10
-DEFAULT_RATE_LIMIT_SEC = 0.20  # be polite to Yahoo
+# Yahoo throttles aggressive anonymous clients hard (HTTP 429). A daily batch
+# of ~35 tickers is small, so we can afford to be slow: ~1s + jitter per call.
+DEFAULT_RATE_LIMIT_SEC = 1.0
+RATE_LIMIT_JITTER_SEC = 0.5      # random extra delay, breaks a fixed cadence
+MAX_BACKOFF_SEC = 30.0           # cap on the exponential 429 backoff
+RL_STORM_THRESHOLD = 4           # consecutive 429s → Yahoo has blocked us; abort
 
 # Browser-style User-Agent — Yahoo blocks suspicious bot UAs
 USER_AGENT = (
@@ -80,7 +98,103 @@ USER_AGENT = (
 ACCEPT = "application/json,text/plain,*/*"
 ACCEPT_LANG = "en-US,en;q=0.9,ja;q=0.8"
 
-YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+# Yahoo load-balances two API hosts; rotating between them on retry dodges a
+# throttle that has latched onto just one.
+YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
+
+
+class YahooRateLimited(Exception):
+    """Raised when Yahoo returns HTTP 429 for a ticker after every retry was
+    exhausted. update_data_file() counts these to detect a throttle storm and
+    abort the batch instead of hammering a blocked endpoint."""
+
+
+def _common_headers() -> dict[str, str]:
+    """Request headers shared by the session handshake and every chart call."""
+    return {
+        "User-Agent": USER_AGENT,
+        "Accept": ACCEPT,
+        "Accept-Language": ACCEPT_LANG,
+        "Referer": "https://finance.yahoo.com/",
+    }
+
+
+def _establish_session(
+    timeout: int = DEFAULT_TIMEOUT_SEC,
+) -> tuple[urllib.request.OpenerDirector, str | None]:
+    """Build a cookie-bearing opener and fetch a Yahoo crumb.
+
+    Yahoo rate-limits cookie-less clients far more aggressively than ones that
+    carry the consent cookie a browser would. We seed that cookie by hitting
+    the finance home page, then fetch a crumb token. Best-effort throughout —
+    the chart endpoint still answers cookie-only, so a failed handshake just
+    means we proceed without a crumb.
+    """
+    jar = http.cookiejar.CookieJar()
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+
+    # 1. Seed cookies. fc.yahoo.com frequently 404s but still sends Set-Cookie.
+    for seed_url in ("https://fc.yahoo.com/", "https://finance.yahoo.com/"):
+        try:
+            req = urllib.request.Request(seed_url, headers=_common_headers())
+            with opener.open(req, timeout=timeout) as resp:
+                resp.read(2048)  # drain enough to let Set-Cookie register
+        except urllib.error.HTTPError:
+            pass
+        except (urllib.error.URLError, ConnectionError, TimeoutError, OSError):
+            pass
+
+    # 2. Fetch a crumb. Harmless on the chart API; required by other endpoints.
+    crumb: str | None = None
+    try:
+        req = urllib.request.Request(
+            "https://query1.finance.yahoo.com/v1/test/getcrumb",
+            headers=_common_headers(),
+        )
+        with opener.open(req, timeout=timeout) as resp:
+            text = resp.read().decode("utf-8", errors="replace").strip()
+        # A real crumb is a short token; an HTML/error body is not one.
+        if text and "<" not in text and len(text) <= 40:
+            crumb = text
+    except (urllib.error.HTTPError, urllib.error.URLError,
+            ConnectionError, TimeoutError, OSError, ValueError):
+        crumb = None
+
+    return opener, crumb
+
+
+# Lazily-built, process-wide session — one cookie jar shared by every ticker.
+_SESSION: tuple[urllib.request.OpenerDirector, str | None] | None = None
+
+
+def _get_session(
+    timeout: int = DEFAULT_TIMEOUT_SEC,
+) -> tuple[urllib.request.OpenerDirector, str | None]:
+    """Return the shared (opener, crumb), establishing it on first use."""
+    global _SESSION
+    if _SESSION is None:
+        _SESSION = _establish_session(timeout=timeout)
+    return _SESSION
+
+
+def _chart_url(host: str, symbol: str, interval: str, range_: str,
+               crumb: str | None) -> str:
+    """Build a Yahoo v8 chart URL for one host."""
+    query = f"interval={interval}&range={range_}&includePrePost=false"
+    if crumb:
+        query += f"&crumb={urllib.parse.quote(crumb, safe='')}"
+    return f"https://{host}/v8/finance/chart/{symbol}?{query}"
+
+
+def _retry_after_seconds(err: urllib.error.HTTPError) -> float | None:
+    """Parse a Retry-After header (seconds form) from a 429 response."""
+    raw = err.headers.get("Retry-After") if err.headers else None
+    if not raw:
+        return None
+    try:
+        return max(0.0, float(raw))
+    except (TypeError, ValueError):
+        return None
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -96,28 +210,31 @@ def fetch_intraday_yahoo(
 ) -> dict[str, Any] | None:
     """Fetch latest intraday price for a Japanese 4-digit ticker.
 
-    Returns a dict with these keys, or None on failure:
+    Runs over the shared cookie-seeded session (see _get_session) — Yahoo
+    throttles cookie-less callers hard. On HTTP 429 it backs off exponentially,
+    honours any Retry-After header, and rotates between the query1/query2
+    hosts. If every attempt is rate-limited it raises YahooRateLimited so the
+    batch caller can detect a throttle storm; all other failures return None.
+
+    Returns a dict with these keys, or None on (non-rate-limit) failure:
         price (float), price_date (str), price_time_jst (str),
         market_state (str), previous_close (float),
         intraday_high (float), intraday_low (float),
         volume (int), currency (str), delay_minutes (int)
+
+    Raises:
+        YahooRateLimited — every retry for this ticker hit HTTP 429.
     """
     symbol = f"{ticker_4d}.T"
-    url = (
-        f"{YAHOO_CHART_URL.format(symbol=symbol)}"
-        f"?interval={interval}&range={range_}&includePrePost=false"
-    )
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": USER_AGENT,
-            "Accept": ACCEPT,
-            "Accept-Language": ACCEPT_LANG,
-        },
-    )
+    opener, crumb = _get_session(timeout=timeout)
 
     last_err: Exception | None = None
     for attempt in range(1, retries + 1):
+        host = YAHOO_HOSTS[(attempt - 1) % len(YAHOO_HOSTS)]
+        req = urllib.request.Request(
+            _chart_url(host, symbol, interval, range_, crumb),
+            headers=_common_headers(),
+        )
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
@@ -172,11 +289,17 @@ def fetch_intraday_yahoo(
 
         except urllib.error.HTTPError as e:
             last_err = e
-            # 429 = rate limit; back off harder. 4xx other = permanent
-            if e.code == 429 and attempt < retries:
-                time.sleep(DEFAULT_BACKOFF_SEC * attempt * 2)
-                continue
-            if e.code in (403, 404, 400):
+            if e.code == 429:
+                # Rate-limited. Back off (Retry-After if given, else exponential
+                # with jitter), retry on the other host; raise if exhausted.
+                if attempt < retries:
+                    wait = _retry_after_seconds(e) or min(
+                        DEFAULT_BACKOFF_SEC * (2 ** attempt), MAX_BACKOFF_SEC)
+                    time.sleep(wait + random.uniform(0.0, 1.0))
+                    continue
+                raise YahooRateLimited(ticker_4d) from e
+            # Other 4xx are permanent for this ticker — don't retry.
+            if e.code in (400, 401, 403, 404):
                 return None
             if attempt < retries:
                 time.sleep(DEFAULT_BACKOFF_SEC * attempt)
@@ -252,11 +375,38 @@ def update_data_file(
         if dry_run:
             print("  [DRY RUN — no writeback]")
 
+    # Establish the cookie/crumb session up front so a throttled handshake is
+    # visible before the per-ticker loop starts.
+    _, crumb = _get_session()
+    if verbose:
+        print(f"  session: cookies seeded · crumb {'✓' if crumb else '—'}")
+
     fetched: dict[str, dict[str, Any]] = {}
     failed: list[str] = []
+    aborted = False
+    consecutive_rl = 0  # consecutive rate-limited tickers — trips the storm abort
 
-    for tk in tickers:
-        result = fetch_intraday_yahoo(tk, interval=interval, range_=range_)
+    for idx, tk in enumerate(tickers):
+        try:
+            result = fetch_intraday_yahoo(tk, interval=interval, range_=range_)
+        except YahooRateLimited:
+            consecutive_rl += 1
+            failed.append(tk)
+            if verbose:
+                print(f"  ✗ {tk}: rate-limited (HTTP 429)")
+            if consecutive_rl >= RL_STORM_THRESHOLD:
+                remaining = tickers[idx + 1:]
+                failed.extend(remaining)
+                aborted = True
+                if verbose:
+                    print(f"\n  ⚠ {consecutive_rl} consecutive 429s — Yahoo has "
+                          f"throttled this IP. Aborting batch; {len(remaining)} "
+                          f"ticker(s) not attempted.")
+                break
+            time.sleep(rate_limit * 3)  # extra cool-down after a rate-limit hit
+            continue
+
+        consecutive_rl = 0
         if result is not None:
             fetched[tk] = result
             if verbose:
@@ -273,7 +423,7 @@ def update_data_file(
             failed.append(tk)
             if verbose:
                 print(f"  ✗ {tk}: no data")
-        time.sleep(rate_limit)
+        time.sleep(rate_limit + random.uniform(0.0, RATE_LIMIT_JITTER_SEC))
 
     # Write back
     updated = 0
@@ -313,6 +463,7 @@ def update_data_file(
         "updated": updated,
         "skipped": skipped_count,
         "failed": len(failed),
+        "aborted": aborted,
     }
 
 
@@ -359,6 +510,9 @@ def main() -> int:
     else:
         print(f"✓ Updated {summary['updated']}/{summary['requested']} prices in {args.data}")
 
+    if summary.get("aborted"):
+        print("  ⚠ batch aborted early — Yahoo rate-limit storm "
+              "(this IP is throttled; try again later)")
     if summary["failed"] > 0:
         print(f"  ⚠ {summary['failed']} tickers failed (check ticker format / network)")
         return 1
