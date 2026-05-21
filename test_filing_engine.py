@@ -151,6 +151,19 @@ class TestEdinetIngest(unittest.TestCase):
         self.assertEqual(
             edinet_filings_ingest.classify_priority(f, {"9684"}, set()), "LOW")
 
+    def test_priority_none_stakes_dont_crash(self):
+        # The EDINET parser leaves stake fields None on docs it cannot size —
+        # classify_priority must handle that, not crash on None comparisons.
+        f = {"ticker": "1878", "doc_type": "大量保有報告書",
+             "stake_before": None, "stake_after": None}
+        self.assertEqual(
+            edinet_filings_ingest.classify_priority(f, set(), set()), "LOW")
+        # 臨時報告書 on a position stays HIGH even with no stake numbers
+        f2 = {"ticker": "4849", "doc_type": "臨時報告書",
+              "stake_before": None, "stake_after": None}
+        self.assertEqual(
+            edinet_filings_ingest.classify_priority(f2, {"4849"}, set()), "HIGH")
+
     def test_ingest_filings_end_to_end(self):
         data = {"positions": [{
             "ticker": "9684", "name": "Square Enix", "pwer": 30.0,

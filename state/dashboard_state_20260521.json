@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-05-19T09:08:46.137684",
+  "as_of": "2026-05-21T10:30:03.382142",
   "product": "Asuka Active Book Daily Risk",
   "version": "3.0",
   "schema_version": "1.0",
@@ -555,12 +555,13 @@
       "catalyst_date": "2026-06-25",
       "notes": "TRIM L1 7% → L2 4% per shadow-buy re-evaluation 2026-05-16. Two non-Oasis hard-stop tripwires fired since Mar-31 memo: (b) Fundamental break — FY26 guidance crushed Feb 12 2026: OP -52.5%, Net -72.9%, dividend ¥70.1→¥24 (-66%), mid-term plan WITHDRAWN. (e) Anchor activist underwater — Oasis 10-20% below WAC ¥1,720 depending on print. Ochi family + foundation bloc = 30.82% NAV (at Oasis failure-pattern threshold). Founder Ochi Michikatsu holds Chairman+CEO+President simultaneously (no governance separation). PB warehousing visible (BNP Paribas 2.67% + CGML 2.10% = 4.77%) — typical Oasis pre-disclosure pattern. Core エン転職 media franchise in structural decline (likely AI/LLM disintermediation). Buyback ¥5B/7.8M sh authorized May 2025, expires Apr 30 2026 — extension not confirmed. Hard-stop tripwire: Oasis 変更報告書 showing stake reduction below 7.0% → EXIT. Re-rate up to L1 only on (a) confirmed Oasis Stage-2 escalation (public letter / formal AGM proposal filing), OR (b) spot ≤¥1,100 with Oasis stake stable/increasing. [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
       "last_filing": {
-        "date": "2025-05-28",
-        "type": "変更報告書 No.1",
-        "filer": "Oasis Management Company Ltd.",
-        "stake_after": 7.93,
-        "purpose": "純投資・重要提案行為等",
-        "edinet_code_source": "Oasis canonical EDINET filer code (PM verify)"
+        "date": "2026-05-19",
+        "type": "臨時報告書",
+        "filer": "エン株式会社",
+        "stake_after": null,
+        "purpose": "",
+        "edinet_code": "E05192",
+        "source": "edinet"
       },
       "pwer_scenarios": {
         "bear": {
@@ -596,7 +597,7 @@
           "rationale": "Extreme bear (NOT bull) — Oasis trims; FY27 guide is transformation year #2 with continued OP decline; segment-transfer / governance defensive action. Floor: net cash ~¥730/sh + PB/B/S floor ~¥900-1000"
         },
         "rationale": "Mid-band reference price ¥1,400 (Asuka PWER -0.8% from mid). At current ¥1,177 the bear-case target is already nearly tagged; PWER improves materially below ¥1,100 entry. Tripwires fired (FY26 guidance break + anchor underwater) override the original Mar-31 +22% PWER calc.",
-        "calculated_at": "2026-05-16T19:42:00+09:00"
+        "calculated_at": "2026-05-21T10:30:03.405781"
       },
       "mos": -10.0,
       "asset_mos": -33.0,
@@ -615,7 +616,42 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
-      "pwer_stored": -0.8,
+      "filing_history": [
+        {
+          "date": "2025-05-28",
+          "doc_type": "変更報告書 No.1",
+          "filer": "Oasis Management Company Ltd.",
+          "stake_after": 7.93,
+          "purpose": "純投資・重要提案行為等"
+        },
+        {
+          "date": "2026-05-19",
+          "doc_type": "臨時報告書",
+          "filer": "エン株式会社",
+          "stake_after": null,
+          "purpose": ""
+        }
+      ],
+      "pwer_history": [
+        {
+          "timestamp": "2026-05-21T10:30:03.405773",
+          "trigger": "臨時報告書",
+          "filer": "エン株式会社",
+          "rules_applied": [
+            "extraordinary_report"
+          ],
+          "reasons": [
+            "  → extraordinary_report: Extraordinary report - human review needed"
+          ],
+          "old_pwer": -0.8,
+          "new_pwer": 8.6,
+          "delta_pp": 9.4,
+          "hokuetsu_reversed": false,
+          "ticker": "4849",
+          "name": "en Japan / en Inc."
+        }
+      ],
+      "pwer_stored": 8.6,
       "pwer_live": true
     },
     {
@@ -1713,7 +1749,15 @@
       "catalyst": "",
       "catalyst_date": null,
       "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops).",
-      "last_filing": null,
+      "last_filing": {
+        "date": "2026-05-18",
+        "type": "臨時報告書",
+        "filer": "文化シヤッター株式会社",
+        "stake_after": null,
+        "purpose": "",
+        "edinet_code": "E01413",
+        "source": "edinet"
+      },
       "pwer_scenarios": {},
       "strategic_source": null,
       "cgsi": {
@@ -1726,6 +1770,15 @@
         "as_of": "2026-05-15"
       },
       "needs_enrichment": true,
+      "filing_history": [
+        {
+          "date": "2026-05-18",
+          "doc_type": "臨時報告書",
+          "filer": "文化シヤッター株式会社",
+          "stake_after": null,
+          "purpose": ""
+        }
+      ],
       "_freshness_audit": {
         "price_age_days": 6,
         "filings_age_days": 999,
@@ -1936,7 +1989,59 @@
       "reason": "AVI optionality only, post-rotation"
     }
   ],
-  "todays_filings": [],
+  "todays_filings": [
+    {
+      "received_at": "2026-05-18 11:00",
+      "ticker": "1878",
+      "name": "Daito Trust",
+      "doc_type": "大量保有報告書",
+      "doc_subtype": "変更報告書",
+      "filer": "大東建託株式会社",
+      "edinet_code": "E00218",
+      "stake_before": null,
+      "stake_after": null,
+      "delta_pp": 0.0,
+      "purpose": "",
+      "edinet_url": "https://disclosure.edinet-fsa.go.jp/E01EW/download?type=2&id=S100Y4D3",
+      "is_position": false,
+      "alert_priority": "LOW",
+      "summary": "大量保有報告書 · stake 0.00%."
+    },
+    {
+      "received_at": "2026-05-18 15:11",
+      "ticker": "5930",
+      "name": "BUNKA SHUTTER ORD",
+      "doc_type": "臨時報告書",
+      "doc_subtype": "臨時報告書",
+      "filer": "文化シヤッター株式会社",
+      "edinet_code": "E01413",
+      "stake_before": null,
+      "stake_after": null,
+      "delta_pp": 0.0,
+      "purpose": "",
+      "edinet_url": "https://disclosure.edinet-fsa.go.jp/E01EW/download?type=2&id=S100Y4CP",
+      "is_position": true,
+      "alert_priority": "HIGH",
+      "summary": "Extraordinary report — material disclosure. Verify thesis impact."
+    },
+    {
+      "received_at": "2026-05-19 13:07",
+      "ticker": "4849",
+      "name": "en Japan / en Inc.",
+      "doc_type": "臨時報告書",
+      "doc_subtype": "臨時報告書",
+      "filer": "エン株式会社",
+      "edinet_code": "E05192",
+      "stake_before": null,
+      "stake_after": null,
+      "delta_pp": 0.0,
+      "purpose": "",
+      "edinet_url": "https://disclosure.edinet-fsa.go.jp/E01EW/download?type=2&id=S100Y4YG",
+      "is_position": true,
+      "alert_priority": "HIGH",
+      "summary": "Extraordinary report — material disclosure. Verify thesis impact."
+    }
+  ],
   "calendar": [],
   "todays_filings_truncated": true
 }

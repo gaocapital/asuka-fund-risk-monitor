@@ -52,8 +52,8 @@ def classify_priority(filing: dict, position_tickers: set, watch_tickers: set) -
     ticker = filing.get("ticker")
     doc_type = filing.get("doc_type", "")
     purpose = filing.get("purpose", "")
-    stake_after = filing.get("stake_after", 0)
-    stake_before = filing.get("stake_before", 0)
+    stake_after = filing.get("stake_after") or 0
+    stake_before = filing.get("stake_before") or 0
     delta_pp = stake_after - stake_before if stake_before else 0
 
     # Tripwire: watch-list name crosses 5%
@@ -84,7 +84,7 @@ def generate_summary(filing: dict, is_position: bool, is_watch: bool) -> str:
     """Auto-generate a one-line summary from filing metadata."""
     doc_type = filing.get("doc_type", "")
     delta_pp = (filing.get("stake_after", 0) or 0) - (filing.get("stake_before", 0) or 0)
-    stake_after = filing.get("stake_after", 0)
+    stake_after = filing.get("stake_after") or 0
     purpose = filing.get("purpose", "")
 
     bits = []
