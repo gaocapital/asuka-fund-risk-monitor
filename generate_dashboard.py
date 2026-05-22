@@ -857,7 +857,10 @@ def explain_action(p: dict, action: str) -> str:
             edge = f", price {wac_d:+.0f}% vs the activist WAC — co-investment edge intact"
         return f"PWER {pw} clears the 20% entry bar{edge}{cat}."
     if action == "WATCH":
-        if pwer is not None and pwer >= 20:
+        if pwer is None:
+            return ("Not yet scored — no PWER or thesis on file; the action "
+                    "engine holds it on WATCH pending enrichment.")
+        if pwer >= 20:
             ed = (f"price is {wac_d:+.0f}% above the activist WAC"
                   if wac_d is not None else "the activist edge is compressed")
             return (f"PWER {pw} clears 20% but {ed} — hold, don't add into a "

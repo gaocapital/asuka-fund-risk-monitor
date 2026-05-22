@@ -1754,16 +1754,16 @@
       "ticker": "4417",
       "name": "Global Security Experts",
       "layer": "L3-PAH",
-      "activist": "PAH-A pre-activist screen — no Tier 1 filer in EDINET cache as of 2026-05-16",
-      "activist_key": "paha",
-      "stake_pct": null,
+      "activist": "Old Peak Group Ltd. (E34245) · 5.14% 大量保有 filed 2026-05-11 (S100Y2FK), 重要提案行為 reserved · sub-Tier-1 deep-value accumulator (also anchors 9722) — PAH-A screen hit",
+      "activist_key": "old_peak",
+      "stake_pct": 5.14,
       "price": 3110.0,
       "price_date": "2026-05-21",
       "price_source": null,
       "wac": null,
-      "wac_source": "PAH-A — no anchor activist identified; WAC tracking deferred until first 5%+ filing triggers R-PAH graduation to L2",
-      "pwer": 0.0,
-      "activist_pwer": 0.0,
+      "wac_source": "PAH-A screen hit 2026-05-11 (Old Peak 5.14%) — sub-Tier-1 reserve-activist; stays L3-PAH on WATCH per the project eval (PWER below the 20% gate). WAC / thesis enrichment pending.",
+      "pwer": null,
+      "activist_pwer": null,
       "weight": 3.4,
       "weight_target": 1.2,
       "action": "WATCH",
@@ -1771,15 +1771,16 @@
       "add_high": null,
       "catalyst": "TBD",
       "catalyst_date": null,
-      "notes": "Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: Insider decrases its stake in Marimo Regional Revitalization REIT... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-15: グローバルセキュリティエキスパート株式会社【4417】株価情報-StockW...Global Security Experts Inc. (4417) Fis (決算発表, 業績) [2026-05-21 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績) [2026-05-22 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績)",
+      "notes": "[2026-05-22 RECONCILE] PAH-A screen HIT — Old Peak Group Ltd. 5.14% 大量保有報告書 (EDINET S100Y2FK, 2026-05-11) verified; 重要提案行為 reserved (strategic_review, no specific demand yet). 4417 IS held — this L3-PAH screen, 1,000 sh @ ¥2,776 — so the project answer's 'not in the book' was wrong; frame is hold-the-screen-on-WATCH, not 'do not initiate'. Project eval PASS/WATCH stands: follower-PWER ~10% at ¥2,778 (below the 20% gate), lone sub-Tier-1 filer, parent-sub bloc (Business Brain ~39.7% + Kanematsu ~20.3%), no asset floor (~9x PBR); stock has since run to ¥3,110, firming the PASS. Tripwires: Old Peak ->=8%, a 2nd institutional filer, or a Business Brain / Kanematsu sell-down or TOB. Thesis enrichment pending. Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: Insider decrases its stake in Marimo Regional Revitalization REIT... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-15: グローバルセキュリティエキスパート株式会社【4417】株価情報-StockW...Global Security Experts Inc. (4417) Fis (決算発表, 業績) [2026-05-21 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績) [2026-05-22 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績)",
       "last_filing": {
         "date": "2026-05-11",
         "type": "大量保有報告書",
         "filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
-        "stake_after": null,
-        "purpose": "",
+        "stake_after": 5.14,
+        "purpose": "重要提案",
         "edinet_code": "E34245",
-        "source": "edinet"
+        "source": "edinet",
+        "doc_id": "S100Y2FK"
       },
       "pwer_scenarios": {
         "bear": {
@@ -1836,8 +1837,9 @@
           "date": "2026-05-11",
           "doc_type": "大量保有報告書",
           "filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
-          "stake_after": null,
-          "purpose": ""
+          "stake_after": 5.14,
+          "purpose": "重要提案",
+          "doc_id": "S100Y2FK"
         }
       ]
     },
