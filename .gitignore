@@ -52,5 +52,13 @@ broker/inbox/
 # News-scan audit output (regenerated each run)
 news_scan_output/
 
+# Email digest — regenerated preview + local send log
+digest_preview.html
+digest_send_log.json
+
+# Pipeline audit outputs (regenerated each run)
+wac_output/
+attribution_snapshots/
+
 # Brainstorming visual-companion mockups (local only)
 .superpowers/
