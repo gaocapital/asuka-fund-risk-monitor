@@ -1,5 +1,5 @@
 {
-  "as_of": "Fri May 22 2026 · 14:35 JST",
+  "as_of": "Fri May 22 2026 · 19:05 JST",
   "product": "Asuka Active Book Daily Risk",
   "version": "3.0",
   "schema_version": "1.0",
@@ -110,7 +110,7 @@
       "price_volume": 1168956,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17,
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -291,7 +291,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 15,
       "filing_history": [
         {
           "date": "2025-05-02",
@@ -432,7 +432,7 @@
       "price_volume": 4509140,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 19,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -539,7 +539,7 @@
       "price_volume": 199299,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -692,7 +692,7 @@
       "price_volume": 1064830,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 20,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -809,7 +809,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 22,
       "filing_history": [
         {
           "date": "2026-03-31",
@@ -919,7 +919,7 @@
           "rationale": "Extreme bear (NOT bull) — Oasis trims; FY27 guide is transformation year #2 with continued OP decline; segment-transfer / governance defensive action. Floor: net cash ~¥730/sh + PB/B/S floor ~¥900-1000"
         },
         "rationale": "Mid-band reference price ¥1,400 (Asuka PWER -0.8% from mid). At current ¥1,177 the bear-case target is already nearly tagged; PWER improves materially below ¥1,100 entry. Tripwires fired (FY26 guidance break + anchor underwater) override the original Mar-31 +22% PWER calc.",
-        "calculated_at": "2026-05-22T13:30:08.330751"
+        "calculated_at": "2026-05-22T18:00:07.955145"
       },
       "mos": -10.0,
       "asset_mos": -33.0,
@@ -928,7 +928,7 @@
       "verified_tdnet_date": "2026-05-21",
       "shadow_buy_reevaluation_date": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 21,
       "cgsi": {
         "quantity": 3500.0,
         "avg_cost": 1148.2857,
@@ -1010,6 +1010,23 @@
         },
         {
           "timestamp": "2026-05-22T13:30:08.330739",
+          "trigger": "臨時報告書",
+          "filer": "エン株式会社",
+          "rules_applied": [
+            "extraordinary_report"
+          ],
+          "reasons": [
+            "  → extraordinary_report: Extraordinary report - human review needed"
+          ],
+          "old_pwer": 12.6,
+          "new_pwer": 12.6,
+          "delta_pp": 0.0,
+          "hokuetsu_reversed": false,
+          "ticker": "4849",
+          "name": "en Japan / en Inc."
+        },
+        {
+          "timestamp": "2026-05-22T18:00:07.955138",
           "trigger": "臨時報告書",
           "filer": "エン株式会社",
           "rules_applied": [
@@ -1137,7 +1154,7 @@
       "price_volume": 4904003,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -1323,7 +1340,7 @@
       "price_volume": 1078532,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 17,
       "cgsi": {
         "quantity": 2000.0,
         "avg_cost": 1806.5,
@@ -1496,7 +1513,7 @@
       "add_high": null,
       "catalyst": "",
       "catalyst_date": null,
-      "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 商船三井、今期経常を11％下方修正、配当は25円増額 - 株探 (下方修正)",
+      "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 商船三井、今期経常を11％下方修正、配当は25円増額 - 株探 (下方修正) [2026-05-22 NEWS-AUDIT] ?: 商船三井、今期経常を11％下方修正、配当は25円増額 - 株探 (下方修正)",
       "last_filing": null,
       "pwer_scenarios": {},
       "strategic_source": null,
@@ -1514,8 +1531,8 @@
       "verified_filings_date": "2026-05-21",
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
-      "news_scan_max_severity": "MEDIUM",
-      "news_scan_result_count": 16
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 18
     },
     {
       "ticker": "6151",
@@ -1588,7 +1605,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 15,
       "cgsi": {
         "quantity": 2100.0,
         "avg_cost": 1688.0,
@@ -1738,7 +1755,7 @@
       "price_volume": 2878965,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 19,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -1829,7 +1846,7 @@
       "is_paha": true,
       "paha_promoted_at": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 17,
       "cgsi": {
         "quantity": 1000.0,
         "avg_cost": 2776.0,
@@ -1932,7 +1949,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17,
+      "news_scan_result_count": 20,
       "cgsi": {
         "quantity": 1500.0,
         "avg_cost": 1559.0,
@@ -2079,7 +2096,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19
+      "news_scan_result_count": 18
     },
     {
       "ticker": "3549",
@@ -2155,7 +2172,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 11,
+      "news_scan_result_count": 19,
       "cgsi": {
         "quantity": 600.0,
         "avg_cost": 3871.0,
@@ -2269,11 +2286,11 @@
       "trigger": "Watch: (1) Silchester accumulation past 7%+ (signals activist intent vs passive), (2) any cross-shareholder unwind announcement, (3) May 11 earnings, (4) India business strategic action (Kansai Nerolac listed separately)",
       "last_filing": {
         "date": "2026-05-19",
-        "type": "変更報告書",
-        "filer": "シルチェスター・インターナショナル・インベスターズ・エルエルピー (Silchester International Investors LLP)",
-        "stake_after": 7.21,
+        "type": "大量保有報告書",
+        "filer": "シルチェスター・インターナショナル・インベスターズ・エルエルピー",
+        "stake_after": null,
         "purpose": "",
-        "doc_id": "S100Y4WN",
+        "edinet_code": "E24872",
         "source": "edinet"
       },
       "added_to_book_date": "2026-04-01",
@@ -2313,7 +2330,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 21,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 2113.29,
@@ -2354,25 +2371,24 @@
         },
         {
           "date": "2026-05-19",
-          "doc_type": "変更報告書",
-          "filer": "シルチェスター・インターナショナル・インベスターズ・エルエルピー (Silchester International Investors LLP)",
-          "stake_after": 7.21,
-          "purpose": "",
-          "doc_id": "S100Y4WN"
+          "doc_type": "大量保有報告書",
+          "filer": "シルチェスター・インターナショナル・インベスターズ・エルエルピー",
+          "stake_after": null,
+          "purpose": ""
         }
       ],
       "accumulation": {
         "first_date": "2026-04-01",
         "first_stake": 5.05,
-        "latest_date": "2026-05-19",
-        "latest_stake": 7.21,
-        "filings": 3,
-        "total_pp": 2.16,
-        "span_days": 48,
-        "pp_per_30d": 1.35,
-        "recent_leg_pp": 1.04,
-        "recent_leg_days": 4,
-        "recent_pp_per_30d": 7.8
+        "latest_date": "2026-05-15",
+        "latest_stake": 6.17,
+        "filings": 2,
+        "total_pp": 1.12,
+        "span_days": 44,
+        "pp_per_30d": 0.76,
+        "recent_leg_pp": 1.12,
+        "recent_leg_days": 44,
+        "recent_pp_per_30d": 0.76
       }
     },
     {
@@ -2476,7 +2492,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 18,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 6578.96,
@@ -2584,7 +2600,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15,
+      "news_scan_result_count": 19,
       "filing_history": [
         {
           "date": "2025-07-04",
@@ -2750,7 +2766,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 22,
       "filing_history": [
         {
           "date": "2026-02-09",
@@ -2846,11 +2862,11 @@
       "name": "Kanto Denka Kogyo",
       "activist": "Effissimo",
       "trigger": "",
-      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-22 NEWS-AUDIT] ?: 片山晃氏大量保有銘柄と投資手法は！？ 7年半で65万円 25... (大量保有報告)",
+      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-22 NEWS-AUDIT] ?: 関電化の25年4〜6月期、純利益54.4%減 通期予想を下方修正 (下方修正)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21
+      "news_scan_result_count": 22
     },
     {
       "ticker": "1813",
@@ -2861,14 +2877,14 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 14
+      "news_scan_result_count": 15
     },
     {
       "ticker": "2267",
       "name": "Yakult Honsha",
       "activist": "Dalton Kizuna Fund",
       "trigger": "",
-      "notes": "Carried over — Oasis-failure-pattern risk; not initiated [2026-05-22 NEWS-AUDIT] ?: ヤクルト純利益5%増 27年3月期、自社株買い550億円 (自社株買い)",
+      "notes": "Carried over — Oasis-failure-pattern risk; not initiated [2026-05-22 NEWS-AUDIT] ?: 【ヤクルト本社】[2267]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
@@ -2879,22 +2895,22 @@
       "name": "Meito Co.",
       "activist": "UGS Asset Management",
       "trigger": "",
-      "notes": "Carried over — limit-order zone; SC co-file trigger [2026-05-22 NEWS-AUDIT] ?: meito(2207) ニュース - 株探（かぶたん） (決算発表)",
+      "notes": "Carried over — limit-order zone; SC co-file trigger [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 13
+      "news_scan_result_count": 18
     },
     {
       "ticker": "3941",
       "name": "Rengo",
       "activist": "Murakami group",
       "trigger": "",
-      "notes": "Carried over — Murakami early-stage entry [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E08957] 三井住友DS... (大量保有報告)",
+      "notes": "Carried over — Murakami early-stage entry [2026-05-22 NEWS-AUDIT] ?: 決算:レンゴーの純利益48％増 27年3月期、自社株買い過去最大250億円 ... (自社株買い)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20
+      "news_scan_result_count": 19
     },
     {
       "ticker": "6367",
@@ -2905,7 +2921,7 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 23
+      "news_scan_result_count": 22
     },
     {
       "ticker": "3863",
@@ -2934,29 +2950,29 @@
       "name": "Gun Ei Chemical",
       "activist": "Ueshima wolf-pack",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 群栄化学工業 (4229)の概要 - 銘柄スカウターライト (決算発表)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18
+      "news_scan_result_count": 17
     },
     {
       "ticker": "4246",
       "name": "DaikyoNishikawa",
       "activist": "Murakami / MI2",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: DNCについて、MI2は保有割合が増加したと報告 [変更報告書No.1] (変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16
+      "news_scan_result_count": 17
     },
     {
       "ticker": "6594",
       "name": "Nidec",
       "activist": "Oasis Management",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: Nidec Corporation Stock (6594) - Quote Japan Exchange ...Nidec (TSE:6594) Delays (会計不正)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 【ニデック】[6594]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
@@ -2967,29 +2983,29 @@
       "name": "Keikyu",
       "activist": "Murakami network",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配... (決算発表, 業績)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: Insider holds 5.02% of shares in Kokuyo(7984.JP) (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17
+      "news_scan_result_count": 20
     },
     {
       "ticker": "9069",
       "name": "Senko Group Holdings",
       "activist": "Dalton + NAVF",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 【センコーグループホールディングス】 [9069]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: センコーグループホールディングス - 適時開示速報 - 日本経済新聞 (決算発表, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15
+      "news_scan_result_count": 20
     },
     {
       "ticker": "9982",
       "name": "Takihyo",
       "activist": "PAH pre-activist screen",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-22 NEWS-AUDIT] ?: タキヒヨー(9982) ニュース - 株探（かぶたん） (大量保有報告, 決算発表)",
+      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-22 NEWS-AUDIT] ?: 【タキヒヨー】[9982]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
@@ -3233,11 +3249,45 @@
       "is_position": false,
       "alert_priority": "LOW",
       "summary": "大量保有報告書 · stake 0.00%."
+    },
+    {
+      "received_at": "2026-05-22 14:31",
+      "ticker": "9104",
+      "name": "MITSUI OSK LINES ORD",
+      "doc_type": "大量保有報告書",
+      "doc_subtype": "変更報告書（特例対象株券等）",
+      "filer": "ブラックロック・ジャパン株式会社",
+      "edinet_code": "E09096",
+      "stake_before": null,
+      "stake_after": null,
+      "delta_pp": 0.0,
+      "purpose": "",
+      "edinet_url": "https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTkxMDQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y",
+      "is_position": true,
+      "alert_priority": "LOW",
+      "summary": "大量保有報告書 · stake 0.00%."
+    },
+    {
+      "received_at": "2026-05-22 16:14",
+      "ticker": "6794",
+      "name": "Foster Electric",
+      "doc_type": "大量保有報告書",
+      "doc_subtype": "変更報告書",
+      "filer": "ＡＸＩＵＭ　ＣＡＰＩＴＡＬ　ＰＴＥ．ＬＴＤ．",
+      "edinet_code": "E40713",
+      "stake_before": null,
+      "stake_after": null,
+      "delta_pp": 0.0,
+      "purpose": "",
+      "edinet_url": "https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTY3OTQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y",
+      "is_position": false,
+      "alert_priority": "LOW",
+      "summary": "大量保有報告書 · stake 0.00%."
     }
   ],
   "calendar": [],
   "todays_filings_truncated": true,
-  "last_price_pull": "2026-05-22T14:35:33.769194+09:00",
+  "last_price_pull": "2026-05-22T19:05:33.967823+09:00",
   "last_price_source": "yahoo_intraday",
   "last_price_fallback": "2026-05-21T17:43:36.405344+09:00"
 }

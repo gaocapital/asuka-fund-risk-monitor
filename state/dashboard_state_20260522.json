@@ -1,5 +1,5 @@
 {
-  "as_of": "Fri May 22 2026 · 14:35 JST",
+  "as_of": "Fri May 22 2026 · 19:05 JST",
   "product": "Asuka Active Book Daily Risk",
   "version": "3.0",
   "schema_version": "1.0",
@@ -26,7 +26,7 @@
       "layer": "L1",
       "activist": "3D Investment Partners",
       "activist_key": "3d",
-      "stake_pct": 17.5,
+      "stake_pct": 18.53,
       "price": 2731.5,
       "price_date": "2026-05-21",
       "wac": 2900,
@@ -41,11 +41,13 @@
       "catalyst_date": "2026-06-25",
       "notes": "At max 12% cap. June AGM 3D board contest binary in 8 weeks. Px ¥2,488 vs 3D WAC ¥2,900 = -14.2% below WAC → co-investment edge fully intact. Morningstar FV ¥6,662. Do not add above ¥2,400 (size cap, not WAC). [2026-05-01 NEWS-AUDIT] ?: Wolf Pack (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] ?: 任天堂【7974】、今期経常は21％減益、前期配当増額も今期減配 | 決算... (減配) [2026-05-21 NEWS-AUDIT] ?: スクエニhdの25年4〜9月期、純利益14.5%減 通期予想を下方修正 (下方修正) [2026-05-22 NEWS-AUDIT] ?: 今期最終を一転31％減益に下方修正 | 決算速報 - 株探（かぶたん） (下方修正)",
       "last_filing": {
-        "date": "2026-03-15",
+        "date": "2026-03-03",
         "type": "変更報告書",
-        "filer": "3D Investment Partners",
-        "stake_after": 17.5,
-        "purpose": "重要提案"
+        "filer": "３Ｄインベストメント・パートナーズ・プライベート・リミティッド（3D Investment Partners Pte. Ltd.）",
+        "stake_after": 18.53,
+        "purpose": "",
+        "doc_id": "S100XOJN",
+        "source": "edinet"
       },
       "pwer_scenarios": {
         "bear": {
@@ -108,7 +110,7 @@
       "price_volume": 1168956,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17,
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 1,
         "filings_age_days": 1,
@@ -250,9 +252,9 @@
       "ticker": "7752",
       "name": "RICOH ORD",
       "layer": "L3",
-      "activist": "",
-      "activist_key": "",
-      "stake_pct": null,
+      "activist": "Effissimo Capital Management (Tier 1 hard) — long-running Ricoh campaign",
+      "activist_key": "effissimo",
+      "stake_pct": 24.77,
       "price": 1443.0,
       "price_date": "2026-05-21",
       "wac": null,
@@ -266,7 +268,15 @@
       "catalyst": "",
       "catalyst_date": null,
       "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書) [2026-05-22 NEWS-AUDIT] ?: リコー【7752】、今期最終は11％増益、4円増配へ | 決算速報 - 株探ニュース (増配)",
-      "last_filing": null,
+      "last_filing": {
+        "date": "2026-03-06",
+        "type": "訂正変更報告書",
+        "filer": "エフィッシモ　キャピタル　マネージメント　ピーティーイー　エルティーディー",
+        "stake_after": 24.77,
+        "purpose": "",
+        "doc_id": "S100XOCL",
+        "source": "edinet"
+      },
       "pwer_scenarios": {},
       "strategic_source": null,
       "cgsi": {
@@ -284,7 +294,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 15,
       "filing_history": [
         {
           "date": "2025-05-02",
@@ -342,9 +352,9 @@
       "ticker": "3182",
       "name": "Oisix ra daichi",
       "layer": "L2",
-      "activist": "GMO-Usonian (E03287) 10.48% · Tier R 純投資及び状況に応じて重要提案行為 · added +0.31pp Apr 2026 while 9% underwater = max-conviction signal",
-      "activist_key": "gmo",
-      "stake_pct": 10.48,
+      "activist": "NO ACTIVIST — the prior 'GMO-Usonian (E03287)' thesis was a name-collision error (2026-05-22 EDINET audit). The 10.48% holder is Grantham, Mayo, Van Otterloo & Co. LLC, a passive quant manager; Recruit (strategic) has been exiting. No co-investment anchor — thesis VOID, PM re-evaluation required.",
+      "activist_key": "",
+      "stake_pct": null,
       "price": 1439.0,
       "price_date": "2026-05-21",
       "wac": 1576,
@@ -360,13 +370,15 @@
       "add_high": 1550,
       "catalyst": "Q1 FY27 earnings late Jul/early Aug PRIMARY near-term tripwire (first read on OP run-rate vs ¥2.18B implied quarterly). June 26 AGM soft catalyst (GMO doesn't run proxy). Q2 FY27 Oct-Nov confirms FY27 trajectory + capital allocation update potential. Late Aug-Sept potential mid-year EDINET refresh — GMO crosses 11%+ = upgrade signal. Strategic source FWD (forward-earnings NPV; PE 28.5x trailing → ~22x FY27 → ~18x FY28).",
       "catalyst_date": "2026-08-05",
-      "notes": "HOLD L2 5.0% per AEDP 2026-05-18 post-FY26 earnings reset. FY26 printed May 14: revenue ¥251.4B (-1.8%), OP ¥7.34B (+6.9%), NP ¥4.53B (+24.4%) — Shidax B2B subscription margin recovery exactly as Usonian thesis predicted. FY27 guidance: revenue ¥252B (+0.2%), OP ¥8.7B (+18.5%) — operating leverage validation. Stock +7% gap-up May 15 to ¥1,500 = disclosure-pop alpha. GMO Drew Edwards: 1.79% of AUM ($341.9M) = large by their standards. PB short flag: Nomura/GS/MS active 空売り — inverse PB-block pattern worth tracking. Founder Takashima Kohei 13.96% > GMO 10.48% = coalition risk. PBR 3.20x materially above GMO's typical sub-1x net-cash entry profile (caveat: underwriting Shidax embedded asset value, not optical PBR). Sleeve concentration warning: Drew Edwards has Optex + Oisix + Musashi 15-18% NAV at same PM — flag against further concentration. ENTRY ¥1,400-1,550 (ideal ≤¥1,450); NO-CHASE >¥1,813 (WAC +15%); HARD-STOP no-add >¥1,891 (WAC +20% AND GMO not adding 90d). UPGRADE TRIPWIRES (L2 5% → L1 7-8%): GMO crosses 11.5%; founder block transfer to GMO (Recruit-style); Drew Edwards public letter / capital allocation demand; buyback ≥¥5B; Q1 FY27 OP ≥¥2.4B. TRIM (5% → 3% outside CWP): px >¥1,815 no GMO accumulation 90d; Q1 FY27 OP miss >15% (<¥1.85B); GMO reduces 0.5pp. HARD EXITS: GMO <9.5% (1pp from peak); FY27 OP guidance cut; founder dumps 3pp+; fraud. PORTFOLIO: GMO-Usonian sub-sleeve ~10% NAV (Oisix + Optex); non-correlated to June AGM cluster (SQEX 3D, Yakult Dalton, DOE5%). Keep at 5% as ballast through June correlation spike. [2026-05-21 NEWS-AUDIT] ?: 大量保有報告書データベース | M＆A Online - M&Aをもっと身近に。 (大量保有報告, 変更報告書) [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
+      "notes": "[2026-05-22 AUDIT] Activist thesis CORRECTED vs EDINET — the 'GMO-Usonian' filer does not exist in EDINET for this name; it was a collision with passive 'GMO' (Grantham, Mayo, Van Otterloo) / Nomura filings. No activist anchor — thesis VOID, needs PM re-evaluation. HOLD L2 5.0% per AEDP 2026-05-18 post-FY26 earnings reset. FY26 printed May 14: revenue ¥251.4B (-1.8%), OP ¥7.34B (+6.9%), NP ¥4.53B (+24.4%) — Shidax B2B subscription margin recovery exactly as Usonian thesis predicted. FY27 guidance: revenue ¥252B (+0.2%), OP ¥8.7B (+18.5%) — operating leverage validation. Stock +7% gap-up May 15 to ¥1,500 = disclosure-pop alpha. GMO Drew Edwards: 1.79% of AUM ($341.9M) = large by their standards. PB short flag: Nomura/GS/MS active 空売り — inverse PB-block pattern worth tracking. Founder Takashima Kohei 13.96% > GMO 10.48% = coalition risk. PBR 3.20x materially above GMO's typical sub-1x net-cash entry profile (caveat: underwriting Shidax embedded asset value, not optical PBR). Sleeve concentration warning: Drew Edwards has Optex + Oisix + Musashi 15-18% NAV at same PM — flag against further concentration. ENTRY ¥1,400-1,550 (ideal ≤¥1,450); NO-CHASE >¥1,813 (WAC +15%); HARD-STOP no-add >¥1,891 (WAC +20% AND GMO not adding 90d). UPGRADE TRIPWIRES (L2 5% → L1 7-8%): GMO crosses 11.5%; founder block transfer to GMO (Recruit-style); Drew Edwards public letter / capital allocation demand; buyback ≥¥5B; Q1 FY27 OP ≥¥2.4B. TRIM (5% → 3% outside CWP): px >¥1,815 no GMO accumulation 90d; Q1 FY27 OP miss >15% (<¥1.85B); GMO reduces 0.5pp. HARD EXITS: GMO <9.5% (1pp from peak); FY27 OP guidance cut; founder dumps 3pp+; fraud. PORTFOLIO: GMO-Usonian sub-sleeve ~10% NAV (Oisix + Optex); non-correlated to June AGM cluster (SQEX 3D, Yakult Dalton, DOE5%). Keep at 5% as ballast through June correlation spike. [2026-05-21 NEWS-AUDIT] ?: 大量保有報告書データベース | M＆A Online - M&Aをもっと身近に。 (大量保有報告, 変更報告書) [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
       "last_filing": {
-        "date": "2026-04",
-        "type": "変更報告書",
-        "filer": "GMO-Usonian (E03287, Drew Edwards / GMO Asset Mgmt USA)",
+        "date": "2026-04-08",
+        "type": "大量保有報告書",
+        "filer": "Grantham, Mayo, Van Otterloo & Co. LLC",
         "stake_after": 10.48,
-        "purpose": "Tier R 純投資及び状況に応じて重要提案行為 — added +0.31pp from 10.17% (Dec 17 2025 entry via Recruit block transfer) while stock -9% below WAC = max-conviction signal per GMO playbook"
+        "purpose": "",
+        "doc_id": "S100XXDY",
+        "source": "edinet"
       },
       "pwer_scenarios": {
         "bear": {
@@ -428,7 +440,7 @@
       "price_volume": 4509140,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 19,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -443,6 +455,7 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
+      "filing_history": [],
       "pwer_stored": 28.7,
       "pwer_live": true,
       "pwer_scen_drift_pct": 4.1
@@ -451,9 +464,9 @@
       "ticker": "9308",
       "name": "Inui Global Logistics",
       "layer": "L2",
-      "activist": "Alphaleo Holdings GK (8.13%, primary 5+yr campaign) + LIM Advisors (5.20%, secondary)",
-      "activist_key": "alphaleo_lim",
-      "stake_pct": 8.13,
+      "activist": "MIRI Capital Management LLC — the actual EDINET 5%-rule filer (the dashboard's 'Alphaleo Holdings GK' is unverified in EDINET, likely the fund vehicle) + LIM Advisors secondary",
+      "activist_key": "miri",
+      "stake_pct": 8.39,
       "price": 1626.0,
       "price_date": "2026-05-21",
       "wac": 1489,
@@ -468,11 +481,13 @@
       "catalyst_date": "2026-04-27",
       "notes": "ALPHALEO IS PRIMARY ACTIVIST (not LIM). Dual-entity structure: Alphaleo Holdings GK (Tokyo SPV) + AlphaLeo Capital Advisors Limited (DIFC Dubai investment manager). 5+yr aggressive campaign 2019-present produced lawsuits, EGM convocations, but Inui family bloc ~22% won every contested vote. Alphaleo reducing 21.86% → 8.13% = primary activist incrementally exiting. HOKUETSU PATTERN. CUT call REINFORCED on structural grounds. [2026-05-01 NEWS-AUDIT] ?: bloomberg.com/jp/news/articles/2010-06-13/L3Z7YS1A74E901 (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: ５％ルール大量保有報告書 マネーフォワード(3994)... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E08957] 三井住友DS... (大量保有報告) [2026-05-21 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告, 変更報告書) [2026-05-22 NEWS-AUDIT] ?: 乾汽船、リム・アドバイザーズの5％超保有が判明 - 株式新聞 (大量保有報告)",
       "last_filing": {
-        "date": "2026-04-27",
-        "type": "Manual desk note",
-        "filer": "Alphaleo Holdings GK + LIM Advisors",
-        "stake_after": 8.13,
-        "purpose": "Activist identity verified - Alphaleo primary, LIM secondary"
+        "date": "2025-09-17",
+        "type": "変更報告書",
+        "filer": "ミリ・キャピタル・マネジメント・エルエルシー (MIRI Capital Management LLC)",
+        "stake_after": 8.39,
+        "purpose": "",
+        "doc_id": "S100WP4F",
+        "source": "edinet"
       },
       "pwer_scenarios": {
         "bear": {
@@ -535,7 +550,7 @@
       "price_volume": 199299,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 1,
         "filings_age_days": 1,
@@ -622,12 +637,12 @@
       "catalyst_date": "2026-04-14",
       "notes": "Quality compounder. Founder 30.62% controlling stake caps upside variance. Q1 print Apr 14 - verify thesis intact post-print. [2026-05-01 NEWS-AUDIT] ?: Dream Incubator Inc. (大量保有報告, 変更報告書) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: SHIFT(3697) ニュース - 株探（かぶたん） (決算発表) [2026-05-21 NEWS-AUDIT] ?: アクセル HD、今期最終を赤字拡大に下方修正 (下方修正) [2026-05-22 NEWS-AUDIT] ?: 今期経常は83％増で2期ぶり最高益、5円増配へ | 決算速報 (増配)",
       "last_filing": {
-        "date": "2026-05-21",
-        "type": "大量保有報告書",
-        "filer": "野村證券株式会社",
-        "stake_after": null,
+        "date": "2026-04-03",
+        "type": "変更報告書",
+        "filer": "アーカス・インベストメント・リミテッド",
+        "stake_after": 7.14,
         "purpose": "",
-        "edinet_code": "E03810",
+        "doc_id": "S100XWOK",
         "source": "edinet"
       },
       "pwer_scenarios": {
@@ -691,7 +706,7 @@
       "price_volume": 1064830,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 20,
       "_freshness_audit": {
         "price_age_days": 1,
         "filings_age_days": 1,
@@ -746,13 +761,6 @@
           "stake_after": 7.14,
           "purpose": "",
           "doc_id": "S100XWOK"
-        },
-        {
-          "date": "2026-05-21",
-          "doc_type": "大量保有報告書",
-          "filer": "野村證券株式会社",
-          "stake_after": null,
-          "purpose": ""
         }
       ],
       "accumulation": {
@@ -776,9 +784,9 @@
       "ticker": "4493",
       "name": "CYBER SECURITY C ORD",
       "layer": "L3",
-      "activist": "",
-      "activist_key": "",
-      "stake_pct": null,
+      "activist": "SilverCape Investments Limited — rapid 3-tranche accumulation Mar-Apr 2026 (also building 3776 Broadband Tower)",
+      "activist_key": "silvercape",
+      "stake_pct": 9.5,
       "price": 1547.0,
       "price_date": "2026-05-21",
       "wac": null,
@@ -792,7 +800,15 @@
       "catalyst": "",
       "catalyst_date": null,
       "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 【サイバーセキュリティクラウド】 [4493]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績) [2026-05-22 NEWS-AUDIT] 2026-05-15: (株)サイバーセキュリティクラウド【4493】：株価・株式情報 - Yahoo!ファイナンス (決算発表)",
-      "last_filing": null,
+      "last_filing": {
+        "date": "2026-04-07",
+        "type": "変更報告書",
+        "filer": "シルバーケイプ・インベストメンツ・リミテッド(SilverCape Investments Limited)",
+        "stake_after": 9.5,
+        "purpose": "",
+        "doc_id": "S100XXL4",
+        "source": "edinet"
+      },
       "pwer_scenarios": {},
       "strategic_source": null,
       "cgsi": {
@@ -810,7 +826,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 22,
       "filing_history": [
         {
           "date": "2026-03-31",
@@ -862,7 +878,7 @@
       "layer": "L2",
       "activist": "Oasis Management 7.93%",
       "activist_key": "oasis",
-      "stake_pct": 7.93,
+      "stake_pct": 9.94,
       "price": 1235.0,
       "price_date": "2026-05-21",
       "price_source": "yahoo_intraday",
@@ -883,12 +899,12 @@
       "catalyst_date": "2026-06-25",
       "notes": "TRIM L1 7% → L2 4% per shadow-buy re-evaluation 2026-05-16. Two non-Oasis hard-stop tripwires fired since Mar-31 memo: (b) Fundamental break — FY26 guidance crushed Feb 12 2026: OP -52.5%, Net -72.9%, dividend ¥70.1→¥24 (-66%), mid-term plan WITHDRAWN. (e) Anchor activist underwater — Oasis 10-20% below WAC ¥1,720 depending on print. Ochi family + foundation bloc = 30.82% NAV (at Oasis failure-pattern threshold). Founder Ochi Michikatsu holds Chairman+CEO+President simultaneously (no governance separation). PB warehousing visible (BNP Paribas 2.67% + CGML 2.10% = 4.77%) — typical Oasis pre-disclosure pattern. Core エン転職 media franchise in structural decline (likely AI/LLM disintermediation). Buyback ¥5B/7.8M sh authorized May 2025, expires Apr 30 2026 — extension not confirmed. Hard-stop tripwire: Oasis 変更報告書 showing stake reduction below 7.0% → EXIT. Re-rate up to L1 only on (a) confirmed Oasis Stage-2 escalation (public letter / formal AGM proposal filing), OR (b) spot ≤¥1,100 with Oasis stake stable/increasing. [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書) [2026-05-21 NEWS-AUDIT] ?: エン（4849）のir情報・決算資料 - Irbank (決算発表, 業績) [2026-05-22 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書)",
       "last_filing": {
-        "date": "2026-05-19",
-        "type": "臨時報告書",
-        "filer": "エン株式会社",
-        "stake_after": null,
+        "date": "2026-05-11",
+        "type": "変更報告書",
+        "filer": "オアシス　マネジメント　カンパニー　リミテッド（Oasis Management Company Ltd.）",
+        "stake_after": 9.94,
         "purpose": "",
-        "edinet_code": "E05192",
+        "doc_id": "S100Y2HO",
         "source": "edinet"
       },
       "pwer_scenarios": {
@@ -925,7 +941,7 @@
           "rationale": "Extreme bear (NOT bull) — Oasis trims; FY27 guide is transformation year #2 with continued OP decline; segment-transfer / governance defensive action. Floor: net cash ~¥730/sh + PB/B/S floor ~¥900-1000"
         },
         "rationale": "Mid-band reference price ¥1,400 (Asuka PWER -0.8% from mid). At current ¥1,177 the bear-case target is already nearly tagged; PWER improves materially below ¥1,100 entry. Tripwires fired (FY26 guidance break + anchor underwater) override the original Mar-31 +22% PWER calc.",
-        "calculated_at": "2026-05-22T13:30:08.330751"
+        "calculated_at": "2026-05-22T18:00:07.955145"
       },
       "mos": -10.0,
       "asset_mos": -33.0,
@@ -934,7 +950,7 @@
       "verified_tdnet_date": "2026-05-21",
       "shadow_buy_reevaluation_date": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 21,
       "cgsi": {
         "quantity": 3500.0,
         "avg_cost": 1148.2857,
@@ -960,13 +976,6 @@
           "stake_after": 9.94,
           "purpose": "",
           "doc_id": "S100Y2HO"
-        },
-        {
-          "date": "2026-05-19",
-          "doc_type": "臨時報告書",
-          "filer": "エン株式会社",
-          "stake_after": null,
-          "purpose": ""
         }
       ],
       "pwer_history": [
@@ -1037,6 +1046,23 @@
           "hokuetsu_reversed": false,
           "ticker": "4849",
           "name": "en Japan / en Inc."
+        },
+        {
+          "timestamp": "2026-05-22T18:00:07.955138",
+          "trigger": "臨時報告書",
+          "filer": "エン株式会社",
+          "rules_applied": [
+            "extraordinary_report"
+          ],
+          "reasons": [
+            "  → extraordinary_report: Extraordinary report - human review needed"
+          ],
+          "old_pwer": 12.6,
+          "new_pwer": 12.6,
+          "delta_pp": 0.0,
+          "hokuetsu_reversed": false,
+          "ticker": "4849",
+          "name": "en Japan / en Inc."
         }
       ],
       "accumulation": {
@@ -1061,7 +1087,7 @@
       "layer": "L2",
       "activist": "Ueshima wolf-pack (Ueshima + Naturali + DOE5%)",
       "activist_key": "ueshima",
-      "stake_pct": 6.59,
+      "stake_pct": 7.62,
       "price": 2032.0,
       "price_date": "2026-05-21",
       "wac": 2233,
@@ -1077,11 +1103,11 @@
       "notes": "Liquidity-capped (micro-cap). Treat Ueshima/DOE5% basket as single correlated exposure. [2026-05-01 NEWS-AUDIT] ?: Wolf Pack (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: ミヨシ油脂(4404) ニュース - 株探（かぶたん） (決算発表) [2026-05-21 NEWS-AUDIT] ?: ミヨシ油脂(4404) ニュース - 株探（かぶたん） (決算発表) [2026-05-22 NEWS-AUDIT] ?: ミヨシ油脂(4404) ニュース - 株探（かぶたん） (決算発表)",
       "last_filing": {
         "date": "2026-05-11",
-        "type": "大量保有報告書",
+        "type": "変更報告書",
         "filer": "株式会社ＤＯＥ５パーセント",
-        "stake_after": null,
+        "stake_after": 7.62,
         "purpose": "",
-        "edinet_code": "E39020",
+        "doc_id": "S100Y2EY",
         "source": "edinet"
       },
       "pwer_scenarios": {
@@ -1152,7 +1178,7 @@
       "price_volume": 4904003,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 1,
         "filings_age_days": 1,
@@ -1224,7 +1250,7 @@
       "layer": "L3",
       "activist": "Will Field Capital Pte Ltd (+ Shino Fumiya joint 0.45%)",
       "activist_key": "will_field",
-      "stake_pct": 8.69,
+      "stake_pct": 18.22,
       "price": 1859.0,
       "price_date": "2026-05-21",
       "wac": 1860,
@@ -1239,12 +1265,12 @@
       "catalyst_date": null,
       "notes": "POST-QUARANTINE RECORD (Apr 30 2026). Will Field Capital quiet accumulator: Feb 2025 5.02% → Apr 2025 6.02% → Oct 2025 9.14% (joint with Shino Fumiya). Implied WAC ¥1,679. Asuka WAC ¥1,860 (slightly above activist basis, no edge degradation). Strategic-source: GOV — TSE PBR-reform pressure on healthcare services, capital allocation pressure plausible from dividend/buyback mechanism. Not a hard-activist thesis. PWER 6.0% reflects defensive priors on quiet accumulator campaigns. PM TODO: verify Will Field filing chain via EDINET 株主プロ; investigate auto-tilt bug. [2026-05-01 NEWS-AUDIT] ?: bloomberg.com/jp/news/articles/2007-09-26/JOYG7I1A74EB (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配... (決算発表, 業績) [2026-05-21 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告, 変更報告書) [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告)",
       "last_filing": {
-        "date": "2026-05-21",
-        "type": "大量保有報告書",
-        "filer": "モルガン・スタンレーＭＵＦＧ証券株式会社",
-        "stake_after": null,
+        "date": "2026-04-24",
+        "type": "変更報告書",
+        "filer": "ウィル・フィールド・キャピタル・ピーティーイー・エルティーディー(WILL FIELD CAPITAL PTE.LTD.）",
+        "stake_after": 18.22,
         "purpose": "",
-        "edinet_code": "E10802",
+        "doc_id": "S100Y0U6",
         "source": "edinet"
       },
       "pwer_scenarios": {
@@ -1341,7 +1367,7 @@
       "price_volume": 1078532,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 17,
       "cgsi": {
         "quantity": 2000.0,
         "avg_cost": 1806.5,
@@ -1479,13 +1505,6 @@
           "stake_after": 18.22,
           "purpose": "",
           "doc_id": "S100Y0U6"
-        },
-        {
-          "date": "2026-05-21",
-          "doc_type": "大量保有報告書",
-          "filer": "モルガン・スタンレーＭＵＦＧ証券株式会社",
-          "stake_after": null,
-          "purpose": ""
         }
       ],
       "accumulation": {
@@ -1524,7 +1543,7 @@
       "add_high": null,
       "catalyst": "",
       "catalyst_date": null,
-      "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 商船三井、今期経常を11％下方修正、配当は25円増額 - 株探 (下方修正)",
+      "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 商船三井、今期経常を11％下方修正、配当は25円増額 - 株探 (下方修正) [2026-05-22 NEWS-AUDIT] ?: 商船三井、今期経常を11％下方修正、配当は25円増額 - 株探 (下方修正)",
       "last_filing": null,
       "pwer_scenarios": {},
       "strategic_source": null,
@@ -1542,8 +1561,8 @@
       "verified_filings_date": "2026-05-21",
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
-      "news_scan_max_severity": "MEDIUM",
-      "news_scan_result_count": 16,
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 1,
         "filings_age_days": 1,
@@ -1557,7 +1576,7 @@
       "activist": "Symphony Financial Group — significant stake (PM-confirmed 2026-05-16)",
       "activist_key": "symphony",
       "anchor_promoted_at": "2026-05-16",
-      "stake_pct": null,
+      "stake_pct": 13.26,
       "price": 1609.0,
       "price_date": "2026-05-21",
       "price_source": "yahoo_intraday",
@@ -1574,12 +1593,12 @@
       "catalyst_date": null,
       "notes": "Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: 2015年02月23日（月）に提出されたEDINET... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-18: 日東工器 (6151) : ニュース・適時開示 [NITTO KOHKI] - みんかぶ (減配) [2026-05-21 NEWS-AUDIT] 2026-05-18: 日東工器 (6151) : ニュース・適時開示 [Nitto Kohki] - みんかぶ (減配) [2026-05-22 NEWS-AUDIT] ?: 日阪製、今期経常は1％減益へ - 株探 (減配, 業績)",
       "last_filing": {
-        "date": "2026-05-13",
-        "type": "大量保有報告書",
-        "filer": "高田　楊子",
-        "stake_after": null,
+        "date": "2026-01-23",
+        "type": "変更報告書",
+        "filer": "シンフォニー・フィナンシャル・パートナーズ（シンガポール）ピーティーイー・リミテッド（Symphony Financial Partners (Singapore) Pte. Ltd.）",
+        "stake_after": 13.26,
         "purpose": "",
-        "edinet_code": "E36588",
+        "doc_id": "S100XGE2",
         "source": "edinet"
       },
       "pwer_scenarios": {
@@ -1621,7 +1640,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 15,
       "cgsi": {
         "quantity": 2100.0,
         "avg_cost": 1688.0,
@@ -1688,9 +1707,9 @@
       "ticker": "6914",
       "name": "Optex Group",
       "layer": "L2",
-      "activist": "GMO-Usonian 5.55% (Feb 17 2026 crossing) · WAC ~¥2,100 est (Q4 2025-Feb 2026 VWAP) · NO accumulation since Feb 25 (3 months silent) = sitting on winner, no longer in buy zone per GMO 7yr framework",
-      "activist_key": "gmo",
-      "stake_pct": 5.55,
+      "activist": "NO ACTIVIST — the prior 'GMO-Usonian' thesis was a name-collision error (2026-05-22 EDINET audit). 6914's only >=5% filers are passive: Nomura (x3) and Grantham, Mayo, Van Otterloo & Co. LLC (passive quant, 5.0%). No co-investment anchor — thesis VOID, PM re-evaluation required.",
+      "activist_key": "",
+      "stake_pct": null,
       "price": 4295.0,
       "price_date": "2026-05-21",
       "wac": 2100,
@@ -1706,13 +1725,15 @@
       "add_high": 2700,
       "catalyst": "Q2 FY26 earnings — decisive beat of management's conservative full-year guide would raise FV terminal values and reopen the buy math. GMO behavior tripwire: any CR showing accumulation (crosses 6%) signals their model has reopened — follow. SOTP carve-out (sensor segment IPO, automotive divestiture) = catalyst overlay re-engages. Type C convergence (second 5%+ activist filing) = catalyst overlay re-engages.",
       "catalyst_date": "2026-08-15",
-      "notes": "TRIM L2 5% → 2.5% per AEDP GMO 7yr framework decomposition 2026-05-18. GMO published Japan Small Value hurdle Q2 2025 = +7.7% real / ~10.2% nominal; position-level expected 11-13% nominal IRR over 7yr. GMO entry cost basis VWAP ~¥2,100 (Q4 2025 - Feb 2026 build window). Bear/Base/Bull 7yr DCF: ¥2,807/¥4,820/¥6,874 (terminal price + 7yr cumulative dividends). Entry PWER from ¥2,100: 12.0% nominal / 9.5% real = 180bp alpha above GMO hurdle CLEAN. Forward PWER from ¥3,210: 5.4% nominal / 2.9% real = ~1/3 of Asuka 15% hurdle. GMO sitting silent since Feb 25 (3 months) consistent with their forward-PWER math (vs H.U. Group ratchet 10.47→11.66→12.67% same period = active buy zone). PHASE 1 trim 1.5pp immediate @ ¥3,210 → 3.5%; PHASE 2 1pp on retrace ¥3,000 or breakdown → 2.5%. AVOID dumping full 2.5pp in one block (signals to GMO-shadows, triggers price decay). FUNDING 2.5pp NAV freed: Senko Phase 2 (1pp toward ¥1,800 limit) + Kusuri scale to 4% (1.5pp). HARD EXITS even at 2.5% residual: GMO files reduction <4.0% = exit; Q2 FY26 miss management's full-year guide = exit; ¥2,400 breach no catalyst = exit; 2 consecutive quarters OP run-rate below FY26 H1 = exit. RE-UPGRADE TO L2 5%: GMO crosses 6% on CR; Q2 FY26 OP +20% vs guide; SOTP carve-out announce; second activist 5%+ Type C convergence. [2026-05-21 NEWS-AUDIT] ?: オプテックスグループ（オプテクスG）【6914】の業績・財務推移[通期・半期・四半期]｜株探（かぶたん） (決算発表, 業績) [2026-05-22 NEWS-AUDIT] ?: オプテックスグループ（オプテクスG）【6914】の業績・財務推移[通期・半期・四半期]｜株探（かぶたん） (決算発表, 業績)",
+      "notes": "[2026-05-22 AUDIT] Activist thesis CORRECTED vs EDINET — the 'GMO-Usonian' filer does not exist in EDINET for this name; it was a collision with passive 'GMO' (Grantham, Mayo, Van Otterloo) / Nomura filings. No activist anchor — thesis VOID, needs PM re-evaluation. TRIM L2 5% → 2.5% per AEDP GMO 7yr framework decomposition 2026-05-18. GMO published Japan Small Value hurdle Q2 2025 = +7.7% real / ~10.2% nominal; position-level expected 11-13% nominal IRR over 7yr. GMO entry cost basis VWAP ~¥2,100 (Q4 2025 - Feb 2026 build window). Bear/Base/Bull 7yr DCF: ¥2,807/¥4,820/¥6,874 (terminal price + 7yr cumulative dividends). Entry PWER from ¥2,100: 12.0% nominal / 9.5% real = 180bp alpha above GMO hurdle CLEAN. Forward PWER from ¥3,210: 5.4% nominal / 2.9% real = ~1/3 of Asuka 15% hurdle. GMO sitting silent since Feb 25 (3 months) consistent with their forward-PWER math (vs H.U. Group ratchet 10.47→11.66→12.67% same period = active buy zone). PHASE 1 trim 1.5pp immediate @ ¥3,210 → 3.5%; PHASE 2 1pp on retrace ¥3,000 or breakdown → 2.5%. AVOID dumping full 2.5pp in one block (signals to GMO-shadows, triggers price decay). FUNDING 2.5pp NAV freed: Senko Phase 2 (1pp toward ¥1,800 limit) + Kusuri scale to 4% (1.5pp). HARD EXITS even at 2.5% residual: GMO files reduction <4.0% = exit; Q2 FY26 miss management's full-year guide = exit; ¥2,400 breach no catalyst = exit; 2 consecutive quarters OP run-rate below FY26 H1 = exit. RE-UPGRADE TO L2 5%: GMO crosses 6% on CR; Q2 FY26 OP +20% vs guide; SOTP carve-out announce; second activist 5%+ Type C convergence. [2026-05-21 NEWS-AUDIT] ?: オプテックスグループ（オプテクスG）【6914】の業績・財務推移[通期・半期・四半期]｜株探（かぶたん） (決算発表, 業績) [2026-05-22 NEWS-AUDIT] ?: オプテックスグループ（オプテクスG）【6914】の業績・財務推移[通期・半期・四半期]｜株探（かぶたん） (決算発表, 業績)",
       "last_filing": {
-        "date": "2026-02-17",
-        "type": "大量保有報告書 (initial 5%+ crossing)",
-        "filer": "GMO-Usonian (E03287, Drew Edwards / GMO Asset Mgmt USA)",
-        "stake_after": 5.55,
-        "purpose": "純投資 — entry VWAP ~¥2,100 (Q4 2025-Feb 2026 build). NO subsequent CR since Feb 25 — 3 months silent = sitting on winner per forward-PWER math (vs H.U. Group active 10.47→12.67% ratchet same period)"
+        "date": "2026-03-23",
+        "type": "大量保有報告書",
+        "filer": "野村證券株式会社",
+        "stake_after": 5.23,
+        "purpose": "",
+        "doc_id": "S100XSDJ",
+        "source": "edinet"
       },
       "pwer_scenarios": {
         "bear": {
@@ -1774,7 +1795,7 @@
       "price_volume": 2878965,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 19,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -1789,6 +1810,7 @@
         "currency": "JPY",
         "as_of": "2026-05-15"
       },
+      "filing_history": [],
       "pwer_stored": 50.25,
       "pwer_live": true,
       "pwer_scen_drift_pct": 33.8
@@ -1797,74 +1819,77 @@
       "ticker": "4417",
       "name": "Global Security Experts",
       "layer": "L3-PAH",
-      "activist": "PAH-A pre-activist screen — no Tier 1 filer in EDINET cache as of 2026-05-16",
-      "activist_key": "paha",
-      "stake_pct": null,
+      "activist": "Old Peak Group Ltd. (E34245) · 5.14% 大量保有 filed 2026-05-11 (S100Y2FK), 重要提案行為 reserved · sub-Tier-1 deep-value accumulator (also anchors 9722) — PAH-A screen hit",
+      "activist_key": "old_peak",
+      "stake_pct": 5.14,
       "price": 3110.0,
       "price_date": "2026-05-21",
       "price_source": null,
       "wac": null,
-      "wac_source": "PAH-A — no anchor activist identified; WAC tracking deferred until first 5%+ filing triggers R-PAH graduation to L2",
-      "pwer": 0.0,
-      "activist_pwer": 0.0,
+      "wac_source": "PAH-A screen hit 2026-05-11 (Old Peak 5.14%) — sub-Tier-1 reserve-activist; stays L3-PAH on WATCH per the project eval (PWER below the 20% gate). WAC / thesis enrichment pending.",
+      "pwer": -5.0,
+      "activist_pwer": null,
       "weight": 3.4,
       "weight_target": 1.2,
       "action": "WATCH",
       "add_low": null,
       "add_high": null,
-      "catalyst": "TBD",
+      "catalyst": "Parent-sub resolution — Business Brain Showa Ota ~39.7% + Kanematsu Electronics ~20.3% (~60% strategic bloc); take-private / governance optionality. No dated binary.",
       "catalyst_date": null,
-      "notes": "Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: Insider decrases its stake in Marimo Regional Revitalization REIT... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-15: グローバルセキュリティエキスパート株式会社【4417】株価情報-StockW...Global Security Experts Inc. (4417) Fis (決算発表, 業績) [2026-05-21 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績) [2026-05-22 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績)",
+      "notes": "[2026-05-22 RECONCILE] PAH-A screen HIT — Old Peak Group Ltd. 5.14% 大量保有報告書 (EDINET S100Y2FK, 2026-05-11) verified; 重要提案行為 reserved (strategic_review, no specific demand yet). 4417 IS held — this L3-PAH screen, 1,000 sh @ ¥2,776 — so the project answer's 'not in the book' was wrong; frame is hold-the-screen-on-WATCH, not 'do not initiate'. Project eval PASS/WATCH stands: follower-PWER ~10% at ¥2,778 (below the 20% gate), lone sub-Tier-1 filer, parent-sub bloc (Business Brain ~39.7% + Kanematsu ~20.3%), no asset floor (~9x PBR); stock has since run to ¥3,110, firming the PASS. Tripwires: Old Peak ->=8%, a 2nd institutional filer, or a Business Brain / Kanematsu sell-down or TOB. Thesis enrichment pending. Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: Insider decrases its stake in Marimo Regional Revitalization REIT... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-15: グローバルセキュリティエキスパート株式会社【4417】株価情報-StockW...Global Security Experts Inc. (4417) Fis (決算発表, 業績) [2026-05-21 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績) [2026-05-22 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績)",
       "last_filing": {
         "date": "2026-05-11",
         "type": "大量保有報告書",
         "filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
-        "stake_after": null,
-        "purpose": "",
+        "stake_after": 5.14,
+        "purpose": "重要提案",
         "edinet_code": "E34245",
-        "source": "edinet"
+        "source": "edinet",
+        "doc_id": "S100Y2FK"
       },
       "pwer_scenarios": {
         "bear": {
-          "prob": 0.25,
-          "return_pct": 0.0,
-          "target_jpy": 0,
-          "probability": 0.25,
-          "target_price": 0.0
+          "prob": 0.4,
+          "probability": 0.4,
+          "return_pct": -38.9,
+          "target_jpy": 1900,
+          "target_price": 1900.0
         },
         "base": {
-          "prob": 0.5,
-          "return_pct": 0.0,
-          "target_jpy": 0,
-          "probability": 0.5,
-          "target_price": 0.0
+          "prob": 0.35,
+          "probability": 0.35,
+          "return_pct": 2.9,
+          "target_jpy": 3200,
+          "target_price": 3200.0
         },
         "bull": {
-          "prob": 0.2,
-          "return_pct": 0.0,
-          "target_jpy": 0,
-          "probability": 0.2,
-          "target_price": 0.0
+          "prob": 0.25,
+          "probability": 0.25,
+          "return_pct": 38.3,
+          "target_jpy": 4300,
+          "target_price": 4300.0
         },
         "xbull": {
-          "prob": 0.05,
-          "return_pct": 0.0,
-          "target_jpy": 0,
-          "probability": 0.05,
-          "target_price": 0.0
+          "prob": 0.0,
+          "probability": 0.0,
+          "return_pct": 38.3,
+          "target_jpy": 4300,
+          "target_price": 4300.0
         },
-        "rationale": "Stub — populate when thesis is built.",
-        "calculated_at": "2026-05-16T07:15:11.988533"
+        "rationale": "DRAFT — Asuka Event Driven Project shadow-trade eval, reconciled vs EDINET 2026-05-22. Bear ¥1,900: Growth-market de-rate of a ~9x-PBR name / decel, or the ~60% strategic bloc simply ignores a 5% minority. Base ¥3,200: growth continues, Old Peak ratchets, a mild governance win, modest re-rate. Bull ¥4,300: a Business Brain / third-party take-private premium, or ~25% compounding holds with the multiple intact. Probabilities Fail 40 / Partial 35 / Success 25 per the project. Targets are the project's; return_pct recomputes at live spot — at ¥3,110 (post-filing run-up) follower-PWER is mildly negative, vs the ~+10% the project computed at its ¥2,778 anchor. Below the 20% entry gate either way.",
+        "calculated_at": "2026-05-22T16:49:04.369876",
+        "calibrated_at_price": 3110.0,
+        "calibrated_at_date": "2026-05-22"
       },
       "mos": null,
-      "asset_mos": null,
+      "asset_mos": -790.0,
       "verified_filings_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "verified_tdnet_date": "2026-05-21",
       "is_paha": true,
       "paha_promoted_at": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 17,
       "cgsi": {
         "quantity": 1000.0,
         "avg_cost": 2776.0,
@@ -1879,15 +1904,18 @@
           "date": "2026-05-11",
           "doc_type": "大量保有報告書",
           "filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
-          "stake_after": null,
-          "purpose": ""
+          "stake_after": 5.14,
+          "purpose": "重要提案",
+          "doc_id": "S100Y2FK"
         }
       ],
-      "_freshness_audit": {
-        "price_age_days": 1,
-        "filings_age_days": 1,
-        "news_age_days": 0
-      }
+      "enrichment_status": "draft",
+      "action_override": "WATCH",
+      "action_override_reason": "PAH-A screen HIT — Old Peak Group 5.14% (EDINET-verified, S100Y2FK, 重要提案行為 reserved). But follower-PWER is below the 20% entry gate and negative at the ¥3,110 post-filing run-up: a lone sub-Tier-1 filer, a ~60% parent-sub bloc (Business Brain ~39.7% + Kanematsu ~20.3%), no asset floor (~9x PBR). HOLD the L3-PAH screen — do not upgrade, do not sell. Arm tripwires: Old Peak ->=8%, a 2nd institutional filer, or a Business Brain / Kanematsu sell-down or TOB. Re-rate entry zone ~¥2,200.",
+      "action_override_source": "Asuka Event Driven Project — 4417 shadow-trade eval, reconciled vs EDINET 2026-05-22",
+      "pwer_stored": -5.0,
+      "pwer_live": true,
+      "pwer_scen_drift_pct": 0.0
     },
     {
       "ticker": "3401",
@@ -1916,12 +1944,12 @@
       "catalyst_date": "2026-06-30",
       "notes": "STEP UP to L2 5% NAV per AEDP v11 memo 2026-05-16. SOTP+CASH primary tag, GOV secondary. Entry tranches: 50bp at ¥1,680 immediate, scale to 5% on pullbacks ¥1,500-1,600, aggressive add ≤¥1,500. NO CHASE >¥1,750. Funding: v10.2 retained +1pp dry powder + 1pp Tamron trim. GS PB facilitation pattern confirmed: GS 5.0% Mar 31 → 1.74% Apr 22 (−3.26pt) vs Effissimo +1.73pt same week = high-conviction planned campaign signal. HARD STOPS: Effissimo reduction (any) = EXIT; <18.0% next CR = trim 50%; ¥1,300 breach = exit; FY27 H1 further healthcare impairment = re-eval; anchor stops adding 90d = WAC penalty becomes binding. UPGRADE TRIPWIRES: Effissimo crosses 20% = L1 7%; Healthcare carve-out announced = L1+ 9%; Tier R 重要提案行為等 = 10-12% cap; ¥30B+ buyback = bull state shift. TRIM: >¥2,200 no catalyst = trim 50%; 6mo Effissimo silence = re-eval. [2026-05-18 NEWS-AUDIT] 2026-05-11: ニュース | 帝人株式会社 (経営統合) [2026-05-21 NEWS-AUDIT] ?: 【帝人】 [3401]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績) [2026-05-22 NEWS-AUDIT] ?: 帝人(3401) ニュース - 株探（かぶたん） (決算発表)",
       "last_filing": {
-        "date": "2026-05-11",
-        "type": "臨時報告書",
-        "filer": "帝人株式会社",
-        "stake_after": null,
+        "date": "2026-04-21",
+        "type": "変更報告書",
+        "filer": "エフィッシモ　キャピタル　マネージメント　ピーティーイー　エルティーディー(Effissimo Capital Management Pte. Ltd.)",
+        "stake_after": 19.26,
         "purpose": "",
-        "edinet_code": "E00872",
+        "doc_id": "S100XYZD",
         "source": "edinet"
       },
       "pwer_scenarios": {
@@ -1967,7 +1995,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17,
+      "news_scan_result_count": 20,
       "cgsi": {
         "quantity": 1500.0,
         "avg_cost": 1559.0,
@@ -2117,7 +2145,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 1,
         "filings_age_days": 1,
@@ -2152,11 +2180,11 @@
       "notes": "SCALE FAST per AEDP memo 2026-05-16. Hybrid Cash-Return × Transaction × Governance archetype (Tsuruha comp). 12% below Oasis marginal cost ¥4,372. Tranche 1: 2% immediate @ ¥3,840. T2: 1% on dip to ¥3,650-3,700 or earnings clear. T3: 1% up to ¥4,200 on AGM proposal filing. Fund from Alfresa + Daito Trust trims. HARD STOPS: anchor <12.5% = exit; spot >¥4,500 no add; FY28 OP miss >15% trim half; close <¥3,200 reassess; Aug AGM zero wins trim to 1%. [2026-05-18 NEWS-AUDIT] ?: クスリのアオキ､自社株買い最大200億円 発行済みの5.7%クスリのアオ... (自社株買い) [2026-05-21 NEWS-AUDIT] ?: クスリのアオキ､自社株買い最大200億円 発行済みの5.7%クスリのアオキ､自社株買い最大200億円 発行済みの5.7% (自社株買い) [2026-05-22 NEWS-AUDIT] ?: AOKIホールディングス（AOKIHD）【8214】の業績・財務推移[通期・半期... (決算発表, 業績)",
       "last_filing": {
         "date": "2026-05-13",
-        "type": "大量保有報告書",
-        "filer": "Ｏａｓｉｓ　Ｍａｎａｇｅｍｅｎｔ　Ｃｏｍｐａｎｙ　Ｌｔｄ．",
-        "stake_after": null,
+        "type": "変更報告書",
+        "filer": "オアシス　マネジメント　カンパニー　リミテッド（Oasis Management Company Ltd.）",
+        "stake_after": 14.05,
         "purpose": "",
-        "edinet_code": "E31883",
+        "doc_id": "S100Y2YV",
         "source": "edinet"
       },
       "pwer_scenarios": {
@@ -2198,7 +2226,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 11,
+      "news_scan_result_count": 19,
       "cgsi": {
         "quantity": 600.0,
         "avg_cost": 3871.0,
@@ -2262,7 +2290,7 @@
       "ticker": "4613",
       "name": "Kansai Paint",
       "activist": "Silchester International Investors",
-      "stake_pct": 5.05,
+      "stake_pct": 7.21,
       "wac": 2511,
       "price": 2341.5,
       "weight": 2.78,
@@ -2313,12 +2341,12 @@
       "thesis": "Silchester long-only quality engagement. Japanese paint global #4 with significant India exposure (Kansai Nerolac). Trades at P/E 11.5x vs global paint peers (Sherwin ~25x, AkzoNobel ~17x), 4.47% yield. TSE PBR reform pressure + India growth = standalone case. Silchester pattern: patient 3-7yr holds, passive engagement, low-velocity.",
       "trigger": "Watch: (1) Silchester accumulation past 7%+ (signals activist intent vs passive), (2) any cross-shareholder unwind announcement, (3) May 11 earnings, (4) India business strategic action (Kansai Nerolac listed separately)",
       "last_filing": {
-        "date": "2026-05-21",
+        "date": "2026-05-19",
         "type": "大量保有報告書",
-        "filer": "野村證券株式会社",
+        "filer": "シルチェスター・インターナショナル・インベスターズ・エルエルピー",
         "stake_after": null,
         "purpose": "",
-        "edinet_code": "E03810",
+        "edinet_code": "E24872",
         "source": "edinet"
       },
       "added_to_book_date": "2026-04-01",
@@ -2358,7 +2386,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 21,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 2113.29,
@@ -2401,13 +2429,6 @@
           "date": "2026-05-19",
           "doc_type": "大量保有報告書",
           "filer": "シルチェスター・インターナショナル・インベスターズ・エルエルピー",
-          "stake_after": null,
-          "purpose": ""
-        },
-        {
-          "date": "2026-05-21",
-          "doc_type": "大量保有報告書",
-          "filer": "野村證券株式会社",
           "stake_after": null,
           "purpose": ""
         }
@@ -2483,10 +2504,13 @@
       "trigger": "PRIMARY: May 2026 full-year results + new MTMP announcement. SECONDARY (BUY-confirmation): Silchester 変更報告書 to 9-10%+ stake; Suzuken announces buyback/dividend hike/treasury stock cancellation pre-MTMP; Alfresa/Medipal escalation (sector confirmation). WATCH: Silchester reduction filing before MTMP would be primary bear signal.",
       "notes": "Px ¥5,561 vs WAC ¥5,400 = +3.0% (close to NEUTRAL edge — clean shadow entry zone). Existing Alfresa 2% in book aligns with sector thesis - DON'T trim Alfresa to fund Suzuken. Multi-year compounding horizon (not binary AGM trade). Sector tailwind: 3-name coordinated capital return campaign is materially more probable than 3 separate trajectories. [2026-04-30 VERIFICATION-AUDIT] Silchester International Investors LLP at 8.25% (per Silchester Japan portfolio: Sumitomo Osaka Cement 19.43%, Alfresa 12.11%, Medipal 11.71%, Daito 9.22%, Suzuken 8.25%). LATE-CYCLE FLAG: Δ vs WAC +20.1% — past +15% co-investment gate. PWER 5.0% near WEAK_HOLD floor. Consider trim if Δ vs WAC crosses +25%. [2026-05-01 NEWS-AUDIT] ?: Ｍ＆Ａの世界へようこそ！ 大量保有報告制度について (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 2015年02月23日（月）に提出されたEDINET... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] ?: 【スズケン】 [9987]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績) [2026-05-21 NEWS-AUDIT] 2026-05-20: スズケン (9987) : ニュース・適時開示 [Suzuken] - みんかぶ (増配) [2026-05-22 NEWS-AUDIT] ?: 変更報告書を提出しました。 - 那須電機鉄工株式会社 (変更報告書, 株主総会)",
       "last_filing": {
-        "date": "2026-04-15",
-        "filer": "Silchester International Investors",
-        "type": "変更報告書 (Re-accumulation past prior peak)",
-        "stake_after": 8.25
+        "date": "2026-03-24",
+        "type": "変更報告書",
+        "filer": "シルチェスター・インターナショナル・インベスターズ・エルエルピー (Silchester International Investors LLP)",
+        "stake_after": 8.25,
+        "purpose": "",
+        "doc_id": "S100XSWW",
+        "source": "edinet"
       },
       "promoted_from_watch_date": "2026-04-28T08:40:05.912015",
       "pwer_history": [
@@ -2527,7 +2551,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 18,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 6578.96,
@@ -2596,9 +2620,9 @@
       "ticker": "9722",
       "name": "FUJITA KANKO ORD",
       "layer": "L3",
-      "activist": "",
-      "activist_key": "",
-      "stake_pct": null,
+      "activist": "Old Peak Group Ltd. (E34245) — also anchors 4417. NB: Feb-2026 DOWA -> NSSK-GAMMA2 (PE) ~25% block transfer — thesis re-eval",
+      "activist_key": "old_peak",
+      "stake_pct": 6.13,
       "price": 1862.0,
       "price_date": "2026-05-21",
       "wac": null,
@@ -2612,7 +2636,15 @@
       "catalyst": "",
       "catalyst_date": null,
       "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 藤田観光（藤田観）【9722】｜ニュース - 株探（かぶたん） (変更報告書) [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
-      "last_filing": null,
+      "last_filing": {
+        "date": "2025-07-07",
+        "type": "変更報告書",
+        "filer": "オールド・ピーク・グループ・リミテッド(Old Peak Group Ltd.)",
+        "stake_after": 6.13,
+        "purpose": "",
+        "doc_id": "S100WBDL",
+        "source": "edinet"
+      },
       "pwer_scenarios": {},
       "strategic_source": null,
       "cgsi": {
@@ -2630,7 +2662,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15,
+      "news_scan_result_count": 19,
       "filing_history": [
         {
           "date": "2025-07-04",
@@ -2672,9 +2704,9 @@
       "ticker": "5930",
       "name": "BUNKA SHUTTER ORD",
       "layer": "L3",
-      "activist": "",
-      "activist_key": "",
-      "stake_pct": null,
+      "activist": "Nippon Active Value Fund (Dalton / NAVF, Tier 1) — dominant activist anchor",
+      "activist_key": "navf",
+      "stake_pct": 20.55,
       "price": 1833.0,
       "price_date": "2026-05-21",
       "wac": null,
@@ -2689,12 +2721,12 @@
       "catalyst_date": null,
       "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 文化シヤタについて、NIPPON ACTIVE VALUE FUND PLCは保有 ... (変更報告書) [2026-05-22 NEWS-AUDIT] ?: Nomura Asset Management holds 5.3% of shares in Pigeon(7956.JP) (大量保有報告, 変更報告書)",
       "last_filing": {
-        "date": "2026-05-18",
-        "type": "臨時報告書",
-        "filer": "文化シヤッター株式会社",
-        "stake_after": null,
+        "date": "2026-04-08",
+        "type": "変更報告書",
+        "filer": "ニッポン・アクティブ・バリュー・ファンド（NIPPON ACTIVE VALUE FUND PLC）",
+        "stake_after": 20.55,
         "purpose": "",
-        "edinet_code": "E01413",
+        "doc_id": "S100XJMG",
         "source": "edinet"
       },
       "pwer_scenarios": {},
@@ -2733,13 +2765,6 @@
           "stake_after": 20.55,
           "purpose": "",
           "doc_id": "S100XJMG"
-        },
-        {
-          "date": "2026-05-18",
-          "doc_type": "臨時報告書",
-          "filer": "文化シヤッター株式会社",
-          "stake_after": null,
-          "purpose": ""
         }
       ],
       "price_source": "cgsi_broker",
@@ -2773,7 +2798,7 @@
       "layer": "L3",
       "activist": "",
       "activist_key": "",
-      "stake_pct": null,
+      "stake_pct": 20.15,
       "price": 255.0,
       "price_date": "2026-05-21",
       "wac": null,
@@ -2789,11 +2814,11 @@
       "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配信 (全ての上場会社を提供) (決算発表, 業績) [2026-05-22 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配信 (全ての上場会社を提供) (決算発表, 業績)",
       "last_filing": {
         "date": "2026-05-14",
-        "type": "大量保有報告書",
-        "filer": "ＳｉｌｖｅｒＣａｐｅ　Ｉｎｖｅｓｔｍｅｎｔｓ　Ｌｉｍｉｔｅｄ",
-        "stake_after": null,
+        "type": "変更報告書",
+        "filer": "シルバーケイプ・インベストメンツ・リミテッド(SilverCape Investments Limited)",
+        "stake_after": 20.15,
         "purpose": "",
-        "edinet_code": "E40437",
+        "doc_id": "S100Y3GP",
         "source": "edinet"
       },
       "pwer_scenarios": {},
@@ -2813,7 +2838,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 22,
       "filing_history": [
         {
           "date": "2026-02-09",
@@ -2914,11 +2939,11 @@
       "name": "Kanto Denka Kogyo",
       "activist": "Effissimo",
       "trigger": "",
-      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-22 NEWS-AUDIT] ?: 片山晃氏大量保有銘柄と投資手法は！？ 7年半で65万円 25... (大量保有報告)",
+      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-22 NEWS-AUDIT] ?: 関電化の25年4〜6月期、純利益54.4%減 通期予想を下方修正 (下方修正)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21
+      "news_scan_result_count": 22
     },
     {
       "ticker": "1813",
@@ -2929,14 +2954,14 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 14
+      "news_scan_result_count": 15
     },
     {
       "ticker": "2267",
       "name": "Yakult Honsha",
       "activist": "Dalton Kizuna Fund",
       "trigger": "",
-      "notes": "Carried over — Oasis-failure-pattern risk; not initiated [2026-05-22 NEWS-AUDIT] ?: ヤクルト純利益5%増 27年3月期、自社株買い550億円 (自社株買い)",
+      "notes": "Carried over — Oasis-failure-pattern risk; not initiated [2026-05-22 NEWS-AUDIT] ?: 【ヤクルト本社】[2267]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
@@ -2947,22 +2972,22 @@
       "name": "Meito Co.",
       "activist": "UGS Asset Management",
       "trigger": "",
-      "notes": "Carried over — limit-order zone; SC co-file trigger [2026-05-22 NEWS-AUDIT] ?: meito(2207) ニュース - 株探（かぶたん） (決算発表)",
+      "notes": "Carried over — limit-order zone; SC co-file trigger [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 13
+      "news_scan_result_count": 18
     },
     {
       "ticker": "3941",
       "name": "Rengo",
       "activist": "Murakami group",
       "trigger": "",
-      "notes": "Carried over — Murakami early-stage entry [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E08957] 三井住友DS... (大量保有報告)",
+      "notes": "Carried over — Murakami early-stage entry [2026-05-22 NEWS-AUDIT] ?: 決算:レンゴーの純利益48％増 27年3月期、自社株買い過去最大250億円 ... (自社株買い)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20
+      "news_scan_result_count": 19
     },
     {
       "ticker": "6367",
@@ -2973,7 +2998,7 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 23
+      "news_scan_result_count": 22
     },
     {
       "ticker": "3863",
@@ -3002,29 +3027,29 @@
       "name": "Gun Ei Chemical",
       "activist": "Ueshima wolf-pack",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 群栄化学工業 (4229)の概要 - 銘柄スカウターライト (決算発表)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18
+      "news_scan_result_count": 17
     },
     {
       "ticker": "4246",
       "name": "DaikyoNishikawa",
       "activist": "Murakami / MI2",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: DNCについて、MI2は保有割合が増加したと報告 [変更報告書No.1] (変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16
+      "news_scan_result_count": 17
     },
     {
       "ticker": "6594",
       "name": "Nidec",
       "activist": "Oasis Management",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: Nidec Corporation Stock (6594) - Quote Japan Exchange ...Nidec (TSE:6594) Delays (会計不正)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 【ニデック】[6594]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
@@ -3035,29 +3060,29 @@
       "name": "Keikyu",
       "activist": "Murakami network",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配... (決算発表, 業績)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: Insider holds 5.02% of shares in Kokuyo(7984.JP) (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17
+      "news_scan_result_count": 20
     },
     {
       "ticker": "9069",
       "name": "Senko Group Holdings",
       "activist": "Dalton + NAVF",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: 【センコーグループホールディングス】 [9069]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-22 NEWS-AUDIT] ?: センコーグループホールディングス - 適時開示速報 - 日本経済新聞 (決算発表, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15
+      "news_scan_result_count": 20
     },
     {
       "ticker": "9982",
       "name": "Takihyo",
       "activist": "PAH pre-activist screen",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-22 NEWS-AUDIT] ?: タキヒヨー(9982) ニュース - 株探（かぶたん） (大量保有報告, 決算発表)",
+      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-22 NEWS-AUDIT] ?: 【タキヒヨー】[9982]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-22",
       "news_scan_max_severity": "HIGH",
@@ -3301,11 +3326,45 @@
       "is_position": false,
       "alert_priority": "LOW",
       "summary": "大量保有報告書 · stake 0.00%."
+    },
+    {
+      "received_at": "2026-05-22 14:31",
+      "ticker": "9104",
+      "name": "MITSUI OSK LINES ORD",
+      "doc_type": "大量保有報告書",
+      "doc_subtype": "変更報告書（特例対象株券等）",
+      "filer": "ブラックロック・ジャパン株式会社",
+      "edinet_code": "E09096",
+      "stake_before": null,
+      "stake_after": null,
+      "delta_pp": 0.0,
+      "purpose": "",
+      "edinet_url": "https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTkxMDQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y",
+      "is_position": true,
+      "alert_priority": "LOW",
+      "summary": "大量保有報告書 · stake 0.00%."
+    },
+    {
+      "received_at": "2026-05-22 16:14",
+      "ticker": "6794",
+      "name": "Foster Electric",
+      "doc_type": "大量保有報告書",
+      "doc_subtype": "変更報告書",
+      "filer": "ＡＸＩＵＭ　ＣＡＰＩＴＡＬ　ＰＴＥ．ＬＴＤ．",
+      "edinet_code": "E40713",
+      "stake_before": null,
+      "stake_after": null,
+      "delta_pp": 0.0,
+      "purpose": "",
+      "edinet_url": "https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTY3OTQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y",
+      "is_position": false,
+      "alert_priority": "LOW",
+      "summary": "大量保有報告書 · stake 0.00%."
     }
   ],
   "calendar": [],
   "todays_filings_truncated": true,
-  "last_price_pull": "2026-05-22T14:35:33.769194+09:00",
+  "last_price_pull": "2026-05-22T19:05:33.967823+09:00",
   "last_price_source": "yahoo_intraday",
   "last_price_fallback": "2026-05-21T17:43:36.405344+09:00"
 }
