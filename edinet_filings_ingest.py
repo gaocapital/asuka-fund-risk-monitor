@@ -46,6 +46,40 @@ def _atomic_write_json(path: str, data) -> None:
 DEFAULT_DATA_PATH = "dashboard_data.json"
 DEFAULT_FILINGS_PATH = "filings_today.json"  # Adapt to your existing pipeline output
 
+# Filers that are passive custodians / brokers / index houses — NOT activist
+# large-holders. A 5%-rule filing from one of these (or an issuer self-filing)
+# must never overwrite a position's activist last_filing / filing_history.
+_PASSIVE_FILER_MARKERS = (
+    "証券", "信託銀行", "信託バンク", "・トラスト", "トラスト・", "銀行",
+    "ブラックロック", "BlackRock", "野村", "ノムラ", "Nomura",
+    "モルガン", "Morgan Stanley", "ゴールドマン", "Goldman",
+    "グランサム", "Grantham", "ステート・ストリート", "State Street",
+    "バンガード", "Vanguard",
+)
+_LARGE_HOLDING_CODES = {"350", "360", "370", "380"}
+
+
+def _is_activist_anchor_filing(filing: dict) -> bool:
+    """True only for a 大量保有報告書 / 変更報告書 filed by a genuine large
+    holder. Excludes non-5%-rule reports (臨時報告書 etc.), passive custodians
+    / brokers / index houses, and issuer self-filings. Such filings still
+    reach todays_filings (the feed) — they just must not overwrite a
+    position's activist last_filing / filing_history / stake_pct."""
+    code = str(filing.get("doc_type_code") or "")
+    dt = str(filing.get("doc_type") or "")
+    if not (code in _LARGE_HOLDING_CODES
+            or "大量保有" in dt or "変更報告書" in dt):
+        return False
+    filer = filing.get("filer") or ""
+    if any(m in filer for m in _PASSIVE_FILER_MARKERS):
+        return False
+    # issuer self-filing — the filer's EDINET code equals the issuer's
+    fe = (filing.get("edinet_code") or "").strip()
+    ie = (filing.get("issuer_edinet_code") or "").strip()
+    if fe and ie and fe == ie:
+        return False
+    return True
+
 
 def classify_priority(filing: dict, position_tickers: set, watch_tickers: set) -> str:
     """Auto-classify alert priority based on filing characteristics."""
@@ -277,7 +311,12 @@ def ingest_filings(data_path: str, filings_path: str) -> dict:
         # Carry edinet_code forward — it's the field the Attribution health
         # pill reads, and it's only available when filing_parser.py has
         # populated it from the EDINET API.
-        if is_position and ticker in position_map:
+        # Passive custodian / broker / issuer self-filings reach the feed
+        # (todays_filings) above, but must NOT overwrite a position's activist
+        # last_filing / filing_history / stake_pct — only a genuine
+        # large-holder filing may. This is what kept burying activist filings
+        # under stale Nomura / trust-bank entries.
+        if is_position and ticker in position_map and _is_activist_anchor_filing(f):
             pos = position_map[ticker]
             new_lf = {
                 "date": normalized["received_at"][:10],

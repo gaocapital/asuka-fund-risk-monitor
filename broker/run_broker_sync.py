@@ -8,7 +8,8 @@ Cowork reasoning layer sees it.
 
   fetch_cgsi.py -> apply_cgsi_update.py -> filing_parser.py ->
   edinet_filings_ingest.py -> news_scan.py -> yahoo_intraday_price_pull.py ->
-  broker_price_fallback.py -> generate_dashboard.py -> git push
+  broker_price_fallback.py -> book_hygiene_check.py -> generate_dashboard.py
+  -> git push
 
 This is the script a daily scheduled task should call. Exit code 0 only if
 every step succeeds, so the scheduler can detect a failed run.
@@ -122,6 +123,8 @@ def main() -> int:
                [sys.executable, os.path.join(REPO, "yahoo_intraday_price_pull.py")])
     _step_soft("fill price gaps (broker-mark fallback)",
                [sys.executable, os.path.join(REPO, "broker_price_fallback.py")])
+    _step_soft("book hygiene check",
+               [sys.executable, os.path.join(REPO, "book_hygiene_check.py")])
     _step("re-render dashboard",
           [sys.executable, os.path.join(REPO, "generate_dashboard.py")])
     _git_push()

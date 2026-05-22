@@ -84,22 +84,34 @@ Some positions enter the book from the CGSI broker sync as bare stubs
   stays visibly DRAFT on the dashboard until the PM signs off.
 Commit the updated dashboard_data.json together with the memo.
 
-OWNERSHIP-HISTORY REFRESH — keep each activist's accumulation curve current:
-The dashboard's Filings tab shows, per held position, the anchor activist's
-filing history and an accumulation block (how fast the stake is building). The
-broker-sync pipeline only appends skeletal entries — its EDINET API path rarely
-recovers stake_after — so YOU are the authoritative maintainer of this data.
-Every run, for each held position with a disclosed activist:
-- Call the EDINET MCP get_ownership_timeline for the ticker; identify the anchor
-  activist (match the position's `activist` field; for a wolf-pack, the lead
-  filer and its 共同保有 group).
-- Write that activist's chronological 5%-rule filings to the position's
-  `filing_history` — a list of {date, doc_type, filer, stake_after, purpose,
-  doc_id}, oldest first, with the real XBRL stake_after on every entry.
-- Recompute `accumulation`: first_date, first_stake, latest_date, latest_stake,
-  filings (count), total_pp, span_days, pp_per_30d (= total_pp / span_days × 30),
-  and the most recent leg — recent_leg_pp, recent_leg_days, recent_pp_per_30d.
-  This is identical to edinet_filings_ingest.compute_accumulation.
+OWNERSHIP-HISTORY REFRESH — keep every position's activist record true to
+EDINET. The dashboard's activist data drifts unless you actively reconcile it:
+the broker-sync pipeline appends skeletal entries, and a 2026-05-22 audit found
+19 of 21 positions stale (passive-filer pollution of last_filing; un-propagated
+stakes; two fabricated "name-collision" activists). YOU are the authoritative
+maintainer. Every run, for EACH held position:
+- Call the EDINET MCP get_ownership_timeline for the ticker. Identify the anchor
+  activist — the genuine large-holder, NOT a passive custodian (証券 / 信託 /
+  トラスト / 銀行 / Nomura / BlackRock / Grantham-GMO etc.) and NOT the issuer
+  self-filing. For a wolf-pack, the lead filer and its 共同保有 group.
+- VERIFY the position's `activist` field names a holder that actually appears in
+  the EDINET timeline. If it names an activist with NO EDINET filing, that is a
+  name-collision / fabrication error (e.g. the 3182 / 6914 "GMO-Usonian" mix-up
+  with passive Grantham-Mayo-Van-Otterloo) — correct `activist` to the real
+  holder, or to "NO ACTIVIST — <why>", and flag it loudly in the memo.
+- Write onto the position in dashboard_data.json the FULL activist record, not
+  just the history: `filing_history` (the anchor's chronological 5%-rule
+  filings — {date, doc_type, filer, stake_after, purpose, doc_id}, oldest
+  first, real XBRL stake on every entry); `accumulation` (recomputed —
+  first/latest date+stake, filings, total_pp, span_days, pp_per_30d
+  (= total_pp / span_days × 30), and the recent leg — recent_leg_pp,
+  recent_leg_days, recent_pp_per_30d; identical to
+  edinet_filings_ingest.compute_accumulation); `stake_pct` (the anchor's latest
+  stake); `last_filing` (the anchor's latest 5%-rule filing — never a passive
+  custodian or 臨時報告書); and the `activist` label.
+- book_hygiene_check.py runs in the daily broker sync and flags residual
+  inconsistencies in the log — treat any hygiene warning as an open item to
+  resolve that run.
 Commit the updated dashboard_data.json with the memo.
 
 PER-POSITION READ — stamp the dashboard with your current take:
