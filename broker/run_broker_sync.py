@@ -113,7 +113,7 @@ def main() -> int:
           [sys.executable, os.path.join(BROKER, "apply_cgsi_update.py"), csv_path])
     _step_soft("pull EDINET filings",
                [sys.executable, os.path.join(REPO, "filing_parser.py"),
-                "--days", "3"])
+                "--days", "7"])
     _step_soft("ingest EDINET filings",
                [sys.executable, os.path.join(REPO, "edinet_filings_ingest.py")])
     _step_soft("scan news (DuckDuckGo)",

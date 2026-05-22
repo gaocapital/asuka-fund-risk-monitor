@@ -72,6 +72,7 @@ HERE = Path(__file__).parent.resolve()
 DATA_PATH = HERE / "dashboard_data.json"
 OUT_PATH = HERE / "filings_today.json"
 ENV_PATH = HERE / ".env"
+CODE_MAP_PATH = HERE / "edinet_code_map.json"
 
 EDINET_API_BASE = "https://api.edinet-fsa.go.jp/api/v2"
 EDINET_DOC_LIST = f"{EDINET_API_BASE}/documents.json"
@@ -138,16 +139,31 @@ def fetch_doc_list(target_date: date, api_key: str, timeout: int = 30) -> list[d
         return []
 
 
-def normalise_doc(doc: dict, ticker_name_map: dict[str, str]) -> dict | None:
+def normalise_doc(doc: dict, ticker_name_map: dict[str, str],
+                  ecode_to_ticker: dict[str, str]) -> dict | None:
     """Convert an EDINET API doc record to the dashboard's filing schema.
     Returns None for docs that don't match a tracked ticker.
+
+    Matching is two-path:
+      (1) issuerEdinetCode — a 大量保有/変更報告書 is filed BY the (usually
+          unlisted) activist, so its secCode is empty; the SUBJECT company is
+          carried in issuerEdinetCode. Match that against the tracked
+          universe's EDINET codes (edinet_code_map.json).
+      (2) secCode — a company's own filing (臨時報告書 etc.) carries its
+          securities code. Match that.
+    Without path (1) every activist 5%-rule filing is silently dropped — which
+    is exactly the bug this restores.
     """
-    sec_code = (doc.get("secCode") or "").strip()
-    if not sec_code:
-        return None
-    # secCode comes back as 5-digit (4-digit ticker + 0). Normalise to 4-digit.
-    ticker = sec_code[:4] if len(sec_code) >= 4 else sec_code
-    if ticker not in ticker_name_map:
+    ticker = None
+    issuer = (doc.get("issuerEdinetCode") or "").strip()
+    if issuer and issuer in ecode_to_ticker:
+        ticker = ecode_to_ticker[issuer]
+    if ticker is None:
+        sec_code = (doc.get("secCode") or "").strip()
+        # secCode is 5-digit (4-digit ticker + 0); normalise to 4-digit.
+        if sec_code and sec_code[:4] in ticker_name_map:
+            ticker = sec_code[:4]
+    if ticker is None:
         return None
 
     doc_type_code = doc.get("docTypeCode", "")
@@ -223,6 +239,21 @@ def main() -> int:
                 ticker_name_map[tk] = item.get("name", "")
     print(f"  Tracking {len(ticker_name_map)} tickers across positions + watch_list + exited")
 
+    # EDINET-code map — required to match 大量保有/変更報告書, which carry the
+    # subject company in issuerEdinetCode (their secCode is empty).
+    ticker_to_ecode: dict[str, str] = {}
+    if CODE_MAP_PATH.exists():
+        with open(CODE_MAP_PATH, encoding="utf-8") as f:
+            ticker_to_ecode = json.load(f)
+    ecode_to_ticker = {ec: tk for tk, ec in ticker_to_ecode.items()
+                       if tk in ticker_name_map}
+    missing = sorted(tk for tk in ticker_name_map if tk not in ticker_to_ecode)
+    if missing:
+        print(f"  [warn] {len(missing)} tracked ticker(s) missing from "
+              f"edinet_code_map.json — their activist filings will be missed: "
+              f"{', '.join(missing)}", file=sys.stderr)
+    print(f"  EDINET-code map: {len(ecode_to_ticker)} tracked issuers resolved")
+
     # Resolve date range
     today = date.today()
     if args.end:
@@ -242,7 +273,7 @@ def main() -> int:
         docs = fetch_doc_list(cursor, api_key)
         kept = 0
         for doc in docs:
-            f = normalise_doc(doc, ticker_name_map)
+            f = normalise_doc(doc, ticker_name_map, ecode_to_ticker)
             if f:
                 all_filings.append(f)
                 kept += 1
