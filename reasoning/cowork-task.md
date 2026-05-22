@@ -153,6 +153,12 @@ EXECUTION-GRADE — every action must be executable:
   under which the name re-enters the buy zone.
 
 PORTFOLIO & CONTEXT:
+- NEW-NAME GUARDRAIL: before evaluating any ticker as a "new signal", fresh
+  idea, or initiation, FIRST check whether it is already in positions[],
+  watch_list[], or exited[] in dashboard_data.json. A name already in the book
+  is a hold / add / trim / re-rate call — never an "initiate / do not initiate"
+  framing. (A 4417 eval was misframed this way — judged a new name when it was
+  a held L3-PAH pre-activist screen.)
 - Position-book continuity: open the book read by distinguishing thesis-complete
   positions from post-CGSI-sync stubs awaiting enrichment. Read
   metadata.book_revision_note and the exited[] array; explain material turnover.
