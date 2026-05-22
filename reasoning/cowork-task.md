@@ -16,12 +16,13 @@ the recurring task with Claude.
 
 ## Data dependency — current state
 
-- The **broker sync** is scheduled (13:30 SGT) and pushes the day's position
-  book to the repo. ✓
-- The **EDINET pull works** (API key configured) but the filing ingest is **not
-  yet scheduled**, so `todays_filings` only refreshes on a manual run. Until
-  that pipeline is wired daily, the reasoning layer should decode whatever
-  `todays_filings` holds and flag the staleness. (Open item.)
+- The **broker sync** runs three times a Singapore trading day (08:30 / 13:30 /
+  18:00 SGT) and pushes the day's position book to the repo. ✓
+- The **EDINET pull + ingest are wired into the broker sync** (filing_parser.py
+  then edinet_filings_ingest.py), so `todays_filings` refreshes every run. ✓
+- Each held position carries a **filing_history + accumulation** block — the
+  activist's stake-building curve. A one-off EDINET-MCP backfill seeded it; you
+  keep it current (see OWNERSHIP-HISTORY REFRESH in the prompt below).
 
 ## The prompt — paste this into Cowork
 
@@ -82,6 +83,24 @@ Some positions enter the book from the CGSI broker sync as bare stubs
   PM can review. A drafted stub is no longer an open enrichment item, but it
   stays visibly DRAFT on the dashboard until the PM signs off.
 Commit the updated dashboard_data.json together with the memo.
+
+OWNERSHIP-HISTORY REFRESH — keep each activist's accumulation curve current:
+The dashboard's Filings tab shows, per held position, the anchor activist's
+filing history and an accumulation block (how fast the stake is building). The
+broker-sync pipeline only appends skeletal entries — its EDINET API path rarely
+recovers stake_after — so YOU are the authoritative maintainer of this data.
+Every run, for each held position with a disclosed activist:
+- Call the EDINET MCP get_ownership_timeline for the ticker; identify the anchor
+  activist (match the position's `activist` field; for a wolf-pack, the lead
+  filer and its 共同保有 group).
+- Write that activist's chronological 5%-rule filings to the position's
+  `filing_history` — a list of {date, doc_type, filer, stake_after, purpose,
+  doc_id}, oldest first, with the real XBRL stake_after on every entry.
+- Recompute `accumulation`: first_date, first_stake, latest_date, latest_stake,
+  filings (count), total_pp, span_days, pp_per_30d (= total_pp / span_days × 30),
+  and the most recent leg — recent_leg_pp, recent_leg_days, recent_pp_per_30d.
+  This is identical to edinet_filings_ingest.compute_accumulation.
+Commit the updated dashboard_data.json with the memo.
 
 OUTPUT FORMAT — reproduce framework/08-worked-example.md exactly:
 1. Boxed header (ASUKA FUND — DAILY SWEEP MEMO; as-of; pipeline line; last-sweep).

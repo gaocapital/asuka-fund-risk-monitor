@@ -12,6 +12,7 @@ daily pipeline:  python generate_dashboard.py
 from __future__ import annotations
 
 import argparse
+import base64
 from datetime import date, datetime
 
 from dashboard_core import (
@@ -456,6 +457,54 @@ a{color:var(--ac);text-decoration:none}
 .addrow{display:flex;align-items:center;gap:9px;padding:11px 12px;font-size:11px;
   color:var(--ac);background:rgba(77,159,255,.05);border-top:1px solid var(--line)}
 
+/* ===== filings tab ===== */
+.acctbl{display:flex;flex-direction:column}
+.acc-head,.acc-row{display:grid;
+  grid-template-columns:minmax(232px,2.4fr) 150px minmax(110px,1fr) 92px 116px 70px 24px;
+  gap:12px;align-items:center}
+.acc-head{padding:9px 14px;border-bottom:1px solid var(--line)}
+.acc-head>div{font-size:9.5px;font-weight:700;letter-spacing:.09em;
+  color:var(--mut);text-transform:uppercase}
+.acc-row{padding:11px 14px;border-bottom:1px solid var(--lsoft);cursor:pointer}
+.acc-row:hover{background:#1a212b}
+.acc-row.exp{background:#1a2433;border-bottom-color:var(--line)}
+.acc-hold{min-width:0}
+.acc-tk{font-size:10.5px;font-weight:700;color:var(--mut);background:var(--s1);
+  border:1px solid var(--line);padding:2px 6px;border-radius:4px}
+.acc-nm{font-size:12.5px;font-weight:600;margin-left:8px}
+.acc-by{font-size:10px;color:var(--dim);margin-top:3px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.acc-stake,.acc-built,.acc-pace,.acc-cnt,.fh-dt,.fh-st,.fh-dl{
+  font-variant-numeric:tabular-nums}
+.acc-stake{font-size:12px}
+.acc-stake b{font-weight:700;color:var(--tx)}
+.acc-u{font-size:9px;color:var(--dim);margin-left:1px}
+.acc-spark{display:flex;align-items:flex-end;gap:2px;height:30px}
+.acc-spk{flex:1;min-width:2px;border-radius:1px 1px 0 0;
+  background:linear-gradient(180deg,#5aa6ff,#2d6fd6)}
+.acc-built{font-size:13px;font-weight:700;color:var(--pos)}
+.acc-pace{font-size:12.5px;font-weight:600}
+.acc-cnt{font-size:12px;color:var(--mut)}
+.acc-chev{text-align:center;color:var(--dim);font-size:10px}
+.acc-row.exp .acc-chev{color:var(--ac)}
+.acc-exp{background:var(--s3);border-bottom:1px solid var(--line);padding:14px 18px}
+.acc-meta{display:flex;justify-content:space-between;align-items:baseline;
+  gap:16px;font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.5}
+.acc-meta b{color:var(--tx);font-weight:700}
+.acc-meta a{white-space:nowrap}
+.fhist{display:flex;flex-direction:column}
+.fh-row{display:grid;grid-template-columns:96px 164px 1fr 58px 50px;gap:12px;
+  align-items:center;padding:5px 2px;border-bottom:1px solid var(--lsoft)}
+.fh-row:last-child{border-bottom:none}
+.fh-dt{font-size:10.5px;color:var(--mut)}
+.fh-ty{font-size:10.5px;color:var(--ac);white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis}
+.fh-bar{height:9px;background:var(--s1);border-radius:2px;overflow:hidden}
+.fh-fill{height:100%;border-radius:2px;
+  background:linear-gradient(90deg,#3a7fc4,#5aa6ff)}
+.fh-st{font-size:11px;font-weight:700;text-align:right}
+.fh-dl{font-size:10.5px;text-align:right}
+
 /* ===== footer ===== */
 footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   font-size:10.5px;color:var(--dim);line-height:1.7}
@@ -516,6 +565,16 @@ DASHBOARD_JS = """
   });
   var sb=document.getElementById('psearch');
   if(sb) sb.addEventListener('input',applyFilter);
+
+  document.querySelectorAll('.acc-row').forEach(function(r){
+    r.addEventListener('click',function(){
+      var x=r.nextElementSibling;
+      if(x && x.classList.contains('acc-exp')){
+        x.hidden=!x.hidden;
+        r.classList.toggle('exp',!x.hidden);
+      }
+    });
+  });
 })();
 
 /* ---- chart tooltips (conviction matrix, histogram, activist bars) ---- */
@@ -653,6 +712,21 @@ LAYER_TITLE = {
     "L3": "BUILD / MONITOR", "L3-PAH": "PRE-ACTIVIST SCREEN",
     "L4": "MERGER ARB",
 }
+
+
+def _edinet_url(ticker: str) -> str:
+    """EDINET simple-document-search deep link for a company, by securities
+    code — lands on that company's EDINET filing list. The renewed EDINET site
+    exposes no keyless per-document permalink, so we link to the keyless search
+    (WEEE0040) filtered to the ticker."""
+    t = str(ticker or "").strip()
+    base = "https://disclosure2.edinet-fsa.go.jp"
+    if not t:
+        return base + "/"
+    q = (f"mul={t}&ctf=off&fls=off&lpr=on&rpr=off&oth=off"
+         f"&yer=&mon=&pfs=6&ser=1&pag=1&sor=2")
+    enc = base64.b64encode(q.encode("utf-8")).decode("ascii")
+    return f"{base}/WEEE0040.aspx?{enc}"
 
 
 def _badge(action: str) -> str:
@@ -1692,9 +1766,9 @@ def render_filing_feed(filings: list) -> str:
             if dp:
                 stake += (f' <span class="{"pos" if dp > 0 else "neg"}">'
                           f'{dp:+.2f}pp</span>')
-        url = f.get("edinet_url") or ""
+        url = _edinet_url(f.get("ticker", ""))
         link = (f'<a href="{html_escape(url)}" target="_blank" rel="noopener">'
-                f'EDINET ↗</a>' if url else "")
+                f'EDINET ↗</a>')
         rows.append(f"""<div class="frow">
   <div class="fr-prio {pcls}">{plabel}</div>
   <div>
@@ -1746,21 +1820,177 @@ def render_tab_catalysts(positions: list, data: dict) -> str:
     upcoming = ("".join(rows) if rows
                 else '<div class="empty"><div class="empty-t">No upcoming catalysts</div></div>')
 
-    filings_body = render_filing_feed(filings)
-
     return f"""{stats}
 {render_catalyst_timeline(positions)}
-<div class="row2">
-  <div class="card">
-    <div class="card-h"><div class="card-t">UPCOMING CATALYSTS</div>
-      <div class="card-sub">{len(fut)} events</div></div>
-    <div class="clist">{upcoming}</div>
+<div class="card">
+  <div class="card-h"><div class="card-t">UPCOMING CATALYSTS</div>
+    <div class="card-sub">{len(fut)} events</div></div>
+  <div class="clist">{upcoming}</div>
+</div>"""
+
+
+# ============================================================================
+# RENDER — FILINGS TAB
+# ============================================================================
+
+def _filer_short(name: str) -> str:
+    """A compact, readable filer label — prefers an English name in parens."""
+    s = str(name or "").strip()
+    if not s:
+        return "—"
+    for op, cl in (("（", "）"), ("(", ")")):
+        if op in s and cl in s and s.index(op) < s.rindex(cl):
+            inner = s[s.index(op) + 1:s.rindex(cl)].strip()
+            if inner.isascii() and any(c.isalpha() for c in inner):
+                return inner if len(inner) <= 40 else inner[:39] + "…"
+    s = s.split("（")[0].split("(")[0].replace("　", " ").strip()
+    return s if len(s) <= 40 else s[:39] + "…"
+
+
+def _acc_detail(p: dict, acc: dict, hist: list) -> str:
+    """The expanded filing-history panel for one activist-accumulation row."""
+    filer = _filer_short((hist[-1].get("filer") if hist else "")
+                         or p.get("activist", ""))
+    url = _edinet_url(p.get("ticker", ""))
+    mx = max((h.get("stake_after") or 0) for h in hist) or 1.0
+
+    frows, prev = [], None
+    for h in hist:
+        st = h.get("stake_after")
+        delta = ""
+        if st is not None and prev is not None and abs(st - prev) >= 0.005:
+            d = st - prev
+            delta = f'<span class="{"pos" if d > 0 else "neg"}">{d:+.2f}</span>'
+        if st is not None:
+            prev = st
+        w = (st or 0) / mx * 100
+        st_s = f"{st:.2f}%" if st is not None else "—"
+        frows.append(f"""<div class="fh-row">
+  <div class="fh-dt">{html_escape(str(h.get('date', '')))}</div>
+  <div class="fh-ty">{html_escape(h.get('doc_type', ''))}</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:{w:.0f}%"></div></div>
+  <div class="fh-st">{st_s}</div>
+  <div class="fh-dl">{delta}</div>
+</div>""")
+    frows.reverse()
+
+    recent = ""
+    rp, rd = acc.get("recent_leg_pp"), acc.get("recent_leg_days")
+    if rp is not None and rd:
+        recent = f' · latest leg <b>{rp:+.2f}pp</b> over {rd}d'
+
+    return f"""<div class="acc-meta">
+  <div><b>{html_escape(filer)}</b> — building since {html_escape(str(acc.get('first_date', '')))}{recent}</div>
+  <a href="{html_escape(url)}" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist">{''.join(frows)}</div>"""
+
+
+def _acc_row(p: dict) -> str:
+    """One activist-accumulation row — a clickable summary over a hidden
+    filing-history panel."""
+    acc = p.get("accumulation") or {}
+    hist = p.get("filing_history") or []
+    ticker = p.get("ticker", "")
+    filer = _filer_short((hist[-1].get("filer") if hist else "")
+                         or p.get("activist", ""))
+
+    first_s, last_s = acc.get("first_stake"), acc.get("latest_stake")
+    total = acc.get("total_pp") or 0.0
+    pace = acc.get("pp_per_30d")
+    n = acc.get("filings") or len(hist)
+
+    stakes = [h.get("stake_after") for h in hist
+              if h.get("stake_after") is not None]
+    spark = ""
+    if stakes:
+        mx = max(stakes) or 1.0
+        spark = '<div class="acc-spark">' + "".join(
+            f'<div class="acc-spk" style="height:{max(s / mx * 100, 6):.0f}%">'
+            f'</div>' for s in stakes) + "</div>"
+
+    if first_s is not None and last_s is not None:
+        stake_s = (f'{first_s:.2f}<span class="acc-u">%</span> '
+                   f'<span class="dim">→</span> '
+                   f'<b>{last_s:.2f}<span class="acc-u">%</span></b>')
+    else:
+        stake_s = '<span class="dim">—</span>'
+    pace_s = (f'+{pace:.2f}<span class="acc-u">pp/30d</span>'
+              if pace is not None else '<span class="dim">—</span>')
+
+    return f"""<div class="acc-row" data-ticker="{html_escape(ticker)}">
+  <div class="acc-hold">
+    <div><span class="acc-tk">{html_escape(ticker)}</span><span class="acc-nm">{html_escape(p.get('name', ''))}</span></div>
+    <div class="acc-by">{html_escape(filer)}</div>
   </div>
-  <div class="card">
-    <div class="card-h"><div class="card-t">FILINGS FEED</div>
-      <div class="card-sub">EDINET · TDnet</div></div>
-    {filings_body}
+  <div class="acc-stake">{stake_s}</div>
+  <div>{spark}</div>
+  <div class="acc-built">+{total:.2f}<span class="acc-u">pp</span></div>
+  <div class="acc-pace">{pace_s}</div>
+  <div class="acc-cnt">{n}</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden>{_acc_detail(p, acc, hist)}</div>"""
+
+
+def render_tab_filings(positions: list, data: dict) -> str:
+    """The Filings tab — activist accumulation curves (per-position filing
+    history) over the live EDINET filings feed."""
+    filings = data.get("todays_filings", []) or []
+    n_high = sum(1 for f in filings if f.get("alert_priority") == "HIGH")
+
+    accs = [p for p in positions if isinstance(p.get("accumulation"), dict)]
+    accs.sort(key=lambda p: p["accumulation"].get("total_pp") or 0, reverse=True)
+
+    if accs:
+        top = accs[0]
+        top_v = top.get("ticker", "—")
+        top_s = (f'{html_escape(str(top.get("name", ""))[:22])} · '
+                 f'+{top["accumulation"].get("total_pp", 0) or 0:.1f}pp built')
+    else:
+        top_v, top_s = "—", "no accumulation series yet"
+
+    stats = f"""
+<div class="stat4">
+  <div class="stat"><div class="stat-l">Filings in Feed</div>
+    <div class="stat-v n">{len(filings)}</div>
+    <div class="stat-s">EDINET scan window</div></div>
+  <div class="stat{' stat-neg' if n_high else ''}"><div class="stat-l">High Priority</div>
+    <div class="stat-v n">{n_high}</div>
+    <div class="stat-s">activist 5%-rule / events</div></div>
+  <div class="stat"><div class="stat-l">Activist Books Tracked</div>
+    <div class="stat-v n">{len(accs)}</div>
+    <div class="stat-s">positions with an accumulation curve</div></div>
+  <div class="stat"><div class="stat-l">Top Accumulator</div>
+    <div class="stat-v n">{html_escape(str(top_v))}</div>
+    <div class="stat-s">{top_s}</div></div>
+</div>"""
+
+    if accs:
+        acc_body = "".join(_acc_row(p) for p in accs)
+    else:
+        acc_body = ('<div class="empty"><div class="empty-i">▤</div>'
+                    '<div class="empty-t">No activist accumulation series yet'
+                    '</div><div class="empty-s">Run edinet_backfill.py, or let '
+                    'the reasoning layer populate filing_history.</div></div>')
+
+    return f"""{stats}
+<div class="card">
+  <div class="card-h"><div class="card-t">ACTIVIST ACCUMULATION</div>
+    <div class="card-sub">{len(accs)} of {len(positions)} holdings have a disclosed activist series · click a row for the filing history</div></div>
+  <div class="acctbl">
+    <div class="acc-head">
+      <div>Holding / EDINET filer</div><div>Stake</div>
+      <div>Accumulation</div><div>Built</div><div>Pace</div>
+      <div>Filings</div><div></div>
+    </div>
+    {acc_body}
   </div>
+</div>
+<div class="card">
+  <div class="card-h"><div class="card-t">EDINET FILINGS FEED</div>
+    <div class="card-sub">大量保有報告書 / 変更報告書 · positions + watch-list</div></div>
+  {render_filing_feed(filings)}
 </div>"""
 
 
@@ -1849,6 +2079,7 @@ def render_dashboard(data: dict, positions: list, deltas: dict) -> str:
     watch = data.get("watch_list", []) or []
     n_future = len(_future_catalysts(positions))
     n_changes = len(_collect_changes(positions, deltas)[0])
+    n_filings = len(data.get("todays_filings", []) or [])
     gen = datetime.now().strftime("%d %b %Y %H:%M").lstrip("0")
     as_of = (data.get("as_of") or "")[:10]
     sources = " · ".join((data.get("metadata") or {}).get("data_sources", []))
@@ -1870,6 +2101,7 @@ def render_dashboard(data: dict, positions: list, deltas: dict) -> str:
   <div class="tab" data-pane="tab-changes">Changes <span class="tab-c">{n_changes}</span></div>
   <div class="tab" data-pane="tab-risk">Risk</div>
   <div class="tab" data-pane="tab-catalysts">Catalysts <span class="tab-c">{n_future}</span></div>
+  <div class="tab" data-pane="tab-filings">Filings <span class="tab-c">{n_filings}</span></div>
   <div class="tab" data-pane="tab-watch">Watch <span class="tab-c">{len(watch)}</span></div>
 </nav>
 <main>
@@ -1877,6 +2109,7 @@ def render_dashboard(data: dict, positions: list, deltas: dict) -> str:
   <section class="tabpane" id="tab-changes" hidden>{render_tab_changes(positions, deltas)}</section>
   <section class="tabpane" id="tab-risk" hidden>{render_tab_risk(positions)}</section>
   <section class="tabpane" id="tab-catalysts" hidden>{render_tab_catalysts(positions, data)}</section>
+  <section class="tabpane" id="tab-filings" hidden>{render_tab_filings(positions, data)}</section>
   <section class="tabpane" id="tab-watch" hidden>{render_tab_watch(data)}</section>
 </main>
 <footer>

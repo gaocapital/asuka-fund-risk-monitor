@@ -6,6 +6,9 @@
 <title>Asuka Fund Risk Monitor</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+/* hidden must always win — author display rules (.grid8/.plgroup) otherwise
+   override the UA [hidden] rule, which silently breaks the Positions filter. */
+[hidden]{display:none!important}
 :root{
   --bg:#0d1117;--s1:#161b22;--s2:#1c2433;--s3:#12171f;--line:#2a313c;--lsoft:#1c232c;
   --tx:#e6edf3;--mut:#8b949e;--dim:#6e7681;
@@ -86,6 +89,47 @@ a{color:var(--ac);text-decoration:none}
 .flag-r .flag-i{background:rgba(248,81,73,.16);color:var(--neg)}
 .flag-b .flag-i{background:rgba(77,159,255,.16);color:var(--ac)}
 .flag b{color:var(--tx);font-weight:700}
+.flag-g{border-left-color:var(--pos)}
+.flag-g .flag-i{background:rgba(63,185,80,.16);color:var(--pos)}
+
+/* ===== day-over-day deltas · freshness · draft state ===== */
+.dlt{font-size:9px;font-weight:800;white-space:nowrap;margin-left:5px}
+.dlt-up{color:var(--pos)}
+.dlt-down{color:var(--neg)}
+.rchip{font-size:8px;font-weight:800;letter-spacing:.04em;padding:1.5px 5px;
+  border-radius:3px;white-space:nowrap;margin-left:6px;vertical-align:1px}
+.rchip-new{background:rgba(77,159,255,.16);color:#6fb1ff;
+  border:1px solid rgba(77,159,255,.4)}
+.rchip-file{background:rgba(63,185,80,.14);color:#56c869;
+  border:1px solid rgba(63,185,80,.4)}
+.flip{color:var(--warn);font-weight:700}
+.draftb{font-size:8.5px;font-weight:800;letter-spacing:.04em;color:#6fb1ff;
+  background:rgba(77,159,255,.12);border:1px solid rgba(77,159,255,.34);
+  padding:2px 6px;border-radius:3px}
+.draft-banner{background:rgba(77,159,255,.1);border:1px solid rgba(77,159,255,.3);
+  border-radius:7px;padding:8px 11px;margin-bottom:14px;font-size:11px;
+  color:#6fb1ff;font-weight:600}
+.chg-sub{font-size:8.5px;font-weight:800;letter-spacing:.11em;color:var(--dim);
+  margin:14px 0 8px;text-transform:uppercase}
+.chg-sub:first-child{margin-top:2px}
+
+/* ===== EDINET filings feed ===== */
+.ffeed{display:flex;flex-direction:column}
+.frow{display:grid;grid-template-columns:46px 1fr 82px;gap:11px;
+  padding:10px 12px;border-bottom:1px solid var(--lsoft)}
+.frow:last-child{border-bottom:none}
+.fr-prio{font-size:8px;font-weight:800;text-align:center;height:18px;
+  line-height:14px;padding:1px 0;border-radius:4px;align-self:start}
+.fr-hi{background:rgba(248,81,73,.16);color:#ff6b63;border:1px solid rgba(248,81,73,.4)}
+.fr-md{background:rgba(214,165,51,.14);color:#dcb04a;border:1px solid rgba(214,165,51,.36)}
+.fr-lo{background:var(--s3);color:var(--dim);border:1px solid var(--line)}
+.fr-top{font-size:12px;line-height:1.4}
+.fr-tk{font-size:10px;font-weight:700;color:var(--mut);background:var(--s1);
+  border:1px solid var(--line);padding:1px 5px;border-radius:3px}
+.fr-dt{font-size:9.5px;color:var(--ac);margin-left:4px}
+.fr-mid{font-size:10.5px;color:var(--mut);margin-top:3px}
+.fr-sum{font-size:10px;color:var(--dim);margin-top:3px;line-height:1.45}
+.fr-side{font-size:9.5px;color:var(--dim);text-align:right;line-height:1.6}
 
 /* ===== badges ===== */
 .badge{font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:4px;
@@ -331,22 +375,23 @@ a{color:var(--ac);text-decoration:none}
 .tl-months span{position:absolute;font-size:9.5px;font-weight:700;
   color:var(--mut);letter-spacing:.04em}
 .tl-track{position:relative;height:9px;background:var(--s3);border-radius:5px;
-  margin-bottom:96px}
+  margin-bottom:40px}
 .tl-grid{position:absolute;top:-5px;bottom:-5px;border-left:1px solid var(--line)}
-.tl-today{position:absolute;top:-11px;bottom:-86px;border-left:2px solid var(--ac)}
+.tl-today{position:absolute;top:-11px;bottom:-32px;border-left:2px solid var(--ac)}
 .tl-today span{position:absolute;top:-16px;left:-17px;font-size:8.5px;
   font-weight:800;color:var(--ac);letter-spacing:.06em}
-.tl-ev{position:absolute;top:5px}
-.tl-dot{position:absolute;top:1px;left:-5px;width:11px;height:11px;
-  border-radius:50%;background:var(--ac);border:2px solid var(--bg)}
+.tl-ev{position:absolute;top:0}
+.tl-dot{position:absolute;top:-1px;left:-5.5px;width:11px;height:11px;
+  border-radius:50%;background:var(--ac);border:2px solid var(--bg);
+  cursor:pointer;transition:transform .1s ease}
 .tl-dot.soon{background:var(--warn)}
-.tl-pill{position:absolute;top:20px;transform:translateX(-50%);width:148px;
-  background:var(--s2);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
-.tl-pill.soon{border-color:rgba(214,165,51,.4)}
-.tl-d{font-size:9px;font-weight:800;color:var(--ac);letter-spacing:.03em}
-.tl-d.soon{color:var(--warn)}
-.tl-x{font-size:10.5px;font-weight:700;margin-top:2px}
-.tl-w{font-size:9px;color:var(--dim);margin-top:2px;line-height:1.35}
+.tl-dot:hover{transform:scale(1.4)}
+.tl-lbl{position:absolute;top:13px;left:0;transform:translateX(-50%);
+  font-size:8px;font-weight:700;color:var(--mut);white-space:nowrap;
+  letter-spacing:.02em}
+.tl-lbl.lane2{top:25px}
+.tl-lbl.edge-l{transform:translateX(0)}
+.tl-lbl.edge-r{transform:translateX(-100%)}
 .clist{display:flex;flex-direction:column}
 .cl-row{display:grid;grid-template-columns:60px minmax(150px,1.4fr) 2fr 70px;
   gap:13px;align-items:center;padding:11px;border-bottom:1px solid var(--lsoft)}
@@ -391,6 +436,54 @@ a{color:var(--ac);text-decoration:none}
 .addrow{display:flex;align-items:center;gap:9px;padding:11px 12px;font-size:11px;
   color:var(--ac);background:rgba(77,159,255,.05);border-top:1px solid var(--line)}
 
+/* ===== filings tab ===== */
+.acctbl{display:flex;flex-direction:column}
+.acc-head,.acc-row{display:grid;
+  grid-template-columns:minmax(232px,2.4fr) 150px minmax(110px,1fr) 92px 116px 70px 24px;
+  gap:12px;align-items:center}
+.acc-head{padding:9px 14px;border-bottom:1px solid var(--line)}
+.acc-head>div{font-size:9.5px;font-weight:700;letter-spacing:.09em;
+  color:var(--mut);text-transform:uppercase}
+.acc-row{padding:11px 14px;border-bottom:1px solid var(--lsoft);cursor:pointer}
+.acc-row:hover{background:#1a212b}
+.acc-row.exp{background:#1a2433;border-bottom-color:var(--line)}
+.acc-hold{min-width:0}
+.acc-tk{font-size:10.5px;font-weight:700;color:var(--mut);background:var(--s1);
+  border:1px solid var(--line);padding:2px 6px;border-radius:4px}
+.acc-nm{font-size:12.5px;font-weight:600;margin-left:8px}
+.acc-by{font-size:10px;color:var(--dim);margin-top:3px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.acc-stake,.acc-built,.acc-pace,.acc-cnt,.fh-dt,.fh-st,.fh-dl{
+  font-variant-numeric:tabular-nums}
+.acc-stake{font-size:12px}
+.acc-stake b{font-weight:700;color:var(--tx)}
+.acc-u{font-size:9px;color:var(--dim);margin-left:1px}
+.acc-spark{display:flex;align-items:flex-end;gap:2px;height:30px}
+.acc-spk{flex:1;min-width:2px;border-radius:1px 1px 0 0;
+  background:linear-gradient(180deg,#5aa6ff,#2d6fd6)}
+.acc-built{font-size:13px;font-weight:700;color:var(--pos)}
+.acc-pace{font-size:12.5px;font-weight:600}
+.acc-cnt{font-size:12px;color:var(--mut)}
+.acc-chev{text-align:center;color:var(--dim);font-size:10px}
+.acc-row.exp .acc-chev{color:var(--ac)}
+.acc-exp{background:var(--s3);border-bottom:1px solid var(--line);padding:14px 18px}
+.acc-meta{display:flex;justify-content:space-between;align-items:baseline;
+  gap:16px;font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.5}
+.acc-meta b{color:var(--tx);font-weight:700}
+.acc-meta a{white-space:nowrap}
+.fhist{display:flex;flex-direction:column}
+.fh-row{display:grid;grid-template-columns:96px 164px 1fr 58px 50px;gap:12px;
+  align-items:center;padding:5px 2px;border-bottom:1px solid var(--lsoft)}
+.fh-row:last-child{border-bottom:none}
+.fh-dt{font-size:10.5px;color:var(--mut)}
+.fh-ty{font-size:10.5px;color:var(--ac);white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis}
+.fh-bar{height:9px;background:var(--s1);border-radius:2px;overflow:hidden}
+.fh-fill{height:100%;border-radius:2px;
+  background:linear-gradient(90deg,#3a7fc4,#5aa6ff)}
+.fh-st{font-size:11px;font-weight:700;text-align:right}
+.fh-dl{font-size:10.5px;text-align:right}
+
 /* ===== footer ===== */
 footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   font-size:10.5px;color:var(--dim);line-height:1.7}
@@ -405,17 +498,17 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="brand-tag">Fund Risk Monitor</div>
   </div>
   <div class="topbar-right">
-    <span class="asof">Book as of Thu May 21 · CGSI 111681A01</span>
-    <span class="fresh"><span class="dot dot-warn"></span>Prices parse err</span>
+    <span class="asof">Book as of 22 May 2026 · CGSI 111681A01</span>
+    <span class="fresh"><span class="dot dot-ok"></span>Prices · all 21 fresh</span>
   </div>
 </header>
 
 <div class="kpis">
   <div class="kpi"><div class="kpi-l">Avg PWER</div>
-    <div class="kpi-v n pos">19.0%</div>
+    <div class="kpi-v n pos">20.3%</div>
     <div class="kpi-s">simple mean · all 21 names</div></div>
   <div class="kpi"><div class="kpi-l">Tier-Weighted PWER</div>
-    <div class="kpi-v n pos">32.5%</div>
+    <div class="kpi-v n pos">33.1%</div>
     <div class="kpi-s">conviction-weighted · 7 BUYs · AAA×3 AA×2 A×1 B×½</div></div>
   <div class="kpi"><div class="kpi-l">Holdings</div>
     <div class="kpi-v n">21</div>
@@ -428,7 +521,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 <section class="hero">
   <div class="hero-head">
     <div class="hero-title">TODAY'S ACTIONS</div>
-    <div class="hero-meta">7 deploy · 5 reduce · 2 flags — fully deployed, so adds fund from reduces</div>
+    <div class="hero-meta">7 to deploy · 5 to reduce · 8 changed overnight</div>
   </div>
   <div class="hero-cols">
     <div class="hcol">
@@ -436,27 +529,27 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <div class="act">
   <div class="act-top"><span class="badge bg-buy">BUY</span><span class="tier tier-aaa">AAA</span>
     <span class="act-tk">3697 Shift Inc.</span>
-    <span class="act-pw">PWER 30.1%</span></div>
+    <span class="act-pw">PWER 33.1%</span></div>
   <div class="act-why">Quality compounder</div>
   <div class="act-nums"><span>Wt 6.84% → tgt 3.0%</span><span class="warn">+3.84pp</span></div>
 </div><div class="act">
   <div class="act-top"><span class="badge bg-buy">BUY</span><span class="tier tier-aa">AA</span>
     <span class="act-tk">9987 Suzuken</span>
-    <span class="act-pw">PWER 28.5%</span></div>
+    <span class="act-pw">PWER 29.8%</span></div>
   <div class="act-why">Px ¥5,561 vs WAC ¥5,400 = +3</div>
   <div class="act-nums"><span>Wt 2.57%</span></div>
 </div><div class="act">
   <div class="act-top"><span class="badge bg-buy">BUY</span><span class="tier tier-aa">AA</span>
     <span class="act-tk">9684 Square Enix</span>
-    <span class="act-pw">PWER 29.7%</span></div>
+    <span class="act-pw">PWER 28.8%</span></div>
   <div class="act-why">At max 12% cap</div>
   <div class="act-nums"><span>Wt 12.84% → tgt 12.0%</span><span class="dim">+0.84pp</span></div>
 </div><div class="act">
   <div class="act-top"><span class="badge bg-buy">BUY</span><span class="tier tier-aa">AA</span>
-    <span class="act-tk">4613 Kansai Paint</span>
-    <span class="act-pw">PWER 24.7%</span></div>
-  <div class="act-why">Silchester 5</div>
-  <div class="act-nums"><span>Wt 2.78%</span></div>
+    <span class="act-tk">4404 Miyoshi Oil &amp; Fat</span>
+    <span class="act-pw">PWER 25.2%</span></div>
+  <div class="act-why">Liquidity-capped (micro-cap)</div>
+  <div class="act-nums"><span>Wt 4.83% → tgt 1.5%</span><span class="warn">+3.33pp</span></div>
 </div><div class="hero-empty">+3 more in the Positions tab</div>
     </div>
     <div class="hcol">
@@ -464,7 +557,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <div class="act">
   <div class="act-top"><span class="badge bg-sell">SELL</span>
     <span class="act-tk">9308 Inui Global Logistics</span>
-    <span class="act-pw">PWER -2.8%</span></div>
+    <span class="act-pw">PWER -6.0%</span></div>
   <div class="act-why">Failed-campaign pattern — thesis broken.</div>
   <div class="act-nums"><span>Wt 7.81% → tgt 0.5%</span><span class="warn">+7.31pp</span></div>
 </div><div class="act">
@@ -482,21 +575,23 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 </div><div class="act">
   <div class="act-top"><span class="badge bg-weak">WEAK HOLD</span>
     <span class="act-tk">6914 Optex Group</span>
-    <span class="act-pw">PWER 7.5%</span></div>
-  <div class="act-why">PWER 8% — sub-threshold; trim candidate.</div>
+    <span class="act-pw">PWER 12.5%</span></div>
+  <div class="act-why">PWER 12% — sub-threshold; trim candidate.</div>
   <div class="act-nums"><span>Wt 3.72% → tgt 2.5%</span><span class="warn">+1.22pp</span></div>
 </div><div class="hero-empty">+1 more in the Positions tab</div>
     </div>
     <div class="hcol">
-      <div class="hcol-h"><span class="hd hd-flg"></span>FLAGS &amp; CHANGES</div>
-      <div class="flag flag-w"><span class="flag-i">7</span><div><b>7 holdings un-enriched</b> — Ricoh Ord, Cyber Security C O, Mitsui Osk Lines O +4. No thesis or PWER yet.</div></div><div class="flag flag-r"><span class="flag-i">⛔</span><div><b>QOL Holdings (3034)</b> — data quarantine; fields cannot be trusted until re-verified.</div></div>
+      <div class="hcol-h"><span class="hd hd-flg"></span>SINCE YESTERDAY</div>
+      <div class="flag flag-g"><span class="flag-i">✦</span><div><b>3697 Shift Inc.</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>4404 Miyoshi Oil &amp; Fat</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>3034 QOL Holdings</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>6151 Nitto Kohki</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>4417 Global Security Expe</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>3401 Teijin</b> — new EDINET filing</div></div><div class="hero-empty">+2 more in the Changes tab</div><div class="chg-sub">Standing Flags</div><div class="flag flag-w"><span class="flag-i">7</span><div><b>7 holdings un-enriched</b> — no thesis or PWER yet</div></div><div class="flag flag-r"><span class="flag-i">⛔</span><div><b>QOL Holdings</b> — data quarantine</div></div>
     </div>
   </div>
 </section>
 <nav class="tabs">
   <div class="tab on" data-pane="tab-positions">Positions <span class="tab-c">21</span></div>
+  <div class="tab" data-pane="tab-changes">Changes <span class="tab-c">8</span></div>
   <div class="tab" data-pane="tab-risk">Risk</div>
   <div class="tab" data-pane="tab-catalysts">Catalysts <span class="tab-c">7</span></div>
+  <div class="tab" data-pane="tab-filings">Filings <span class="tab-c">35</span></div>
   <div class="tab" data-pane="tab-watch">Watch <span class="tab-c">14</span></div>
 </nav>
 <main>
@@ -510,49 +605,49 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 <div class="grid8 pthead">
   <div class="sortable" data-sort="name" title="Sort by Holding">Holding<span class="sort-ar"></span></div><div>Layer</div><div class="sortable" data-sort="weight" title="Sort by Weight">Weight<span class="sort-ar"></span></div><div class="sortable" data-sort="price" title="Sort by Price">Price<span class="sort-ar"></span></div><div class="sortable" data-sort="pwer" title="Sort by PWER">PWER<span class="sort-ar"></span></div><div class="sortable" data-sort="action" title="Sort by Action">Action<span class="sort-ar"></span></div><div class="sortable" data-sort="catalyst" title="Sort by Catalyst">Catalyst<span class="sort-ar"></span></div><div></div>
 </div><div class="plgroup" data-layer="L1"><span class="pl-t">L1 · CORE CONVICTION</span><span class="pl-m">1 name · 12.8%</span><span class="pl-line"></span></div>
-<div class="grid8 prow" data-layer="L1" data-enrich="0" data-name="9684 square enix" data-sort-weight="12.84" data-sort-price="2713.5" data-sort-pwer="29.7" data-sort-action="0" data-sort-catalyst="35">
+<div class="grid8 prow" data-layer="L1" data-enrich="0" data-name="9684 square enix" data-sort-weight="12.84" data-sort-price="2731.5" data-sort-pwer="28.8" data-sort-action="0" data-sort-catalyst="34">
   <div class="pc-name"><span class="pc-tk">9684</span>
     <div style="min-width:0"><div class="pc-nm">Square Enix</div>
       <div class="pc-by">3D Investment Partners</div></div></div>
   <div><span class="lb lb-l1">L1</span></div>
   <div><div class="pc-wv n">12.84%</div><div class="pc-sub">tgt 12.0% · <span class="dim">+0.84</span></div></div>
-  <div><div class="pc-pv n">¥2,713</div><div class="pc-sub">WAC ¥2,900 · -6%</div></div>
-  <div><span class="pw pw-hi n">29.7%</span></div>
+  <div><div class="pc-pv n">¥2,731</div><div class="pc-sub">WAC ¥2,900 · -6% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-hi n">28.8%</span></div>
   <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
-  <div class="pc-cat">June 2026 AGM 3D board contest<br><span class="cat-d">25 Jun · 35d</span></div>
+  <div class="pc-cat">June 2026 AGM 3D board contest<br><span class="cat-d">25 Jun · 34d</span></div>
   <div class="chev">▸</div>
 </div>
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-26.7%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#5a8a52"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+3.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+40.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#56d364"></div></div><span class="scen-p">20%</span><span class="scen-r pos">+102.7%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-27.1%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#5a8a52"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+2.5%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+39.1%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#56d364"></div></div><span class="scen-p">20%</span><span class="scen-r pos">+101.4%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>29.7%</b> · above the 15% floor</div>
+      <b>28.8%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
-    <p>At max 12% cap. June AGM 3D board contest binary in 8 weeks. Px ¥2,488 vs 3D WAC ¥2,900 = -14.2% below WAC → co-investment edge fully intact. Morningstar FV ¥6,662. Do not add above ¥2,400 (size cap, not WAC). [2026-05-01 NEWS-AUDIT] ?: Wolf Pack (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] ?: 任天堂【7974】、今期経常は21％減益、前期配当増額も今期減配 | 決算... (減配)</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">3D Investment Partners</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">17.5%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">15 Mar · 変更報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,900</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L1</span></div></div>
+    <p>At max 12% cap. June AGM 3D board contest binary in 8 weeks. Px ¥2,488 vs 3D WAC ¥2,900 = -14.2% below WAC → co-investment edge fully intact. Morningstar FV ¥6,662. Do not add above ¥2,400 (size cap, not WAC). [2026-05-01 NEWS-AUDIT] ?: Wolf Pack (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] ?: 任天堂【7974】、今期経常は21％減益、前期配当増額も今期減配 | 決算... (減配) [2026-05-21 NEWS-AUDIT] ?: スクエニhdの25年4〜9月期、…</p>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">3D Investment Partners</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">17.5%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">15 Mar · 変更報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,900</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L1</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">5.5% → 18.5% · 13 filings / 309d · +1.1pp/30d</span></div></div>
   </div>
 </div></div></div><div class="plgroup" data-layer="L2"><span class="pl-t">L2 · ACTIVE CATALYST</span><span class="pl-m">8 names · 39.5%</span><span class="pl-line"></span></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3182 oisix ra daichi" data-sort-weight="8.22" data-sort-price="1486.0" data-sort-pwer="29.9" data-sort-action="1" data-sort-catalyst="76">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3182 oisix ra daichi" data-sort-weight="8.22" data-sort-price="1439.0" data-sort-pwer="34.1" data-sort-action="1" data-sort-catalyst="75">
   <div class="pc-name"><span class="pc-tk">3182</span>
     <div style="min-width:0"><div class="pc-nm">Oisix ra daichi</div>
       <div class="pc-by">GMO-Usonian (E03287) 10.48% · Tier R 純投資</div></div></div>
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">8.22%</div><div class="pc-sub">tgt 5.0% · <span class="warn">+3.22</span></div></div>
-  <div><div class="pc-pv n">¥1,486</div><div class="pc-sub">WAC ¥1,576 · -6%</div></div>
-  <div><span class="pw pw-hi n">29.9%</span></div>
+  <div><div class="pc-pv n">¥1,439</div><div class="pc-sub">WAC ¥1,576 · -9% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-hi n">34.1%</span></div>
   <div><span class="badge bg-hold">HOLD</span></div>
-  <div class="pc-cat">Q1 FY27 earnings late Jul/early Aug PRIMARY near-term <br><span class="cat-d">5 Aug · 76d</span></div>
+  <div class="pc-cat">Q1 FY27 earnings late Jul/early Aug PRIMARY near-term <br><span class="cat-d">5 Aug · 75d</span></div>
   <div class="chev">▸</div>
 </div>
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-19.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:100%;background:#3fb950"></div></div><span class="scen-p">50%</span><span class="scen-r pos">+31.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+54.8%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:11%;background:#56d364"></div></div><span class="scen-p">5%</span><span class="scen-r pos">+88.4%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-16.6%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:100%;background:#3fb950"></div></div><span class="scen-p">50%</span><span class="scen-r pos">+35.5%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+59.8%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:11%;background:#56d364"></div></div><span class="scen-p">5%</span><span class="scen-r pos">+94.6%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>29.9%</b> · above the 15% floor</div>
+      <b>34.1%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -560,14 +655,14 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">GMO-Usonian (E03287) 10.48% · Ti</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">10.48%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">2026-04 · 変更報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,576</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">5 Aug</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="9308 inui global logistics" data-sort-weight="7.81" data-sort-price="1574.0" data-sort-pwer="-2.8" data-sort-action="3" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="9308 inui global logistics" data-sort-weight="7.81" data-sort-price="1626.0" data-sort-pwer="-6.0" data-sort-action="3" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9308</span>
     <div style="min-width:0"><div class="pc-nm">Inui Global Logistics</div>
       <div class="pc-by">Alphaleo Holdings GK (8.13%, primary 5+y</div></div></div>
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">7.81%</div><div class="pc-sub">tgt 0.5% · <span class="neg">+7.31</span></div></div>
-  <div><div class="pc-pv n">¥1,574</div><div class="pc-sub">WAC ¥1,489 · +6%</div></div>
-  <div><span class="pw pw-lo n">-2.8%</span></div>
+  <div><div class="pc-pv n">¥1,626</div><div class="pc-sub">WAC ¥1,489 · +9% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-lo n">-6.0%</span></div>
   <div><span class="badge bg-sell">SELL</span></div>
   <div class="pc-cat">Op profit warning impairs thesis<br><span class="cat-d past">27 Apr</span></div>
   <div class="chev">▸</div>
@@ -575,73 +670,73 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:99%;background:#f85149"></div></div><span class="scen-p">45%</span><span class="scen-r neg">-19.1%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#5a8a52"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+1.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+21.5%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:11%;background:#3fb950"></div></div><span class="scen-p">5%</span><span class="scen-r pos">+41.7%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:99%;background:#f85149"></div></div><span class="scen-p">45%</span><span class="scen-r neg">-21.6%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#f85149"></div></div><span class="scen-p">35%</span><span class="scen-r neg">-2.0%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+17.6%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:11%;background:#3fb950"></div></div><span class="scen-p">5%</span><span class="scen-r pos">+37.1%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>-2.8%</b> · below the 15% floor</div>
+      <b>-6.0%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
     <p>ALPHALEO IS PRIMARY ACTIVIST (not LIM). Dual-entity structure: Alphaleo Holdings GK (Tokyo SPV) + AlphaLeo Capital Advisors Limited (DIFC Dubai investment manager). 5+yr aggressive campaign 2019-present produced lawsuits, EGM convocations, but Inui family bloc ~22% won every contested vote. Alphaleo reducing 21.86% → 8.13% = primary activist incrementally exiting. HOKUETSU PATTERN. CUT call REINFORCED on structural g…</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Alphaleo Holdings GK (8.13%, pri</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.13%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">27 Apr · Manual desk note</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,489</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">27 Apr</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Alphaleo Holdings GK (8.13%, pri</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.13%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">27 Apr · Manual desk note</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,489</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">27 Apr</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">5.1% → 8.4% · 4 filings / 35d · +1.6pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="4849 en japan / en inc." data-sort-weight="4.98" data-sort-price="1280.0" data-sort-pwer="8.6" data-sort-action="2" data-sort-catalyst="35">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="4849 en japan / en inc." data-sort-weight="4.98" data-sort-price="1235.0" data-sort-pwer="12.6" data-sort-action="2" data-sort-catalyst="34">
   <div class="pc-name"><span class="pc-tk">4849</span>
     <div style="min-width:0"><div class="pc-nm">en Japan / en Inc.</div>
       <div class="pc-by">Oasis Management 7.93%</div></div></div>
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">4.98%</div><div class="pc-sub">tgt 4.0% · <span class="dim">+0.98</span></div></div>
-  <div><div class="pc-pv n">¥1,280</div><div class="pc-sub">WAC ¥1,720 · -26%</div></div>
-  <div><span class="pw pw-mid n">8.6%</span></div>
+  <div><div class="pc-pv n">¥1,235</div><div class="pc-sub">WAC ¥1,720 · -28% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-mid n">12.6%</span></div>
   <div><span class="badge bg-weak">WEAK HOLD</span></div>
-  <div class="pc-cat">June 2026 AGM — binary on Oasis proposals (if filed) +<br><span class="cat-d">25 Jun · 35d</span></div>
+  <div class="pc-cat">June 2026 AGM — binary on Oasis proposals (if filed) +<br><span class="cat-d">25 Jun · 34d</span></div>
   <div class="chev">▸</div>
 </div>
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#f85149"></div></div><span class="scen-p">35%</span><span class="scen-r neg">-10.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+25.0%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+52.3%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-29.7%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#f85149"></div></div><span class="scen-p">35%</span><span class="scen-r neg">-6.9%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+29.6%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+57.9%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-27.1%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>8.6%</b> · below the 15% floor</div>
+      <b>12.6%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
     <p>TRIM L1 7% → L2 4% per shadow-buy re-evaluation 2026-05-16. Two non-Oasis hard-stop tripwires fired since Mar-31 memo: (b) Fundamental break — FY26 guidance crushed Feb 12 2026: OP -52.5%, Net -72.9%, dividend ¥70.1→¥24 (-66%), mid-term plan WITHDRAWN. (e) Anchor activist underwater — Oasis 10-20% below WAC ¥1,720 depending on print. Ochi family + foundation bloc = 30.82% NAV (at Oasis failure-pattern threshold). Fou…</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Oasis Management 7.93%</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">7.93%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">19 May · 臨時報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,720</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Oasis Management 7.93%</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">7.93%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">19 May · 臨時報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,720</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">7.9% → 9.9% · 2 filings / 348d · +0.2pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="4404 miyoshi oil &amp; fat" data-sort-weight="4.83" data-sort-price="2095.0" data-sort-pwer="21.4" data-sort-action="0" data-sort-catalyst="35">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="4404 miyoshi oil &amp; fat" data-sort-weight="4.83" data-sort-price="2032.0" data-sort-pwer="25.2" data-sort-action="0" data-sort-catalyst="34">
   <div class="pc-name"><span class="pc-tk">4404</span>
-    <div style="min-width:0"><div class="pc-nm">Miyoshi Oil &amp; Fat</div>
+    <div style="min-width:0"><div class="pc-nm">Miyoshi Oil &amp; Fat<span class="rchip rchip-file">NEW FILING</span></div>
       <div class="pc-by">Ueshima wolf-pack (Ueshima + Naturali + </div></div></div>
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">4.83%</div><div class="pc-sub">tgt 1.5% · <span class="warn">+3.33</span></div></div>
-  <div><div class="pc-pv n">¥2,095</div><div class="pc-sub">WAC ¥2,233 · -6%</div></div>
-  <div><span class="pw pw-hi n">21.4%</span></div>
-  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-a">A</span></div>
-  <div class="pc-cat">AGM cycle (basket)<br><span class="cat-d">25 Jun · 35d</span></div>
+  <div><div class="pc-pv n">¥2,032</div><div class="pc-sub">WAC ¥2,233 · -9% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-hi n">25.2%</span></div>
+  <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
+  <div class="pc-cat">AGM cycle (basket)<br><span class="cat-d">25 Jun · 34d</span></div>
   <div class="chev">▸</div>
 </div>
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-9.4%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+17.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+33.2%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+49.2%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-6.6%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+20.9%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+37.4%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#3fb950"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+53.8%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>21.4%</b> · above the 15% floor</div>
+      <b>25.2%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
-    <p>Liquidity-capped (micro-cap). Treat Ueshima/DOE5% basket as single correlated exposure. [2026-05-01 NEWS-AUDIT] ?: Wolf Pack (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: ミヨシ油脂(4404) ニュース - 株探（かぶたん） (決算発表)</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Ueshima wolf-pack (Ueshima + Nat</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">6.59%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">25 Jan · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,233</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
+    <p>Liquidity-capped (micro-cap). Treat Ueshima/DOE5% basket as single correlated exposure. [2026-05-01 NEWS-AUDIT] ?: Wolf Pack (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: ミヨシ油脂(4404) ニュース - 株探（かぶたん） (決算発表) [2026-05-21 NEWS-AUDIT] ?: ミヨシ油脂(4404) ニュース - 株探（かぶたん） (決算発表)</p>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Ueshima wolf-pack (Ueshima + Nat</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">6.59%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">11 May · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,233</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">25 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">5.5% → 7.6% · 4 filings / 122d · +0.9pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="6151 nitto kohki" data-sort-weight="4.11" data-sort-price="1642.0" data-sort-pwer="0.0" data-sort-action="3" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="6151 nitto kohki" data-sort-weight="4.11" data-sort-price="1609.0" data-sort-pwer="0.0" data-sort-action="3" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">6151</span>
-    <div style="min-width:0"><div class="pc-nm">Nitto Kohki</div>
+    <div style="min-width:0"><div class="pc-nm">Nitto Kohki<span class="rchip rchip-file">NEW FILING</span></div>
       <div class="pc-by">Symphony Financial Group — significant s</div></div></div>
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">4.11%</div><div class="pc-sub">tgt 4.0% · <span class="dim">+0.11</span></div></div>
-  <div><div class="pc-pv n">¥1,642</div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥1,609</div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-lo n">0.0%</span></div>
   <div><span class="badge bg-sell">SELL</span></div>
   <div class="pc-cat">TBD</div>
@@ -656,28 +751,28 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
-    <p>Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: 2015年02月23日（月）に提出されたEDINET... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-18: 日東工器 (6151) : ニュース・適時開示 [NITTO KOHKI] - みんかぶ (減配)</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Symphony Financial Group — signi</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
+    <p>Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: 2015年02月23日（月）に提出されたEDINET... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-18: 日東工器 (6151) : ニュース・適時開示 [NITTO KOHKI] - みんかぶ (減配) [2026-05-21 NEWS-AUDIT] 2026-05-18: 日東工器 (6151) : ニュース・適時開示 [Nitto Kohki] - みんかぶ (減配)</p>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Symphony Financial Group — signi</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">13 May · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">10.3% → 13.3% · 4 filings / 238d · +0.6pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="6914 optex group" data-sort-weight="3.72" data-sort-price="4495.0" data-sort-pwer="7.5" data-sort-action="2" data-sort-catalyst="86">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="6914 optex group" data-sort-weight="3.72" data-sort-price="4295.0" data-sort-pwer="12.5" data-sort-action="2" data-sort-catalyst="85">
   <div class="pc-name"><span class="pc-tk">6914</span>
     <div style="min-width:0"><div class="pc-nm">Optex Group</div>
       <div class="pc-by">GMO-Usonian 5.55% (Feb 17 2026 crossing)</div></div></div>
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">3.72%</div><div class="pc-sub">tgt 2.5% · <span class="dim">+1.22</span></div></div>
-  <div><div class="pc-pv n">¥4,495</div><div class="pc-sub">WAC ¥2,100 · +114%</div></div>
-  <div><span class="pw pw-mid n">7.5%</span></div>
+  <div><div class="pc-pv n">¥4,295</div><div class="pc-sub">WAC ¥2,100 · +104% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-mid n">12.5%</span></div>
   <div><span class="badge bg-weak">WEAK HOLD</span></div>
-  <div class="pc-cat">Q2 FY26 earnings — decisive beat of management's conse<br><span class="cat-d">15 Aug · 86d</span></div>
+  <div class="pc-cat">Q2 FY26 earnings — decisive beat of management's conse<br><span class="cat-d">15 Aug · 85d</span></div>
   <div class="chev">▸</div>
 </div>
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#f85149"></div></div><span class="scen-p">25%</span><span class="scen-r neg">-37.6%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:100%;background:#5a8a52"></div></div><span class="scen-p">50%</span><span class="scen-r pos">+7.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+52.9%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:4%;background:#5a8a52"></div></div><span class="scen-p">0%</span><span class="scen-r pos">0.0%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#f85149"></div></div><span class="scen-p">25%</span><span class="scen-r neg">-34.6%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:100%;background:#5a8a52"></div></div><span class="scen-p">50%</span><span class="scen-r pos">+12.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#56d364"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+60.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:4%;background:#5a8a52"></div></div><span class="scen-p">0%</span><span class="scen-r pos">0.0%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>7.5%</b> · below the 15% floor</div>
+      <b>12.5%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
@@ -685,65 +780,65 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">GMO-Usonian 5.55% (Feb 17 2026 c</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">5.55%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">17 Feb · 大量保有報告書 (initial 5%+ crossing)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,100</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">15 Aug</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3401 teijin" data-sort-weight="3.05" data-sort-price="1636.0" data-sort-pwer="58.0" data-sort-action="0" data-sort-catalyst="40">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3401 teijin" data-sort-weight="3.05" data-sort-price="1606.0" data-sort-pwer="61.0" data-sort-action="0" data-sort-catalyst="39">
   <div class="pc-name"><span class="pc-tk">3401</span>
-    <div style="min-width:0"><div class="pc-nm">Teijin</div>
+    <div style="min-width:0"><div class="pc-nm">Teijin<span class="rchip rchip-file">NEW FILING</span></div>
       <div class="pc-by">Effissimo Capital Management (Tier 1 har</div></div></div>
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">3.05%</div><div class="pc-sub">tgt 5.0% · <span class="warn">-1.95</span></div></div>
-  <div><div class="pc-pv n">¥1,636</div><div class="pc-sub">WAC ¥1,350 · +21%</div></div>
-  <div><span class="pw pw-hi n">58.0%</span></div>
+  <div><div class="pc-pv n">¥1,606</div><div class="pc-sub">WAC ¥1,350 · +19% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-hi n">61.0%</span></div>
   <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
-  <div class="pc-cat">Mode 2 threshold crossing — Effissimo at 19.26%, ~0.74<br><span class="cat-d">30 Jun · 40d</span></div>
+  <div class="pc-cat">Mode 2 threshold crossing — Effissimo at 19.26%, ~0.74<br><span class="cat-d">30 Jun · 39d</span></div>
   <div class="chev">▸</div>
 </div>
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:26%;background:#f85149"></div></div><span class="scen-p">12%</span><span class="scen-r neg">-14.4%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:59%;background:#3fb950"></div></div><span class="scen-p">27%</span><span class="scen-r pos">+22.2%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#56d364"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+62.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:68%;background:#56d364"></div></div><span class="scen-p">31%</span><span class="scen-r pos">+113.3%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:26%;background:#f85149"></div></div><span class="scen-p">12%</span><span class="scen-r neg">-12.8%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:59%;background:#3fb950"></div></div><span class="scen-p">27%</span><span class="scen-r pos">+24.5%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#56d364"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+65.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:68%;background:#56d364"></div></div><span class="scen-p">31%</span><span class="scen-r pos">+117.3%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>58.0%</b> · above the 15% floor</div>
+      <b>61.0%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
     <p>STEP UP to L2 5% NAV per AEDP v11 memo 2026-05-16. SOTP+CASH primary tag, GOV secondary. Entry tranches: 50bp at ¥1,680 immediate, scale to 5% on pullbacks ¥1,500-1,600, aggressive add ≤¥1,500. NO CHASE &gt;¥1,750. Funding: v10.2 retained +1pp dry powder + 1pp Tamron trim. GS PB facilitation pattern confirmed: GS 5.0% Mar 31 → 1.74% Apr 22 (−3.26pt) vs Effissimo +1.73pt same week = high-conviction planned campaign signa…</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Effissimo Capital Management (Ti</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">19.26%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">14 Apr · 変更報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,350</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">30 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Effissimo Capital Management (Ti</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">19.26%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">11 May · 臨時報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,350</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">30 Jun</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">11.1% → 19.3% · 8 filings / 302d · +4.3pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3549 kusuri no aoki holdings" data-sort-weight="2.79" data-sort-price="3749.0" data-sort-pwer="26.0" data-sort-action="0" data-sort-catalyst="102">
+<div class="grid8 prow" data-layer="L2" data-enrich="0" data-name="3549 kusuri no aoki holdings" data-sort-weight="2.79" data-sort-price="3758.0" data-sort-pwer="25.7" data-sort-action="0" data-sort-catalyst="101">
   <div class="pc-name"><span class="pc-tk">3549</span>
     <div style="min-width:0"><div class="pc-nm">Kusuri no Aoki Holdings</div>
       <div class="pc-by">Oasis Management Company Ltd. (E31883) ·</div></div></div>
   <div><span class="lb lb-l2">L2</span></div>
   <div><div class="pc-wv n">2.79%</div><div class="pc-sub">tgt 4.0% · <span class="dim">-1.21</span></div></div>
-  <div><div class="pc-pv n">¥3,749</div><div class="pc-sub">WAC ¥3,050 · +23%</div></div>
-  <div><span class="pw pw-hi n">26.0%</span></div>
+  <div><div class="pc-pv n">¥3,758</div><div class="pc-sub">WAC ¥3,050 · +23% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-hi n">25.7%</span></div>
   <div><span class="badge bg-buy">BUY</span> <span class="tier tier-b">B</span></div>
-  <div class="pc-cat">Aug 2026 AGM (binary): Items 5/6 (cap-return) + Item 3<br><span class="cat-d">31 Aug · 102d</span></div>
+  <div class="pc-cat">Aug 2026 AGM (binary): Items 5/6 (cap-return) + Item 3<br><span class="cat-d">31 Aug · 101d</span></div>
   <div class="chev">▸</div>
 </div>
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-12.0%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#5a8a52"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+12.0%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+28.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#56d364"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+60.0%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#f85149"></div></div><span class="scen-p">15%</span><span class="scen-r neg">-12.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#5a8a52"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+11.8%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+27.7%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+59.7%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>26.0%</b> · above the 15% floor</div>
+      <b>25.7%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
     <p>SCALE FAST per AEDP memo 2026-05-16. Hybrid Cash-Return × Transaction × Governance archetype (Tsuruha comp). 12% below Oasis marginal cost ¥4,372. Tranche 1: 2% immediate @ ¥3,840. T2: 1% on dip to ¥3,650-3,700 or earnings clear. T3: 1% up to ¥4,200 on AGM proposal filing. Fund from Alfresa + Daito Trust trims. HARD STOPS: anchor &lt;12.5% = exit; spot &gt;¥4,500 no add; FY28 OP miss &gt;15% trim half; close &lt;¥3,200 reassess;…</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Oasis Management Company Ltd. (E</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">14.05%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">13 May · 変更報告書 (保有目的の変更)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥3,050</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">31 Aug</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div></div>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Oasis Management Company Ltd. (E</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">14.05%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">13 May · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥3,050</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">31 Aug</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L2</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">10.7% → 14.1% · 4 filings / 251d · +0.0pp/30d</span></div></div>
   </div>
 </div></div></div><div class="plgroup" data-layer="L3"><span class="pl-t">L3 · BUILD / MONITOR</span><span class="pl-m">11 names · 44.2%</span><span class="pl-line"></span></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="7752 ricoh ord" data-sort-weight="8.59" data-sort-price="1421.5" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="7752 ricoh ord" data-sort-weight="8.59" data-sort-price="1443.0" data-sort-pwer="" data-sort-action="4" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">7752</span>
     <div style="min-width:0"><div class="pc-nm">RICOH ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">8.59%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥1,421 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥1,443 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-na n">—</span></div>
-  <div><span class="badge bg-stale">STALE</span></div>
+  <div><span class="badge bg-watch">WATCH</span></div>
   <div class="pc-cat"><span class="dim">No thesis — new from CGSI sync</span></div>
   <div class="chev">▸</div>
 </div>
@@ -751,17 +846,17 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <b>This holding has no thesis yet.</b> It entered the book from the CGSI
       broker sync and is flagged for enrichment — activist, PWER scenarios and
       hard stops still need to be authored. Current price
-      ¥1,421, portfolio weight
+      ¥1,443, portfolio weight
       8.59%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="3697 shift inc." data-sort-weight="6.84" data-sort-price="664.1" data-sort-pwer="30.1" data-sort-action="0" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="3697 shift inc." data-sort-weight="6.84" data-sort-price="649.2" data-sort-pwer="33.1" data-sort-action="0" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">3697</span>
-    <div style="min-width:0"><div class="pc-nm">Shift Inc.</div>
+    <div style="min-width:0"><div class="pc-nm">Shift Inc.<span class="rchip rchip-file">NEW FILING</span></div>
       <div class="pc-by">Arcus Investment</div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">6.84%</div><div class="pc-sub">tgt 3.0% · <span class="warn">+3.84</span></div></div>
-  <div><div class="pc-pv n">¥664</div><div class="pc-sub">WAC ¥738 · -10%</div></div>
-  <div><span class="pw pw-hi n">30.1%</span></div>
+  <div><div class="pc-pv n">¥649</div><div class="pc-sub">WAC ¥738 · -12% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-hi n">33.1%</span></div>
   <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aaa">AAA</span></div>
   <div class="pc-cat">Apr 14 Q1 print (post-print verify) · 2 AI launches<br><span class="cat-d past">14 Apr</span></div>
   <div class="chev">▸</div>
@@ -769,25 +864,25 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-26.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#5a8a52"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+13.1%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+47.6%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#56d364"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+96.7%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-24.5%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+15.7%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:77%;background:#3fb950"></div></div><span class="scen-p">35%</span><span class="scen-r pos">+51.0%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:33%;background:#56d364"></div></div><span class="scen-p">15%</span><span class="scen-r pos">+101.2%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>30.1%</b> · above the 15% floor</div>
+      <b>33.1%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
-    <p>Quality compounder. Founder 30.62% controlling stake caps upside variance. Q1 print Apr 14 - verify thesis intact post-print. [2026-05-01 NEWS-AUDIT] ?: Dream Incubator Inc. (大量保有報告, 変更報告書) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne &gt; [8804]... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: SHIFT(3697) ニュース - 株探（かぶたん） (決算発表)</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Arcus Investment</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">7.14%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">8 Apr · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥738</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">14 Apr</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div></div>
+    <p>Quality compounder. Founder 30.62% controlling stake caps upside variance. Q1 print Apr 14 - verify thesis intact post-print. [2026-05-01 NEWS-AUDIT] ?: Dream Incubator Inc. (大量保有報告, 変更報告書) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne &gt; [8804]... (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: SHIFT(3697) ニュース - 株探（かぶたん） (決算発表) [2026-05-21 NEWS-AUDIT] ?: アクセル HD、今期最終を赤字拡大に下方修正 (下方修正)</p>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Arcus Investment</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">7.14%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">21 May · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥738</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">14 Apr</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">5.0% → 7.1% · 5 filings / 31d · +3.0pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="4493 cyber security c ord" data-sort-weight="5.57" data-sort-price="1646.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="4493 cyber security c ord" data-sort-weight="5.57" data-sort-price="1547.0" data-sort-pwer="" data-sort-action="4" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">4493</span>
     <div style="min-width:0"><div class="pc-nm">CYBER SECURITY C ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">5.57%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥1,646 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥1,547 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-na n">—</span></div>
-  <div><span class="badge bg-stale">STALE</span></div>
+  <div><span class="badge bg-watch">WATCH</span></div>
   <div class="pc-cat"><span class="dim">No thesis — new from CGSI sync</span></div>
   <div class="chev">▸</div>
 </div>
@@ -795,17 +890,17 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <b>This holding has no thesis yet.</b> It entered the book from the CGSI
       broker sync and is flagged for enrichment — activist, PWER scenarios and
       hard stops still need to be authored. Current price
-      ¥1,646, portfolio weight
+      ¥1,547, portfolio weight
       5.57%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="3034 qol holdings" data-sort-weight="4.67" data-sort-price="1861.0" data-sort-pwer="4.5" data-sort-action="7" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="3034 qol holdings" data-sort-weight="4.67" data-sort-price="1859.0" data-sort-pwer="4.6" data-sort-action="7" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">3034</span>
-    <div style="min-width:0"><div class="pc-nm">QOL Holdings</div>
+    <div style="min-width:0"><div class="pc-nm">QOL Holdings<span class="rchip rchip-file">NEW FILING</span></div>
       <div class="pc-by">Will Field Capital Pte Ltd (+ Shino Fumi</div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">4.67%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥1,861</div><div class="pc-sub">WAC ¥1,860 · +0%</div></div>
-  <div><span class="pw pw-lo n">4.5%</span></div>
+  <div><div class="pc-pv n">¥1,859</div><div class="pc-sub">WAC ¥1,860 · -0% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-lo n">4.6%</span></div>
   <div><span class="badge bg-quar">QUARANTINE</span></div>
   <div class="pc-cat">verify - Wil Field engagement pattern</div>
   <div class="chev">▸</div>
@@ -813,25 +908,25 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-15.5%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:99%;background:#5a8a52"></div></div><span class="scen-p">45%</span><span class="scen-r pos">+0.8%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+15.2%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#3fb950"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+34.3%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:44%;background:#f85149"></div></div><span class="scen-p">20%</span><span class="scen-r neg">-15.4%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:99%;background:#5a8a52"></div></div><span class="scen-p">45%</span><span class="scen-r pos">+0.9%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+15.3%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#3fb950"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+34.5%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>4.5%</b> · below the 15% floor</div>
+      <b>4.6%</b> · below the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
     <p>POST-QUARANTINE RECORD (Apr 30 2026). Will Field Capital quiet accumulator: Feb 2025 5.02% → Apr 2025 6.02% → Oct 2025 9.14% (joint with Shino Fumiya). Implied WAC ¥1,679. Asuka WAC ¥1,860 (slightly above activist basis, no edge degradation). Strategic-source: GOV — TSE PBR-reform pressure on healthcare services, capital allocation pressure plausible from dividend/buyback mechanism. Not a hard-activist thesis. PWER 6…</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Will Field Capital Pte Ltd (+ Sh</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.69%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">21 Oct · 変更報告書 (joint)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,860</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div></div>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Will Field Capital Pte Ltd (+ Sh</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.69%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">21 May · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥1,860</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">7.0% → 18.2% · 16 filings / 287d · +0.0pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9104 mitsui osk lines ord" data-sort-weight="4.25" data-sort-price="5863.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9104 mitsui osk lines ord" data-sort-weight="4.25" data-sort-price="5709.0" data-sort-pwer="" data-sort-action="4" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9104</span>
     <div style="min-width:0"><div class="pc-nm">MITSUI OSK LINES ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">4.25%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥5,863 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥5,709 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-na n">—</span></div>
-  <div><span class="badge bg-stale">STALE</span></div>
+  <div><span class="badge bg-watch">WATCH</span></div>
   <div class="pc-cat"><span class="dim">No thesis — new from CGSI sync</span></div>
   <div class="chev">▸</div>
 </div>
@@ -839,18 +934,18 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <b>This holding has no thesis yet.</b> It entered the book from the CGSI
       broker sync and is flagged for enrichment — activist, PWER scenarios and
       hard stops still need to be authored. Current price
-      ¥5,863, portfolio weight
+      ¥5,709, portfolio weight
       4.25%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9115 meiji shipping ord" data-sort-weight="2.97" data-sort-price="1227.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9115 meiji shipping ord" data-sort-weight="2.97" data-sort-price="1130.0" data-sort-pwer="" data-sort-action="4" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9115</span>
     <div style="min-width:0"><div class="pc-nm">MEIJI SHIPPING ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">2.97%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥1,227 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥1,130 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-na n">—</span></div>
-  <div><span class="badge bg-stale">STALE</span></div>
+  <div><span class="badge bg-watch">WATCH</span></div>
   <div class="pc-cat"><span class="dim">No thesis — new from CGSI sync</span></div>
   <div class="chev">▸</div>
 </div>
@@ -858,17 +953,17 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <b>This holding has no thesis yet.</b> It entered the book from the CGSI
       broker sync and is flagged for enrichment — activist, PWER scenarios and
       hard stops still need to be authored. Current price
-      ¥1,227, portfolio weight
+      ¥1,130, portfolio weight
       2.97%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="4613 kansai paint" data-sort-weight="2.78" data-sort-price="2304.5" data-sort-pwer="24.7" data-sort-action="0" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="4613 kansai paint" data-sort-weight="2.78" data-sort-price="2341.5" data-sort-pwer="22.7" data-sort-action="0" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">4613</span>
-    <div style="min-width:0"><div class="pc-nm">Kansai Paint</div>
+    <div style="min-width:0"><div class="pc-nm">Kansai Paint<span class="rchip rchip-file">NEW FILING</span></div>
       <div class="pc-by">Silchester International Investors</div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">2.78%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥2,304</div><div class="pc-sub">WAC ¥2,511 · -8%</div></div>
-  <div><span class="pw pw-hi n">24.7%</span></div>
+  <div><div class="pc-pv n">¥2,341</div><div class="pc-sub">WAC ¥2,511 · -7% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-hi n">22.7%</span></div>
   <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
   <div class="pc-cat">May 11 earnings · TSE PBR reform pressure · India biz <br><span class="cat-d past">11 May</span></div>
   <div class="chev">▸</div>
@@ -876,24 +971,24 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#f85149"></div></div><span class="scen-p">25%</span><span class="scen-r neg">-12.2%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:88%;background:#3fb950"></div></div><span class="scen-p">40%</span><span class="scen-r pos">+23.9%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+44.6%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#56d364"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+70.4%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#f85149"></div></div><span class="scen-p">25%</span><span class="scen-r neg">-13.6%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:88%;background:#3fb950"></div></div><span class="scen-p">40%</span><span class="scen-r pos">+22.0%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:55%;background:#3fb950"></div></div><span class="scen-p">25%</span><span class="scen-r pos">+42.3%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#56d364"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+67.7%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>24.7%</b> · above the 15% floor</div>
+      <b>22.7%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
     <p>Silchester 5.05% disclosed Mar 2026, WAC ¥2,511. Tier 2 LONG-ONLY style (NOT Tier 1 activist) - thesis must stand on fundamentals + TSE reform. P/E 11.5x vs global peers 17-25x, 4.47% yield. India growth (Kansai Nerolac) hidden asset. Px below WAC = clean shadow co-investment. Entered Apr 1 2026 funded from Daito Trust trim. Patient 24-36mo horizon. [2026-04-30 VERIFICATION-AUDIT] Silchester (E24872) filed initial 5.…</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Silchester International Investo</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">5.05%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">1 Apr · 大量保有報告書 (initial 5%+)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,511</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">11 May</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div></div>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Silchester International Investo</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">5.05%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">21 May · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥2,511</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">11 May</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">5.0% → 7.2% · 3 filings / 48d · +7.8pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="9987 suzuken" data-sort-weight="2.57" data-sort-price="5399.0" data-sort-pwer="28.5" data-sort-action="0" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="0" data-name="9987 suzuken" data-sort-weight="2.57" data-sort-price="5344.0" data-sort-pwer="29.8" data-sort-action="0" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9987</span>
     <div style="min-width:0"><div class="pc-nm">Suzuken</div>
       <div class="pc-by">Silchester International Investors</div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">2.57%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥5,399</div><div class="pc-sub">WAC ¥5,500 · -2%</div></div>
-  <div><span class="pw pw-hi n">28.5%</span></div>
+  <div><div class="pc-pv n">¥5,344</div><div class="pc-sub">WAC ¥5,500 · -3% · <span class="dim">today</span></div></div>
+  <div><span class="pw pw-hi n">29.8%</span></div>
   <div><span class="badge bg-buy">BUY</span> <span class="tier tier-aa">AA</span></div>
   <div class="pc-cat">May 2026 full-year results + new MTMP announcement<br><span class="cat-d past">15 May</span></div>
   <div class="chev">▸</div>
@@ -901,25 +996,25 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 <div class="pexp-row" hidden><div class="pexp"><div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
-    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:40%;background:#f85149"></div></div><span class="scen-p">18%</span><span class="scen-r neg">-12.4%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:92%;background:#3fb950"></div></div><span class="scen-p">42%</span><span class="scen-r pos">+23.6%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+44.2%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#56d364"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+75.1%</span></div></div>
+    <div class="scen"><div class="scen-row"><span class="scen-l">Bear</span><div class="scen-track"><div class="scen-fill" style="width:40%;background:#f85149"></div></div><span class="scen-p">18%</span><span class="scen-r neg">-11.5%</span></div><div class="scen-row"><span class="scen-l">Base</span><div class="scen-track"><div class="scen-fill" style="width:92%;background:#3fb950"></div></div><span class="scen-p">42%</span><span class="scen-r pos">+24.8%</span></div><div class="scen-row"><span class="scen-l">Bull</span><div class="scen-track"><div class="scen-fill" style="width:66%;background:#3fb950"></div></div><span class="scen-p">30%</span><span class="scen-r pos">+45.7%</span></div><div class="scen-row"><span class="scen-l">X-Bull</span><div class="scen-track"><div class="scen-fill" style="width:22%;background:#56d364"></div></div><span class="scen-p">10%</span><span class="scen-r pos">+76.9%</span></div></div>
     <div class="pexp-foot">Probability-weighted return =
-      <b>28.5%</b> · above the 15% floor</div>
+      <b>29.8%</b> · above the 15% floor</div>
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
     <p>Px ¥5,561 vs WAC ¥5,400 = +3.0% (close to NEUTRAL edge — clean shadow entry zone). Existing Alfresa 2% in book aligns with sector thesis - DON'T trim Alfresa to fund Suzuken. Multi-year compounding horizon (not binary AGM trade). Sector tailwind: 3-name coordinated capital return campaign is materially more probable than 3 separate trajectories. [2026-04-30 VERIFICATION-AUDIT] Silchester International Investors LLP a…</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Silchester International Investo</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.25%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">15 Apr · 変更報告書 (Re-accumulation past prior peak)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥5,500</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">15 May</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div></div>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">Silchester International Investo</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">8.25%</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">15 Apr · 変更報告書 (Re-accumulation past prior peak)</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">¥5,500</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">15 May</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3</span></div><div class="kv-i"><span class="kv-k">Accumulation</span><span class="kv-v">6.1% → 8.2% · 3 filings / 307d · +0.1pp/30d</span></div></div>
   </div>
 </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9722 fujita kanko ord" data-sort-weight="2.3" data-sort-price="1905.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="9722 fujita kanko ord" data-sort-weight="2.3" data-sort-price="1862.0" data-sort-pwer="" data-sort-action="4" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">9722</span>
     <div style="min-width:0"><div class="pc-nm">FUJITA KANKO ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">2.30%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥1,905 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥1,862 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-na n">—</span></div>
-  <div><span class="badge bg-stale">STALE</span></div>
+  <div><span class="badge bg-watch">WATCH</span></div>
   <div class="pc-cat"><span class="dim">No thesis — new from CGSI sync</span></div>
   <div class="chev">▸</div>
 </div>
@@ -927,18 +1022,18 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <b>This holding has no thesis yet.</b> It entered the book from the CGSI
       broker sync and is flagged for enrichment — activist, PWER scenarios and
       hard stops still need to be authored. Current price
-      ¥1,905, portfolio weight
+      ¥1,862, portfolio weight
       2.30%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="5930 bunka shutter ord" data-sort-weight="2.2" data-sort-price="1820.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="5930 bunka shutter ord" data-sort-weight="2.2" data-sort-price="1833.0" data-sort-pwer="" data-sort-action="4" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">5930</span>
     <div style="min-width:0"><div class="pc-nm">BUNKA SHUTTER ORD</div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">2.20%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥1,820 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥1,833 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-na n">—</span></div>
-  <div><span class="badge bg-stale">STALE</span></div>
+  <div><span class="badge bg-watch">WATCH</span></div>
   <div class="pc-cat"><span class="dim">No thesis — new from CGSI sync</span></div>
   <div class="chev">▸</div>
 </div>
@@ -946,18 +1041,18 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <b>This holding has no thesis yet.</b> It entered the book from the CGSI
       broker sync and is flagged for enrichment — activist, PWER scenarios and
       hard stops still need to be authored. Current price
-      ¥1,820, portfolio weight
+      ¥1,833, portfolio weight
       2.20%.
     </div></div></div>
-<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="3776 broadband tower ord" data-sort-weight="1.51" data-sort-price="250.0" data-sort-pwer="" data-sort-action="5" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3" data-enrich="1" data-name="3776 broadband tower ord" data-sort-weight="1.51" data-sort-price="255.0" data-sort-pwer="" data-sort-action="4" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">3776</span>
-    <div style="min-width:0"><div class="pc-nm">BROADBAND TOWER ORD</div>
+    <div style="min-width:0"><div class="pc-nm">BROADBAND TOWER ORD<span class="rchip rchip-file">NEW FILING</span></div>
       <div class="pc-by"><span class="enrich">NEEDS ENRICHMENT</span></div></div></div>
   <div><span class="lb lb-l3">L3</span></div>
   <div><div class="pc-wv n">1.51%</div><div class="pc-sub"><span class="dim">no target</span></div></div>
-  <div><div class="pc-pv n">¥250 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥255 <span class="src-eod" title="Broker mark from the CGSI Position file — Yahoo live quote was unavailable">EOD</span></div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-na n">—</span></div>
-  <div><span class="badge bg-stale">STALE</span></div>
+  <div><span class="badge bg-watch">WATCH</span></div>
   <div class="pc-cat"><span class="dim">No thesis — new from CGSI sync</span></div>
   <div class="chev">▸</div>
 </div>
@@ -965,16 +1060,16 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <b>This holding has no thesis yet.</b> It entered the book from the CGSI
       broker sync and is flagged for enrichment — activist, PWER scenarios and
       hard stops still need to be authored. Current price
-      ¥250, portfolio weight
+      ¥255, portfolio weight
       1.51%.
     </div></div></div><div class="plgroup" data-layer="L3-PAH"><span class="pl-t">L3-PAH · PRE-ACTIVIST SCREEN</span><span class="pl-m">1 name · 3.4%</span><span class="pl-line"></span></div>
-<div class="grid8 prow" data-layer="L3-PAH" data-enrich="0" data-name="4417 global security experts" data-sort-weight="3.4" data-sort-price="2890.0" data-sort-pwer="0.0" data-sort-action="3" data-sort-catalyst="">
+<div class="grid8 prow" data-layer="L3-PAH" data-enrich="0" data-name="4417 global security experts" data-sort-weight="3.4" data-sort-price="3110.0" data-sort-pwer="0.0" data-sort-action="3" data-sort-catalyst="">
   <div class="pc-name"><span class="pc-tk">4417</span>
-    <div style="min-width:0"><div class="pc-nm">Global Security Experts</div>
+    <div style="min-width:0"><div class="pc-nm">Global Security Experts<span class="rchip rchip-file">NEW FILING</span></div>
       <div class="pc-by">PAH-A pre-activist screen — no Tier 1 fi</div></div></div>
   <div><span class="lb lb-lp">PAH</span></div>
   <div><div class="pc-wv n">3.40%</div><div class="pc-sub">tgt 1.2% · <span class="warn">+2.20</span></div></div>
-  <div><div class="pc-pv n">¥2,890</div><div class="pc-sub">WAC —</div></div>
+  <div><div class="pc-pv n">¥3,110</div><div class="pc-sub">WAC — · <span class="dim">today</span></div></div>
   <div><span class="pw pw-lo n">0.0%</span></div>
   <div><span class="badge bg-sell">SELL</span></div>
   <div class="pc-cat">TBD</div>
@@ -989,10 +1084,37 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   </div>
   <div>
     <div class="pexp-h">THESIS</div>
-    <p>Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: Insider decrases its stake in Marimo Regional Revitalization REIT... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-15: グローバルセキュリティエキスパート株式会社【4417】株価情報-StockW...Global Security Experts Inc. (4417) Fis (決算発表, 業績)</p>
-    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">PAH-A pre-activist screen — no T</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3-PAH</span></div></div>
+    <p>Stub created 2026-05-16 from May152026Asuka.xlsx — needs activist/WAC/thesis enrichment. [2026-05-16 NEWS-AUDIT] ?: Insider decrases its stake in Marimo Regional Revitalization REIT... (大量保有報告, 変更報告書) [2026-05-18 NEWS-AUDIT] 2026-05-15: グローバルセキュリティエキスパート株式会社【4417】株価情報-StockW...Global Security Experts Inc. (4417) Fis (決算発表, 業績) [2026-05-21 NEWS-AUDIT] ?: グローバルセキュリティエキスパート（4417）のIR情報・決算資料 (決算発表, 業績)</p>
+    <div class="kv"><div class="kv-i"><span class="kv-k">Activist</span><span class="kv-v">PAH-A pre-activist screen — no T</span></div><div class="kv-i"><span class="kv-k">Stake</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Last filing</span><span class="kv-v">11 May · 大量保有報告書</span></div><div class="kv-i"><span class="kv-k">WAC</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Catalyst</span><span class="kv-v">—</span></div><div class="kv-i"><span class="kv-k">Layer</span><span class="kv-v">L3-PAH</span></div></div>
   </div>
 </div></div></div></div></section>
+  <section class="tabpane" id="tab-changes" hidden>
+<div class="stat4">
+  <div class="stat"><div class="stat-l">Total Changes</div>
+    <div class="stat-v n">8</div>
+    <div class="stat-s">since the last snapshot</div></div>
+  <div class="stat"><div class="stat-l">Verdict Flips</div>
+    <div class="stat-v n">0</div>
+    <div class="stat-s">action changed overnight</div></div>
+  <div class="stat"><div class="stat-l">New Filings</div>
+    <div class="stat-v n">8</div>
+    <div class="stat-s">EDINET filings overnight</div></div>
+  <div class="stat"><div class="stat-l">Standing Flags</div>
+    <div class="stat-v n">2</div>
+    <div class="stat-s">open portfolio issues</div></div>
+</div>
+<div class="row2">
+  <div class="card">
+    <div class="card-h"><div class="card-t">SINCE YESTERDAY — ALL CHANGES</div>
+      <div class="card-sub">8 changes</div></div>
+    <div class="card-b"><div class="flag flag-g"><span class="flag-i">✦</span><div><b>3697 Shift Inc.</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>4404 Miyoshi Oil &amp; Fat</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>3034 QOL Holdings</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>6151 Nitto Kohki</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>4417 Global Security Expe</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>3401 Teijin</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>4613 Kansai Paint</b> — new EDINET filing</div></div><div class="flag flag-g"><span class="flag-i">✦</span><div><b>3776 BROADBAND TOWER ORD</b> — new EDINET filing</div></div></div>
+  </div>
+  <div class="card">
+    <div class="card-h"><div class="card-t">STANDING FLAGS</div>
+      <div class="card-sub">2 open</div></div>
+    <div class="card-b"><div class="flag flag-w"><span class="flag-i">7</span><div><b>7 holdings un-enriched</b> — no thesis or PWER yet</div></div><div class="flag flag-r"><span class="flag-i">⛔</span><div><b>QOL Holdings</b> — data quarantine</div></div></div>
+  </div>
+</div></section>
   <section class="tabpane" id="tab-risk" hidden>
 <div class="stat4">
   <div class="stat"><div class="stat-l">Top-5 Concentration</div>
@@ -1024,7 +1146,7 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
       <div class="sc-q sc-q-bl">ENRICH / EXIT<small>small · low PWER</small></div>
       <div class="sc-q sc-q-br">ADD<small>small · high PWER</small></div>
       <div class="sc-floor"><span>15% floor</span></div>
-      <div class="sc-dot sc-l1" data-tip="9684 · Square Enix&#10;L1 — Core Conviction&#10;PWER 29.7%    ·    Weight 12.84%&#10;Action — BUY" style="left:49.5%;bottom:91.7%;width:21px;height:21px"><span class="sc-tag">9684 Square Enix</span></div><div class="sc-dot sc-l2" data-tip="3182 · Oisix ra daichi&#10;L2 — Active Catalyst&#10;PWER 29.9%    ·    Weight 8.22%&#10;Action — HOLD" style="left:49.8%;bottom:58.7%;width:17px;height:17px"><span class="sc-tag">3182 Oisix ra da</span></div><div class="sc-dot sc-l2" data-tip="9308 · Inui Global Logistics&#10;L2 — Active Catalyst&#10;PWER -2.8%    ·    Weight 7.81%&#10;Action — SELL" style="left:0.0%;bottom:55.8%;width:16px;height:16px"><span class="sc-tag">9308 Inui Global</span></div><div class="sc-dot sc-l3" data-tip="3697 · Shift Inc.&#10;L3 — Build / Monitor&#10;PWER 30.1%    ·    Weight 6.84%&#10;Action — BUY" style="left:50.2%;bottom:48.9%;width:15px;height:15px"></div><div class="sc-dot sc-l2" data-tip="4849 · en Japan / en Inc.&#10;L2 — Active Catalyst&#10;PWER 8.6%    ·    Weight 4.98%&#10;Action — WEAK HOLD" style="left:14.3%;bottom:35.6%;width:14px;height:14px"></div><div class="sc-dot sc-l2" data-tip="4404 · Miyoshi Oil &amp; Fat&#10;L2 — Active Catalyst&#10;PWER 21.4%    ·    Weight 4.83%&#10;Action — BUY" style="left:35.7%;bottom:34.5%;width:14px;height:14px"></div><div class="sc-dot sc-l3" data-tip="3034 · QOL Holdings&#10;L3 — Build / Monitor&#10;PWER 4.5%    ·    Weight 4.67%&#10;Action — DATA QUARANTINE" style="left:7.5%;bottom:33.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" data-tip="6151 · Nitto Kohki&#10;L2 — Active Catalyst&#10;PWER 0.0%    ·    Weight 4.11%&#10;Action — SELL" style="left:0.0%;bottom:29.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" data-tip="6914 · Optex Group&#10;L2 — Active Catalyst&#10;PWER 7.5%    ·    Weight 3.72%&#10;Action — WEAK HOLD" style="left:12.5%;bottom:26.6%;width:13px;height:13px"></div><div class="sc-dot sc-lp" data-tip="4417 · Global Security Experts&#10;L3-PAH — Pre-Activist Screen&#10;PWER 0.0%    ·    Weight 3.40%&#10;Action — SELL" style="left:0.0%;bottom:24.3%;width:12px;height:12px"></div><div class="sc-dot sc-l2" data-tip="3401 · Teijin&#10;L2 — Active Catalyst&#10;PWER 58.0%    ·    Weight 3.05%&#10;Action — BUY" style="left:96.7%;bottom:21.8%;width:12px;height:12px"></div><div class="sc-dot sc-l2" data-tip="3549 · Kusuri no Aoki Holdings&#10;L2 — Active Catalyst&#10;PWER 26.0%    ·    Weight 2.79%&#10;Action — BUY" style="left:43.3%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" data-tip="4613 · Kansai Paint&#10;L3 — Build / Monitor&#10;PWER 24.7%    ·    Weight 2.78%&#10;Action — BUY" style="left:41.2%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" data-tip="9987 · Suzuken&#10;L3 — Build / Monitor&#10;PWER 28.5%    ·    Weight 2.57%&#10;Action — BUY" style="left:47.5%;bottom:18.4%;width:11px;height:11px"></div>
+      <div class="sc-dot sc-l1" data-tip="9684 · Square Enix&#10;L1 — Core Conviction&#10;PWER 28.8%    ·    Weight 12.84%&#10;Action — BUY" style="left:48.0%;bottom:91.7%;width:21px;height:21px"><span class="sc-tag">9684 Square Enix</span></div><div class="sc-dot sc-l2" data-tip="3182 · Oisix ra daichi&#10;L2 — Active Catalyst&#10;PWER 34.1%    ·    Weight 8.22%&#10;Action — HOLD" style="left:56.8%;bottom:58.7%;width:17px;height:17px"><span class="sc-tag">3182 Oisix ra da</span></div><div class="sc-dot sc-l2" data-tip="9308 · Inui Global Logistics&#10;L2 — Active Catalyst&#10;PWER -6.0%    ·    Weight 7.81%&#10;Action — SELL" style="left:0.0%;bottom:55.8%;width:16px;height:16px"><span class="sc-tag">9308 Inui Global</span></div><div class="sc-dot sc-l3" data-tip="3697 · Shift Inc.&#10;L3 — Build / Monitor&#10;PWER 33.1%    ·    Weight 6.84%&#10;Action — BUY" style="left:55.2%;bottom:48.9%;width:15px;height:15px"></div><div class="sc-dot sc-l2" data-tip="4849 · en Japan / en Inc.&#10;L2 — Active Catalyst&#10;PWER 12.6%    ·    Weight 4.98%&#10;Action — WEAK HOLD" style="left:21.0%;bottom:35.6%;width:14px;height:14px"></div><div class="sc-dot sc-l2" data-tip="4404 · Miyoshi Oil &amp; Fat&#10;L2 — Active Catalyst&#10;PWER 25.2%    ·    Weight 4.83%&#10;Action — BUY" style="left:42.0%;bottom:34.5%;width:14px;height:14px"></div><div class="sc-dot sc-l3" data-tip="3034 · QOL Holdings&#10;L3 — Build / Monitor&#10;PWER 4.6%    ·    Weight 4.67%&#10;Action — DATA QUARANTINE" style="left:7.7%;bottom:33.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" data-tip="6151 · Nitto Kohki&#10;L2 — Active Catalyst&#10;PWER 0.0%    ·    Weight 4.11%&#10;Action — SELL" style="left:0.0%;bottom:29.4%;width:13px;height:13px"></div><div class="sc-dot sc-l2" data-tip="6914 · Optex Group&#10;L2 — Active Catalyst&#10;PWER 12.5%    ·    Weight 3.72%&#10;Action — WEAK HOLD" style="left:20.8%;bottom:26.6%;width:13px;height:13px"></div><div class="sc-dot sc-lp" data-tip="4417 · Global Security Experts&#10;L3-PAH — Pre-Activist Screen&#10;PWER 0.0%    ·    Weight 3.40%&#10;Action — SELL" style="left:0.0%;bottom:24.3%;width:12px;height:12px"></div><div class="sc-dot sc-l2" data-tip="3401 · Teijin&#10;L2 — Active Catalyst&#10;PWER 61.0%    ·    Weight 3.05%&#10;Action — BUY" style="left:100.0%;bottom:21.8%;width:12px;height:12px"></div><div class="sc-dot sc-l2" data-tip="3549 · Kusuri no Aoki Holdings&#10;L2 — Active Catalyst&#10;PWER 25.7%    ·    Weight 2.79%&#10;Action — BUY" style="left:42.8%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" data-tip="4613 · Kansai Paint&#10;L3 — Build / Monitor&#10;PWER 22.7%    ·    Weight 2.78%&#10;Action — BUY" style="left:37.8%;bottom:19.9%;width:12px;height:12px"></div><div class="sc-dot sc-l3" data-tip="9987 · Suzuken&#10;L3 — Build / Monitor&#10;PWER 29.8%    ·    Weight 2.57%&#10;Action — BUY" style="left:49.7%;bottom:18.4%;width:11px;height:11px"></div>
     </div>
     <div class="sc-xt" style="left:50px">0%</div>
     <div class="sc-xt" style="left:25%">15%</div>
@@ -1058,13 +1180,13 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div class="card-t">PWER DISTRIBUTION</div></div>
   <div class="card-b"><div class="histo">
     <div class="histo-floor" style="left:calc(33.3% - 4px)"><span>15% floor</span></div>
-    <div class="hb" data-tip="PWER below 0%&#10;1 holding&#10;9308"><div class="hb-c">1</div><div class="hb-bar hb-below" style="height:14%"></div><div class="hb-l">&lt;0%</div></div><div class="hb" data-tip="PWER 0–15%&#10;5 holdings&#10;4849, 3034, 6151, 6914, 4417"><div class="hb-c">5</div><div class="hb-bar hb-below" style="height:71%"></div><div class="hb-l">0–15</div></div><div class="hb" data-tip="PWER 15–25%&#10;2 holdings&#10;4404, 4613"><div class="hb-c">2</div><div class="hb-bar hb-above" style="height:29%"></div><div class="hb-l">15–25</div></div><div class="hb" data-tip="PWER 25–40%&#10;5 holdings&#10;9684, 3182, 3697, 3549, 9987"><div class="hb-c">5</div><div class="hb-bar hb-above" style="height:71%"></div><div class="hb-l">25–40</div></div><div class="hb" data-tip="PWER 40% and above&#10;1 holding&#10;3401"><div class="hb-c">1</div><div class="hb-bar hb-above" style="height:14%"></div><div class="hb-l">40%+</div></div><div class="hb" data-tip="PWER not scored&#10;7 holdings&#10;7752, 4493, 9104, 9115, 9722, 5930, 3776"><div class="hb-c dim">7</div><div class="hb-bar hb-na" style="height:100%"></div><div class="hb-l">n/a</div></div>
+    <div class="hb" data-tip="PWER below 0%&#10;1 holding&#10;9308"><div class="hb-c">1</div><div class="hb-bar hb-below" style="height:14%"></div><div class="hb-l">&lt;0%</div></div><div class="hb" data-tip="PWER 0–15%&#10;5 holdings&#10;4849, 3034, 6151, 6914, 4417"><div class="hb-c">5</div><div class="hb-bar hb-below" style="height:71%"></div><div class="hb-l">0–15</div></div><div class="hb" data-tip="PWER 15–25%&#10;1 holding&#10;4613"><div class="hb-c">1</div><div class="hb-bar hb-above" style="height:14%"></div><div class="hb-l">15–25</div></div><div class="hb" data-tip="PWER 25–40%&#10;6 holdings&#10;9684, 3182, 3697, 4404, 3549, 9987"><div class="hb-c">6</div><div class="hb-bar hb-above" style="height:86%"></div><div class="hb-l">25–40</div></div><div class="hb" data-tip="PWER 40% and above&#10;1 holding&#10;3401"><div class="hb-c">1</div><div class="hb-bar hb-above" style="height:14%"></div><div class="hb-l">40%+</div></div><div class="hb" data-tip="PWER not scored&#10;7 holdings&#10;7752, 4493, 9104, 9115, 9722, 5930, 3776"><div class="hb-c dim">7</div><div class="hb-bar hb-na" style="height:100%"></div><div class="hb-l">n/a</div></div>
   </div></div></div>
 </div></section>
   <section class="tabpane" id="tab-catalysts" hidden>
 <div class="stat4">
   <div class="stat"><div class="stat-l">Next Catalyst</div>
-    <div class="stat-v n">35 days</div>
+    <div class="stat-v n">34 days</div>
     <div class="stat-s">25 Jun</div></div>
   <div class="stat"><div class="stat-l">Events, Next 8 Weeks</div>
     <div class="stat-v n">4</div>
@@ -1072,114 +1194,1236 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   <div class="stat"><div class="stat-l">Upcoming Total</div>
     <div class="stat-v n">7</div>
     <div class="stat-s">positions with a future catalyst</div></div>
-  <div class="stat"><div class="stat-l">Filings Today</div>
-    <div class="stat-v n">1</div>
-    <div class="stat-s">EDINET / TDnet scan</div></div>
+  <div class="stat"><div class="stat-l">EDINET Filings</div>
+    <div class="stat-v n">35</div>
+    <div class="stat-s">activist 5%-rule + events</div></div>
 </div>
 
 <div class="card">
   <div class="card-h"><div class="card-t">CATALYST TIMELINE</div>
-    <div class="card-sub">next 118 days · binary events from position catalyst dates</div></div>
+    <div class="card-sub">next 117 days · hover a marker for detail</div></div>
   <div class="card-b"><div class="tl">
-    <div class="tl-months"><span style="left:0%">May</span><span style="left:9.3%">Jun</span><span style="left:34.7%">Jul</span><span style="left:61.0%">Aug</span><span style="left:87.3%">Sep</span></div>
+    <div class="tl-months"><span style="left:0%">May</span><span style="left:8.5%">Jun</span><span style="left:34.2%">Jul</span><span style="left:60.7%">Aug</span><span style="left:87.2%">Sep</span></div>
     <div class="tl-track">
-      <div class="tl-grid" style="left:9.3%"></div><div class="tl-grid" style="left:34.7%"></div><div class="tl-grid" style="left:61.0%"></div><div class="tl-grid" style="left:87.3%"></div>
+      <div class="tl-grid" style="left:8.5%"></div><div class="tl-grid" style="left:34.2%"></div><div class="tl-grid" style="left:60.7%"></div><div class="tl-grid" style="left:87.2%"></div>
       <div class="tl-today" style="left:0%"><span>TODAY</span></div>
-      <div class="tl-ev" style="left:29.7%">
-  <div class="tl-dot"></div>
-  <div class="tl-pill">
-    <div class="tl-d">25 JUN – 30 JUN</div>
-    <div class="tl-x">Catalyst cluster — 4</div>
-    <div class="tl-w">9684 · 4849 · 4404 · 3401</div>
-  </div></div><div class="tl-ev" style="left:64.4%">
-  <div class="tl-dot"></div>
-  <div class="tl-pill">
-    <div class="tl-d">5 AUG</div>
-    <div class="tl-x">Oisix ra daichi</div>
-    <div class="tl-w">3182</div>
-  </div></div><div class="tl-ev" style="left:72.9%">
-  <div class="tl-dot"></div>
-  <div class="tl-pill">
-    <div class="tl-d">15 AUG</div>
-    <div class="tl-x">Optex Group</div>
-    <div class="tl-w">6914</div>
-  </div></div><div class="tl-ev" style="left:86.4%">
-  <div class="tl-dot"></div>
-  <div class="tl-pill">
-    <div class="tl-d">31 AUG</div>
-    <div class="tl-x">Kusuri no Aoki Holdi</div>
-    <div class="tl-w">3549</div>
-  </div></div>
+      <div class="tl-ev" style="left:29.1%"><div class="tl-dot" data-tip="25 Jun–30 Jun&#10;4 catalysts clustered&#10;9684 · 4849 · 4404 · 3401"></div><div class="tl-lbl">25 Jun–30 Jun</div></div><div class="tl-ev" style="left:64.1%"><div class="tl-dot" data-tip="5 Aug&#10;Oisix ra daichi&#10;3182"></div><div class="tl-lbl lane2">5 Aug</div></div><div class="tl-ev" style="left:72.6%"><div class="tl-dot" data-tip="15 Aug&#10;Optex Group&#10;6914"></div><div class="tl-lbl">15 Aug</div></div><div class="tl-ev" style="left:86.3%"><div class="tl-dot" data-tip="31 Aug&#10;Kusuri no Aoki Holdings&#10;3549"></div><div class="tl-lbl lane2">31 Aug</div></div>
     </div>
   </div></div>
 </div>
-<div class="row2">
-  <div class="card">
-    <div class="card-h"><div class="card-t">UPCOMING CATALYSTS</div>
-      <div class="card-sub">7 events</div></div>
-    <div class="clist">
+<div class="card">
+  <div class="card-h"><div class="card-t">UPCOMING CATALYSTS</div>
+    <div class="card-sub">7 events</div></div>
+  <div class="clist">
 <div class="cl-row">
-  <div class="cl-cd">35d</div>
+  <div class="cl-cd">34d</div>
   <div><div class="cl-nm">Square Enix</div>
     <div class="cl-tk">9684 · L1</div></div>
   <div class="cl-ev">June 2026 AGM 3D board contest</div>
   <div class="cl-date">25 Jun</div>
 </div>
 <div class="cl-row">
-  <div class="cl-cd">35d</div>
+  <div class="cl-cd">34d</div>
   <div><div class="cl-nm">en Japan / en Inc.</div>
     <div class="cl-tk">4849 · L2</div></div>
   <div class="cl-ev">June 2026 AGM — binary on Oasis proposals (if filed) + director re-election supp</div>
   <div class="cl-date">25 Jun</div>
 </div>
 <div class="cl-row">
-  <div class="cl-cd">35d</div>
+  <div class="cl-cd">34d</div>
   <div><div class="cl-nm">Miyoshi Oil &amp; Fat</div>
     <div class="cl-tk">4404 · L2</div></div>
   <div class="cl-ev">AGM cycle (basket)</div>
   <div class="cl-date">25 Jun</div>
 </div>
 <div class="cl-row">
-  <div class="cl-cd">40d</div>
+  <div class="cl-cd">39d</div>
   <div><div class="cl-nm">Teijin</div>
     <div class="cl-tk">3401 · L2</div></div>
   <div class="cl-ev">Mode 2 threshold crossing — Effissimo at 19.26%, ~0.74pp from 20% trigger at 1.2</div>
   <div class="cl-date">30 Jun</div>
 </div>
 <div class="cl-row">
-  <div class="cl-cd">76d</div>
+  <div class="cl-cd">75d</div>
   <div><div class="cl-nm">Oisix ra daichi</div>
     <div class="cl-tk">3182 · L2</div></div>
   <div class="cl-ev">Q1 FY27 earnings late Jul/early Aug PRIMARY near-term tripwire (first read on OP</div>
   <div class="cl-date">5 Aug</div>
 </div>
 <div class="cl-row">
-  <div class="cl-cd">86d</div>
+  <div class="cl-cd">85d</div>
   <div><div class="cl-nm">Optex Group</div>
     <div class="cl-tk">6914 · L2</div></div>
   <div class="cl-ev">Q2 FY26 earnings — decisive beat of management's conservative full-year guide wo</div>
   <div class="cl-date">15 Aug</div>
 </div>
 <div class="cl-row">
-  <div class="cl-cd">102d</div>
+  <div class="cl-cd">101d</div>
   <div><div class="cl-nm">Kusuri no Aoki Holdings</div>
     <div class="cl-tk">3549 · L2</div></div>
   <div class="cl-ev">Aug 2026 AGM (binary): Items 5/6 (cap-return) + Item 3 (board) + Item 12 (delist</div>
   <div class="cl-date">31 Aug</div>
 </div></div>
+</div></section>
+  <section class="tabpane" id="tab-filings" hidden>
+<div class="stat4">
+  <div class="stat"><div class="stat-l">Filings in Feed</div>
+    <div class="stat-v n">35</div>
+    <div class="stat-s">EDINET scan window</div></div>
+  <div class="stat stat-neg"><div class="stat-l">High Priority</div>
+    <div class="stat-v n">3</div>
+    <div class="stat-s">activist 5%-rule / events</div></div>
+  <div class="stat"><div class="stat-l">Activist Books Tracked</div>
+    <div class="stat-v n">16</div>
+    <div class="stat-s">positions with an accumulation curve</div></div>
+  <div class="stat"><div class="stat-l">Top Accumulator</div>
+    <div class="stat-v n">3776</div>
+    <div class="stat-s">BROADBAND TOWER ORD · +13.8pp built</div></div>
+</div>
+<div class="card">
+  <div class="card-h"><div class="card-t">ACTIVIST ACCUMULATION</div>
+    <div class="card-sub">16 of 21 holdings have a disclosed activist series · click a row for the filing history</div></div>
+  <div class="acctbl">
+    <div class="acc-head">
+      <div>Holding / EDINET filer</div><div>Stake</div>
+      <div>Accumulation</div><div>Built</div><div>Pace</div>
+      <div>Filings</div><div></div>
+    </div>
+    <div class="acc-row" data-ticker="3776">
+  <div class="acc-hold">
+    <div><span class="acc-tk">3776</span><span class="acc-nm">BROADBAND TOWER ORD</span></div>
+    <div class="acc-by">SilverCape Investments Limited</div>
   </div>
-  <div class="card">
-    <div class="card-h"><div class="card-t">FILINGS FEED</div>
-      <div class="card-sub">EDINET · TDnet</div></div>
-    <div class="clist">
-<div class="cl-row">
-  <div class="cl-cd">NEW</div>
-  <div><div class="cl-nm">en Japan / en Inc.</div>
-    <div class="cl-tk">4849</div></div>
-  <div class="cl-ev">臨時報告書 · エン株式会社</div>
-  <div class="cl-date">2026-05-19</div>
+  <div class="acc-stake">6.35<span class="acc-u">%</span> <span class="dim">→</span> <b>20.15<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:32%"></div><div class="acc-spk" style="height:42%"></div><div class="acc-spk" style="height:55%"></div><div class="acc-spk" style="height:62%"></div><div class="acc-spk" style="height:69%"></div><div class="acc-spk" style="height:74%"></div><div class="acc-spk" style="height:84%"></div><div class="acc-spk" style="height:93%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+13.80<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+4.40<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">9</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>SilverCape Investments Limited</b> — building since 2026-02-09 · latest leg <b>+1.50pp</b> over 3d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM3NzYmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-05-14</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">20.15%</div>
+  <div class="fh-dl"><span class="pos">+1.50</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-05-11</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:93%"></div></div>
+  <div class="fh-st">18.65%</div>
+  <div class="fh-dl"><span class="pos">+1.65</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-04-10</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:84%"></div></div>
+  <div class="fh-st">17.00%</div>
+  <div class="fh-dl"><span class="pos">+2.00</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-11</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:74%"></div></div>
+  <div class="fh-st">15.00%</div>
+  <div class="fh-dl"><span class="pos">+1.00</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-10</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:69%"></div></div>
+  <div class="fh-st">14.00%</div>
+  <div class="fh-dl"><span class="pos">+1.60</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-04</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:62%"></div></div>
+  <div class="fh-st">12.40%</div>
+  <div class="fh-dl"><span class="pos">+1.40</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-17</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:55%"></div></div>
+  <div class="fh-st">11.00%</div>
+  <div class="fh-dl"><span class="pos">+2.45</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-16</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:42%"></div></div>
+  <div class="fh-st">8.55%</div>
+  <div class="fh-dl"><span class="pos">+2.20</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-09</div>
+  <div class="fh-ty">大量保有報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:32%"></div></div>
+  <div class="fh-st">6.35%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="9684">
+  <div class="acc-hold">
+    <div><span class="acc-tk">9684</span><span class="acc-nm">Square Enix</span></div>
+    <div class="acc-by">3D Investment Partners Pte. Ltd.</div>
+  </div>
+  <div class="acc-stake">5.47<span class="acc-u">%</span> <span class="dim">→</span> <b>18.53<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:30%"></div><div class="acc-spk" style="height:36%"></div><div class="acc-spk" style="height:42%"></div><div class="acc-spk" style="height:47%"></div><div class="acc-spk" style="height:53%"></div><div class="acc-spk" style="height:59%"></div><div class="acc-spk" style="height:64%"></div><div class="acc-spk" style="height:71%"></div><div class="acc-spk" style="height:77%"></div><div class="acc-spk" style="height:83%"></div><div class="acc-spk" style="height:89%"></div><div class="acc-spk" style="height:94%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+13.06<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+1.27<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">13</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>3D Investment Partners Pte. Ltd.</b> — building since 2025-04-28 · latest leg <b>+1.03pp</b> over 27d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTk2ODQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-03-03</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">18.53%</div>
+  <div class="fh-dl"><span class="pos">+1.03</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-04</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:94%"></div></div>
+  <div class="fh-st">17.50%</div>
+  <div class="fh-dl"><span class="pos">+1.02</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-12-24</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:89%"></div></div>
+  <div class="fh-st">16.48%</div>
+  <div class="fh-dl"><span class="pos">+1.08</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-12-12</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:83%"></div></div>
+  <div class="fh-st">15.40%</div>
+  <div class="fh-dl"><span class="pos">+1.04</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-07-17</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:77%"></div></div>
+  <div class="fh-st">14.36%</div>
+  <div class="fh-dl"><span class="pos">+1.24</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-07-15</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:71%"></div></div>
+  <div class="fh-st">13.12%</div>
+  <div class="fh-dl"><span class="pos">+1.19</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-07-07</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:64%"></div></div>
+  <div class="fh-st">11.93%</div>
+  <div class="fh-dl"><span class="pos">+1.06</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-06-25</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:59%"></div></div>
+  <div class="fh-st">10.87%</div>
+  <div class="fh-dl"><span class="pos">+1.08</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-06-12</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:53%"></div></div>
+  <div class="fh-st">9.79%</div>
+  <div class="fh-dl"><span class="pos">+1.01</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-05-30</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:47%"></div></div>
+  <div class="fh-st">8.78%</div>
+  <div class="fh-dl"><span class="pos">+1.05</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-05-22</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:42%"></div></div>
+  <div class="fh-st">7.73%</div>
+  <div class="fh-dl"><span class="pos">+1.15</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-05-09</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:36%"></div></div>
+  <div class="fh-st">6.58%</div>
+  <div class="fh-dl"><span class="pos">+1.11</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-04-28</div>
+  <div class="fh-ty">大量保有報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:30%"></div></div>
+  <div class="fh-st">5.47%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="3034">
+  <div class="acc-hold">
+    <div><span class="acc-tk">3034</span><span class="acc-nm">QOL Holdings</span></div>
+    <div class="acc-by">ウィル・フィールド・キャピタル・ピーティーイー・エルティーディー</div>
+  </div>
+  <div class="acc-stake">7.04<span class="acc-u">%</span> <span class="dim">→</span> <b>18.22<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:39%"></div><div class="acc-spk" style="height:44%"></div><div class="acc-spk" style="height:50%"></div><div class="acc-spk" style="height:56%"></div><div class="acc-spk" style="height:62%"></div><div class="acc-spk" style="height:68%"></div><div class="acc-spk" style="height:73%"></div><div class="acc-spk" style="height:79%"></div><div class="acc-spk" style="height:85%"></div><div class="acc-spk" style="height:91%"></div><div class="acc-spk" style="height:97%"></div><div class="acc-spk" style="height:100%"></div><div class="acc-spk" style="height:100%"></div><div class="acc-spk" style="height:100%"></div><div class="acc-spk" style="height:100%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+11.18<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+1.17<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">16</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>ウィル・フィールド・キャピタル・ピーティーイー・エルティーディー</b> — building since 2025-07-11 · latest leg <b>+0.00pp</b> over 2d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTMwMzQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-04-24</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">18.22%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-04-22</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">18.22%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-04-02</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">18.22%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-26</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">18.22%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-25</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">18.22%</div>
+  <div class="fh-dl"><span class="pos">+0.61</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-16</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:97%"></div></div>
+  <div class="fh-st">17.61%</div>
+  <div class="fh-dl"><span class="pos">+1.10</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-05</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:91%"></div></div>
+  <div class="fh-st">16.51%</div>
+  <div class="fh-dl"><span class="pos">+1.09</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-19</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:85%"></div></div>
+  <div class="fh-st">15.42%</div>
+  <div class="fh-dl"><span class="pos">+1.07</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-13</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:79%"></div></div>
+  <div class="fh-st">14.35%</div>
+  <div class="fh-dl"><span class="pos">+1.05</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-01-23</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:73%"></div></div>
+  <div class="fh-st">13.30%</div>
+  <div class="fh-dl"><span class="pos">+1.00</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-01-06</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:68%"></div></div>
+  <div class="fh-st">12.30%</div>
+  <div class="fh-dl"><span class="pos">+1.08</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-11-28</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:62%"></div></div>
+  <div class="fh-st">11.22%</div>
+  <div class="fh-dl"><span class="pos">+1.01</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-11-10</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:56%"></div></div>
+  <div class="fh-st">10.21%</div>
+  <div class="fh-dl"><span class="pos">+1.07</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-10-21</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:50%"></div></div>
+  <div class="fh-st">9.14%</div>
+  <div class="fh-dl"><span class="pos">+1.07</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-08-07</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:44%"></div></div>
+  <div class="fh-st">8.07%</div>
+  <div class="fh-dl"><span class="pos">+1.03</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-07-11</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:39%"></div></div>
+  <div class="fh-st">7.04%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="3401">
+  <div class="acc-hold">
+    <div><span class="acc-tk">3401</span><span class="acc-nm">Teijin</span></div>
+    <div class="acc-by">Effissimo Capital Management Pte. Ltd.</div>
+  </div>
+  <div class="acc-stake">11.08<span class="acc-u">%</span> <span class="dim">→</span> <b>19.26<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:58%"></div><div class="acc-spk" style="height:63%"></div><div class="acc-spk" style="height:69%"></div><div class="acc-spk" style="height:74%"></div><div class="acc-spk" style="height:79%"></div><div class="acc-spk" style="height:85%"></div><div class="acc-spk" style="height:91%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+8.18<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+0.81<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">8</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>Effissimo Capital Management Pte. Ltd.</b> — building since 2025-06-23 · latest leg <b>+1.73pp</b> over 12d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM0MDEmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-04-21</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">19.26%</div>
+  <div class="fh-dl"><span class="pos">+1.73</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-04-09</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:91%"></div></div>
+  <div class="fh-st">17.53%</div>
+  <div class="fh-dl"><span class="pos">+1.09</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-23</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:85%"></div></div>
+  <div class="fh-st">16.44%</div>
+  <div class="fh-dl"><span class="pos">+1.15</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-02</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:79%"></div></div>
+  <div class="fh-st">15.29%</div>
+  <div class="fh-dl"><span class="pos">+1.08</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-12-18</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:74%"></div></div>
+  <div class="fh-st">14.21%</div>
+  <div class="fh-dl"><span class="pos">+1.01</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-11-13</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:69%"></div></div>
+  <div class="fh-st">13.20%</div>
+  <div class="fh-dl"><span class="pos">+1.08</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-10-21</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:63%"></div></div>
+  <div class="fh-st">12.12%</div>
+  <div class="fh-dl"><span class="pos">+1.04</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-06-23</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:58%"></div></div>
+  <div class="fh-st">11.08%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="3549">
+  <div class="acc-hold">
+    <div><span class="acc-tk">3549</span><span class="acc-nm">Kusuri no Aoki Holdings</span></div>
+    <div class="acc-by">Oasis Management Company Ltd.</div>
+  </div>
+  <div class="acc-stake">10.70<span class="acc-u">%</span> <span class="dim">→</span> <b>14.05<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:76%"></div><div class="acc-spk" style="height:100%"></div><div class="acc-spk" style="height:100%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+3.35<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+0.40<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">4</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>Oasis Management Company Ltd.</b> — building since 2025-09-04 · latest leg <b>+0.03pp</b> over 78d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM1NDkmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-05-13</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">14.05%</div>
+  <div class="fh-dl"><span class="pos">+0.03</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-24</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">14.02%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-20</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">14.02%</div>
+  <div class="fh-dl"><span class="pos">+3.32</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-09-04</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:76%"></div></div>
+  <div class="fh-st">10.70%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="9308">
+  <div class="acc-hold">
+    <div><span class="acc-tk">9308</span><span class="acc-nm">Inui Global Logistics</span></div>
+    <div class="acc-by">MIRI Capital Management LLC</div>
+  </div>
+  <div class="acc-stake">5.06<span class="acc-u">%</span> <span class="dim">→</span> <b>8.39<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:60%"></div><div class="acc-spk" style="height:74%"></div><div class="acc-spk" style="height:87%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+3.33<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+2.85<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">4</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>MIRI Capital Management LLC</b> — building since 2025-08-13 · latest leg <b>+1.05pp</b> over 20d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTkzMDgmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2025-09-17</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">8.39%</div>
+  <div class="fh-dl"><span class="pos">+1.05</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-08-28</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:87%"></div></div>
+  <div class="fh-st">7.34%</div>
+  <div class="fh-dl"><span class="pos">+1.14</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-08-21</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:74%"></div></div>
+  <div class="fh-st">6.20%</div>
+  <div class="fh-dl"><span class="pos">+1.14</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-08-13</div>
+  <div class="fh-ty">大量保有報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:60%"></div></div>
+  <div class="fh-st">5.06%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="4493">
+  <div class="acc-hold">
+    <div><span class="acc-tk">4493</span><span class="acc-nm">CYBER SECURITY C ORD</span></div>
+    <div class="acc-by">SilverCape Investments Limited</div>
+  </div>
+  <div class="acc-stake">6.50<span class="acc-u">%</span> <span class="dim">→</span> <b>9.50<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:68%"></div><div class="acc-spk" style="height:84%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+3.00<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+12.86<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">3</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>SilverCape Investments Limited</b> — building since 2026-03-31 · latest leg <b>+1.50pp</b> over 5d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ0OTMmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-04-07</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">9.50%</div>
+  <div class="fh-dl"><span class="pos">+1.50</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-04-02</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:84%"></div></div>
+  <div class="fh-st">8.00%</div>
+  <div class="fh-dl"><span class="pos">+1.50</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-31</div>
+  <div class="fh-ty">大量保有報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:68%"></div></div>
+  <div class="fh-st">6.50%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="6151">
+  <div class="acc-hold">
+    <div><span class="acc-tk">6151</span><span class="acc-nm">Nitto Kohki</span></div>
+    <div class="acc-by">Singapore</div>
+  </div>
+  <div class="acc-stake">10.27<span class="acc-u">%</span> <span class="dim">→</span> <b>13.26<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:77%"></div><div class="acc-spk" style="height:83%"></div><div class="acc-spk" style="height:92%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+2.99<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+0.38<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">4</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>Singapore</b> — building since 2025-05-30 · latest leg <b>+1.00pp</b> over 53d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTYxNTEmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-01-23</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">13.26%</div>
+  <div class="fh-dl"><span class="pos">+1.00</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-12-01</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:92%"></div></div>
+  <div class="fh-st">12.26%</div>
+  <div class="fh-dl"><span class="pos">+1.26</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-10-17</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:83%"></div></div>
+  <div class="fh-st">11.00%</div>
+  <div class="fh-dl"><span class="pos">+0.73</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-05-30</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:77%"></div></div>
+  <div class="fh-st">10.27%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="4613">
+  <div class="acc-hold">
+    <div><span class="acc-tk">4613</span><span class="acc-nm">Kansai Paint</span></div>
+    <div class="acc-by">Silchester International Investors LLP</div>
+  </div>
+  <div class="acc-stake">5.05<span class="acc-u">%</span> <span class="dim">→</span> <b>7.21<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:70%"></div><div class="acc-spk" style="height:86%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+2.16<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+1.35<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">3</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>Silchester International Investors LLP</b> — building since 2026-04-01 · latest leg <b>+1.04pp</b> over 4d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ2MTMmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-05-19</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">7.21%</div>
+  <div class="fh-dl"><span class="pos">+1.04</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-05-15</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:86%"></div></div>
+  <div class="fh-st">6.17%</div>
+  <div class="fh-dl"><span class="pos">+1.12</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-04-01</div>
+  <div class="fh-ty">大量保有報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:70%"></div></div>
+  <div class="fh-st">5.05%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="3697">
+  <div class="acc-hold">
+    <div><span class="acc-tk">3697</span><span class="acc-nm">Shift Inc.</span></div>
+    <div class="acc-by">アーカス・インベストメント・リミテッド</div>
+  </div>
+  <div class="acc-stake">5.01<span class="acc-u">%</span> <span class="dim">→</span> <b>7.14<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:70%"></div><div class="acc-spk" style="height:85%"></div><div class="acc-spk" style="height:85%"></div><div class="acc-spk" style="height:85%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+2.13<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+2.06<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">5</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>アーカス・インベストメント・リミテッド</b> — building since 2026-03-03 · latest leg <b>+1.10pp</b> over 11d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM2OTcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-04-03</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">7.14%</div>
+  <div class="fh-dl"><span class="pos">+1.10</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-23</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:85%"></div></div>
+  <div class="fh-st">6.04%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-19</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:85%"></div></div>
+  <div class="fh-st">6.04%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-18</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:85%"></div></div>
+  <div class="fh-st">6.04%</div>
+  <div class="fh-dl"><span class="pos">+1.03</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-03</div>
+  <div class="fh-ty">大量保有報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:70%"></div></div>
+  <div class="fh-st">5.01%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="9987">
+  <div class="acc-hold">
+    <div><span class="acc-tk">9987</span><span class="acc-nm">Suzuken</span></div>
+    <div class="acc-by">Silchester International Investors LLP</div>
+  </div>
+  <div class="acc-stake">6.13<span class="acc-u">%</span> <span class="dim">→</span> <b>8.25<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:74%"></div><div class="acc-spk" style="height:86%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+2.12<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+0.21<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">3</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>Silchester International Investors LLP</b> — building since 2025-05-21 · latest leg <b>+1.12pp</b> over 253d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTk5ODcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-03-24</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">8.25%</div>
+  <div class="fh-dl"><span class="pos">+1.12</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-07-14</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:86%"></div></div>
+  <div class="fh-st">7.13%</div>
+  <div class="fh-dl"><span class="pos">+1.00</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-05-21</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:74%"></div></div>
+  <div class="fh-st">6.13%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="4404">
+  <div class="acc-hold">
+    <div><span class="acc-tk">4404</span><span class="acc-nm">Miyoshi Oil &amp; Fat</span></div>
+    <div class="acc-by">株式会社ＤＯＥ５パーセント</div>
+  </div>
+  <div class="acc-stake">5.52<span class="acc-u">%</span> <span class="dim">→</span> <b>7.62<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:72%"></div><div class="acc-spk" style="height:87%"></div><div class="acc-spk" style="height:87%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+2.10<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+0.52<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">4</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>株式会社ＤＯＥ５パーセント</b> — building since 2026-01-09 · latest leg <b>+1.02pp</b> over 35d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ0MDQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-05-11</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">7.62%</div>
+  <div class="fh-dl"><span class="pos">+1.02</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-04-06</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:87%"></div></div>
+  <div class="fh-st">6.60%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-03-30</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:87%"></div></div>
+  <div class="fh-st">6.60%</div>
+  <div class="fh-dl"><span class="pos">+1.08</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-01-09</div>
+  <div class="fh-ty">大量保有報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:72%"></div></div>
+  <div class="fh-st">5.52%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="4849">
+  <div class="acc-hold">
+    <div><span class="acc-tk">4849</span><span class="acc-nm">en Japan / en Inc.</span></div>
+    <div class="acc-by">Oasis Management Company Ltd.</div>
+  </div>
+  <div class="acc-stake">7.93<span class="acc-u">%</span> <span class="dim">→</span> <b>9.94<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:80%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+2.01<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+0.17<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">2</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>Oasis Management Company Ltd.</b> — building since 2025-05-28 · latest leg <b>+2.01pp</b> over 348d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ4NDkmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-05-11</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">9.94%</div>
+  <div class="fh-dl"><span class="pos">+2.01</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-05-28</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:80%"></div></div>
+  <div class="fh-st">7.93%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="7752">
+  <div class="acc-hold">
+    <div><span class="acc-tk">7752</span><span class="acc-nm">RICOH ORD</span></div>
+    <div class="acc-by">エフィッシモ キャピタル マネージメント ピーティーイー エルティーディー</div>
+  </div>
+  <div class="acc-stake">22.82<span class="acc-u">%</span> <span class="dim">→</span> <b>24.77<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:92%"></div><div class="acc-spk" style="height:96%"></div><div class="acc-spk" style="height:100%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+1.95<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+0.19<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">4</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>エフィッシモ キャピタル マネージメント ピーティーイー エルティーディー</b> — building since 2025-05-02 · latest leg <b>+0.00pp</b> over 7d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTc3NTImY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-03-06</div>
+  <div class="fh-ty">訂正変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">24.77%</div>
+  <div class="fh-dl"></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2026-02-27</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">24.77%</div>
+  <div class="fh-dl"><span class="pos">+0.89</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-07-02</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:96%"></div></div>
+  <div class="fh-st">23.88%</div>
+  <div class="fh-dl"><span class="pos">+1.06</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-05-02</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:92%"></div></div>
+  <div class="fh-st">22.82%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="5930">
+  <div class="acc-hold">
+    <div><span class="acc-tk">5930</span><span class="acc-nm">BUNKA SHUTTER ORD</span></div>
+    <div class="acc-by">NIPPON ACTIVE VALUE FUND PLC</div>
+  </div>
+  <div class="acc-stake">18.66<span class="acc-u">%</span> <span class="dim">→</span> <b>20.55<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:91%"></div><div class="acc-spk" style="height:96%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+1.89<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+0.17<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">3</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>NIPPON ACTIVE VALUE FUND PLC</b> — building since 2025-05-08 · latest leg <b>+0.86pp</b> over 295d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTU5MzAmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2026-04-08</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">20.55%</div>
+  <div class="fh-dl"><span class="pos">+0.86</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-06-17</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:96%"></div></div>
+  <div class="fh-st">19.69%</div>
+  <div class="fh-dl"><span class="pos">+1.03</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-05-08</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:91%"></div></div>
+  <div class="fh-st">18.66%</div>
+  <div class="fh-dl"></div>
+</div></div></div><div class="acc-row" data-ticker="9722">
+  <div class="acc-hold">
+    <div><span class="acc-tk">9722</span><span class="acc-nm">FUJITA KANKO ORD</span></div>
+    <div class="acc-by">Old Peak Group Ltd.</div>
+  </div>
+  <div class="acc-stake">5.03<span class="acc-u">%</span> <span class="dim">→</span> <b>6.13<span class="acc-u">%</span></b></div>
+  <div><div class="acc-spark"><div class="acc-spk" style="height:82%"></div><div class="acc-spk" style="height:100%"></div></div></div>
+  <div class="acc-built">+1.10<span class="acc-u">pp</span></div>
+  <div class="acc-pace">+11.00<span class="acc-u">pp/30d</span></div>
+  <div class="acc-cnt">2</div>
+  <div class="acc-chev">▾</div>
+</div>
+<div class="acc-exp" hidden><div class="acc-meta">
+  <div><b>Old Peak Group Ltd.</b> — building since 2025-07-04 · latest leg <b>+1.10pp</b> over 3d</div>
+  <a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTk3MjImY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET filings ↗</a>
+</div>
+<div class="fhist"><div class="fh-row">
+  <div class="fh-dt">2025-07-07</div>
+  <div class="fh-ty">変更報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:100%"></div></div>
+  <div class="fh-st">6.13%</div>
+  <div class="fh-dl"><span class="pos">+1.10</span></div>
+</div><div class="fh-row">
+  <div class="fh-dt">2025-07-04</div>
+  <div class="fh-ty">訂正大量保有報告書</div>
+  <div class="fh-bar"><div class="fh-fill" style="width:82%"></div></div>
+  <div class="fh-st">5.03%</div>
+  <div class="fh-dl"></div>
+</div></div></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-h"><div class="card-t">EDINET FILINGS FEED</div>
+    <div class="card-sub">大量保有報告書 / 変更報告書 · positions + watch-list</div></div>
+  <div class="ffeed"><div class="frow">
+  <div class="fr-prio fr-hi">HIGH</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4849</span>
+      <b>en Japan / en Inc.</b>
+      <span class="fr-dt">臨時報告書</span></div>
+    <div class="fr-mid">エン株式会社</div>
+    <div class="fr-sum">Extraordinary report — material disclosure. Verify thesis impact.</div>
+  </div>
+  <div class="fr-side">2026-05-19<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ4NDkmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-hi">HIGH</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">5930</span>
+      <b>BUNKA SHUTTER ORD</b>
+      <span class="fr-dt">臨時報告書</span></div>
+    <div class="fr-mid">文化シヤッター株式会社</div>
+    <div class="fr-sum">Extraordinary report — material disclosure. Verify thesis impact.</div>
+  </div>
+  <div class="fr-side">2026-05-18<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTU5MzAmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-hi">HIGH</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3401</span>
+      <b>Teijin</b>
+      <span class="fr-dt">臨時報告書</span></div>
+    <div class="fr-mid">帝人株式会社</div>
+    <div class="fr-sum">Extraordinary report — material disclosure. Verify thesis impact.</div>
+  </div>
+  <div class="fr-side">2026-05-11<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM0MDEmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">6367</span>
+      <b>Daikin Industries</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">野村證券株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-21<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTYzNjcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4613</span>
+      <b>Kansai Paint</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">野村證券株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-21<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ2MTMmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3697</span>
+      <b>Shift Inc.</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">野村證券株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-21<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM2OTcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3034</span>
+      <b>QOL Holdings</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">モルガン・スタンレーＭＵＦＧ証券株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-21<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTMwMzQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">6367</span>
+      <b>Daikin Industries</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">三井住友信託銀行株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-21<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTYzNjcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4613</span>
+      <b>Kansai Paint</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">シルチェスター・インターナショナル・インベスターズ・エルエルピー</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-19<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ2MTMmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">2207</span>
+      <b>Meito Co.</b>
+      <span class="fr-dt">変更報告書</span></div>
+    <div class="fr-mid">ＵＧＳアセットマネジメント株式会社</div>
+    <div class="fr-sum">変更報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-18<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTIyMDcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">6794</span>
+      <b>Foster Electric</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">株式会社三菱ＵＦＪフィナンシャル・グループ</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-18<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTY3OTQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">1878</span>
+      <b>Daito Trust</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">大東建託株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-18<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTE4NzgmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4047</span>
+      <b>Kanto Denka Kogyo</b>
+      <span class="fr-dt">臨時報告書</span></div>
+    <div class="fr-mid">関東電化工業株式会社</div>
+    <div class="fr-sum">Extraordinary report — material disclosure. Verify thesis impact.</div>
+  </div>
+  <div class="fr-side">2026-05-15<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQwNDcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4613</span>
+      <b>Kansai Paint</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">シルチェスター・インターナショナル・インベスターズ・エルエルピー</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-15<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ2MTMmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">6367</span>
+      <b>Daikin Industries</b>
+      <span class="fr-dt">臨時報告書</span></div>
+    <div class="fr-mid">ダイキン工業株式会社</div>
+    <div class="fr-sum">Extraordinary report — material disclosure. Verify thesis impact.</div>
+  </div>
+  <div class="fr-side">2026-05-14<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTYzNjcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3941</span>
+      <b>Rengo</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">株式会社南青山不動産</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-14<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM5NDEmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4027</span>
+      <b>Tayca Corp</b>
+      <span class="fr-dt">臨時報告書</span></div>
+    <div class="fr-mid">テイカ株式会社</div>
+    <div class="fr-sum">Extraordinary report — material disclosure. Verify thesis impact.</div>
+  </div>
+  <div class="fr-side">2026-05-14<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQwMjcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3776</span>
+      <b>BROADBAND TOWER ORD</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">ＳｉｌｖｅｒＣａｐｅ　Ｉｎｖｅｓｔｍｅｎｔｓ　Ｌｉｍｉｔｅｄ</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-14<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM3NzYmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">2207</span>
+      <b>Meito Co.</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">ＵＧＳアセットマネジメント株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-14<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTIyMDcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">6151</span>
+      <b>Nitto Kohki</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">高田　楊子</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-13<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTYxNTEmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">6151</span>
+      <b>Nitto Kohki</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">御器谷　春子</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-13<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTYxNTEmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">9069</span>
+      <b>Senko Group Holdings</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">ＮＩＰＰＯＮ　ＡＣＴＩＶＥ　ＶＡＬＵＥ　ＦＵＮＤ　ＰＬＣ</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-13<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTkwNjkmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">6594</span>
+      <b>Nidec</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">Ｏａｓｉｓ　Ｍａｎａｇｅｍｅｎｔ　Ｃｏｍｐａｎｙ　Ｌｔｄ．</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-13<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTY1OTQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3549</span>
+      <b>Kusuri no Aoki Holdings</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">Ｏａｓｉｓ　Ｍａｎａｇｅｍｅｎｔ　Ｃｏｍｐａｎｙ　Ｌｔｄ．</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-13<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM1NDkmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">8368</span>
+      <b>Hyakugo Bank</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">ありあけキャピタル株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-13<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTgzNjgmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4047</span>
+      <b>Kanto Denka Kogyo</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">朝日生命保険相互会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-12<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQwNDcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3863</span>
+      <b>Nippon Paper Industries</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">株式会社シティインデックスイレブンス</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-12<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM4NjMmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4194</span>
+      <b>Visional</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">オービス・インベストメント・マネジメント・リミテッド</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-12<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQxOTQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3776</span>
+      <b>BROADBAND TOWER ORD</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">ＳｉｌｖｅｒＣａｐｅ　Ｉｎｖｅｓｔｍｅｎｔｓ　Ｌｉｍｉｔｅｄ</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-11<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM3NzYmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4404</span>
+      <b>Miyoshi Oil &amp; Fat</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">株式会社ＤＯＥ５パーセント</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-11<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ0MDQmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4417</span>
+      <b>Global Security Experts</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-11<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ0MTcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">9006</span>
+      <b>Keikyu</b>
+      <span class="fr-dt">臨時報告書</span></div>
+    <div class="fr-mid">京浜急行電鉄株式会社</div>
+    <div class="fr-sum">Extraordinary report — material disclosure. Verify thesis impact.</div>
+  </div>
+  <div class="fr-side">2026-05-11<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTkwMDYmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3697</span>
+      <b>Shift Inc.</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">三井住友トラスト・アセットマネジメント株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-11<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM2OTcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">4849</span>
+      <b>en Japan / en Inc.</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">Ｏａｓｉｓ　Ｍａｎａｇｅｍｅｎｔ　Ｃｏｍｐａｎｙ　Ｌｔｄ．</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-11<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTQ4NDkmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
+</div><div class="frow">
+  <div class="fr-prio fr-lo">LOW</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">3697</span>
+      <b>Shift Inc.</b>
+      <span class="fr-dt">大量保有報告書</span></div>
+    <div class="fr-mid">野村證券株式会社</div>
+    <div class="fr-sum">大量保有報告書 · stake 0.00%.</div>
+  </div>
+  <div class="fr-side">2026-05-11<br><a href="https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTM2OTcmY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y" target="_blank" rel="noopener">EDINET ↗</a></div>
 </div></div>
-  </div>
 </div></section>
   <section class="tabpane" id="tab-watch" hidden>
 <div class="stat3">
@@ -1303,8 +2547,8 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
 </div></section>
 </main>
 <footer>
-  Asuka Fund Risk Monitor · rendered 21 May 2026 16:43 · 21 holdings ·
-  book as of Thu May 21 · Bloomberg · EDINET · TDNet · Asuka_EDINET pipeline<br>
+  Asuka Fund Risk Monitor · rendered 22 May 2026 11:54 · 21 holdings ·
+  book as of 2026-05-22 · Bloomberg · EDINET · TDNet · Asuka_EDINET pipeline<br>
   PWER recomputed at live spot · deltas vs the previous snapshot ·
   Wtd-Avg PWER floor 25%.
 </footer>
@@ -1363,6 +2607,16 @@ footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
   });
   var sb=document.getElementById('psearch');
   if(sb) sb.addEventListener('input',applyFilter);
+
+  document.querySelectorAll('.acc-row').forEach(function(r){
+    r.addEventListener('click',function(){
+      var x=r.nextElementSibling;
+      if(x && x.classList.contains('acc-exp')){
+        x.hidden=!x.hidden;
+        r.classList.toggle('exp',!x.hidden);
+      }
+    });
+  });
 })();
 
 /* ---- chart tooltips (conviction matrix, histogram, activist bars) ---- */

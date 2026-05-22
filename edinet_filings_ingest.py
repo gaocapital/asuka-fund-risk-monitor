@@ -107,6 +107,48 @@ def generate_summary(filing: dict, is_position: bool, is_watch: bool) -> str:
     return " ".join(bits)
 
 
+def compute_accumulation(filing_history: list) -> "dict | None":
+    """Measure how fast an activist's stake is building.
+
+    Pure function over a position's filing_history — a list of
+    {date, stake_after, ...} entries. Returns the accumulation block, or None
+    when there are fewer than two stake-bearing filings (not enough to measure
+    a rate). Shared by the daily ingest and the one-off EDINET-MCP backfill.
+    """
+    staked = [h for h in filing_history
+              if h.get("stake_after") is not None and h.get("date")]
+    if len(staked) < 2:
+        return None
+    staked.sort(key=lambda h: str(h.get("date", "")))
+
+    def _d(s):
+        return datetime.fromisoformat(str(s).split("T")[0]).date()
+
+    try:
+        first, prev, last = staked[0], staked[-2], staked[-1]
+        span_days = (_d(last["date"]) - _d(first["date"])).days
+        leg_days = (_d(last["date"]) - _d(prev["date"])).days
+    except (ValueError, TypeError):
+        return None
+
+    total_pp = round(last["stake_after"] - first["stake_after"], 2)
+    leg_pp = round(last["stake_after"] - prev["stake_after"], 2)
+    return {
+        "first_date": first["date"], "first_stake": first["stake_after"],
+        "latest_date": last["date"], "latest_stake": last["stake_after"],
+        "filings": len(staked),
+        "total_pp": total_pp,
+        "span_days": span_days,
+        # average pace over the whole accumulation window
+        "pp_per_30d": round(total_pp / span_days * 30, 2) if span_days > 0 else None,
+        # most recent filing-to-filing leg — the current pace
+        "recent_leg_pp": leg_pp,
+        "recent_leg_days": leg_days,
+        "recent_pp_per_30d": (round(leg_pp / leg_days * 30, 2)
+                              if leg_days > 0 else None),
+    }
+
+
 def update_filing_history(position: dict, new_filing: dict) -> "dict | None":
     """Append a filing to a position's filing_history and recompute the
     activist accumulation rate.
@@ -146,40 +188,11 @@ def update_filing_history(position: dict, new_filing: dict) -> "dict | None":
     hist.sort(key=lambda h: h.get("date", ""))
     position["filing_history"] = hist
 
-    staked = [h for h in hist
-              if h.get("stake_after") is not None and h.get("date")]
-    if len(staked) < 2:
+    accumulation = compute_accumulation(hist)
+    if accumulation is None:
         position.pop("accumulation", None)
-        return None
-
-    def _d(s):
-        return datetime.fromisoformat(str(s).split("T")[0]).date()
-
-    try:
-        first, prev, last = staked[0], staked[-2], staked[-1]
-        span_days = (_d(last["date"]) - _d(first["date"])).days
-        leg_days = (_d(last["date"]) - _d(prev["date"])).days
-    except (ValueError, TypeError):
-        position.pop("accumulation", None)
-        return None
-
-    total_pp = round(last["stake_after"] - first["stake_after"], 2)
-    leg_pp = round(last["stake_after"] - prev["stake_after"], 2)
-    accumulation = {
-        "first_date": first["date"], "first_stake": first["stake_after"],
-        "latest_date": last["date"], "latest_stake": last["stake_after"],
-        "filings": len(staked),
-        "total_pp": total_pp,
-        "span_days": span_days,
-        # average pace over the whole accumulation window
-        "pp_per_30d": round(total_pp / span_days * 30, 2) if span_days > 0 else None,
-        # most recent filing-to-filing leg — the current pace
-        "recent_leg_pp": leg_pp,
-        "recent_leg_days": leg_days,
-        "recent_pp_per_30d": (round(leg_pp / leg_days * 30, 2)
-                              if leg_days > 0 else None),
-    }
-    position["accumulation"] = accumulation
+    else:
+        position["accumulation"] = accumulation
     return accumulation
 
 

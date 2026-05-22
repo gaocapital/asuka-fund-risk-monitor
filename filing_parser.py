@@ -55,6 +55,7 @@ HIGH-priority alert.
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import sys
@@ -118,6 +119,21 @@ def _atomic_write_json(path: str, data) -> None:
     os.replace(tmp, path)
 
 
+def edinet_search_url(ticker: str) -> str:
+    """EDINET simple-document-search deep link for a company, by securities
+    code — lands on that company's filing list (大量保有報告書 / 変更報告書 etc.).
+    EDINET's renewed site exposes no keyless per-document permalink, so we link
+    to the keyless search (WEEE0040) filtered to the ticker."""
+    base = "https://disclosure2.edinet-fsa.go.jp"
+    t = (ticker or "").strip()
+    if not t:
+        return base + "/"
+    q = (f"mul={t}&ctf=off&fls=off&lpr=on&rpr=off&oth=off"
+         f"&yer=&mon=&pfs=6&ser=1&pag=1&sor=2")
+    enc = base64.b64encode(q.encode("utf-8")).decode("ascii")
+    return f"{base}/WEEE0040.aspx?{enc}"
+
+
 def fetch_doc_list(target_date: date, api_key: str, timeout: int = 30) -> list[dict]:
     """Fetch all filings for a date from EDINET API v2."""
     params = {
@@ -177,10 +193,9 @@ def normalise_doc(doc: dict, ticker_name_map: dict[str, str],
     submit_at = doc.get("submitDateTime") or doc.get("submitDate") or ""
     doc_id = doc.get("docID", "")
 
-    edinet_url = (
-        f"https://disclosure.edinet-fsa.go.jp/E01EW/download?type=2&id={doc_id}"
-        if doc_id else ""
-    )
+    # EDINET's renewed site has no keyless per-document permalink — link to the
+    # keyless simple-search filtered to the subject company's ticker.
+    edinet_url = edinet_search_url(ticker)
 
     purpose = ""
     # 大量保有: docDescription often includes 純投資 / 重要提案 hint
