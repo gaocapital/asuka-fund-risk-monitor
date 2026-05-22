@@ -133,6 +133,24 @@ a{color:var(--ac);text-decoration:none}
   margin:14px 0 8px;text-transform:uppercase}
 .chg-sub:first-child{margin-top:2px}
 
+/* ===== EDINET filings feed ===== */
+.ffeed{display:flex;flex-direction:column}
+.frow{display:grid;grid-template-columns:46px 1fr 82px;gap:11px;
+  padding:10px 12px;border-bottom:1px solid var(--lsoft)}
+.frow:last-child{border-bottom:none}
+.fr-prio{font-size:8px;font-weight:800;text-align:center;height:18px;
+  line-height:14px;padding:1px 0;border-radius:4px;align-self:start}
+.fr-hi{background:rgba(248,81,73,.16);color:#ff6b63;border:1px solid rgba(248,81,73,.4)}
+.fr-md{background:rgba(214,165,51,.14);color:#dcb04a;border:1px solid rgba(214,165,51,.36)}
+.fr-lo{background:var(--s3);color:var(--dim);border:1px solid var(--line)}
+.fr-top{font-size:12px;line-height:1.4}
+.fr-tk{font-size:10px;font-weight:700;color:var(--mut);background:var(--s1);
+  border:1px solid var(--line);padding:1px 5px;border-radius:3px}
+.fr-dt{font-size:9.5px;color:var(--ac);margin-left:4px}
+.fr-mid{font-size:10.5px;color:var(--mut);margin-top:3px}
+.fr-sum{font-size:10px;color:var(--dim);margin-top:3px;line-height:1.45}
+.fr-side{font-size:9.5px;color:var(--dim);text-align:right;line-height:1.6}
+
 /* ===== badges ===== */
 .badge{font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:4px;
   letter-spacing:.04em;white-space:nowrap}
@@ -877,9 +895,9 @@ def _flag(cls: str, icon: str, text: str) -> str:
             f'<div>{text}</div></div>')
 
 
-def render_changes_col(positions: list, deltas: dict) -> str:
-    """The hero's third column — what changed since the last snapshot, then
-    standing portfolio flags."""
+def _collect_changes(positions: list, deltas: dict) -> "tuple[list, list]":
+    """Gather (changes, standing_flags) as [(css, icon, html)] tuples — shared
+    by the hero's Since-Yesterday column and the full Changes tab."""
     by_tk = {p.get("ticker"): p for p in positions}
     changes: list[tuple] = []
 
@@ -893,40 +911,41 @@ def render_changes_col(positions: list, deltas: dict) -> str:
                                 (d.get("prev_action") or "?", ""))[0]
         now = ACTION_BADGE.get(derive_action(p), (derive_action(p), ""))[0]
         changes.append(("flag-b", "Δ",
-            f"<b>{html_escape(tk)} {html_escape((p.get('name') or '')[:16])}</b> "
+            f"<b>{html_escape(tk)} {html_escape((p.get('name') or '')[:20])}</b> "
             f"— verdict {html_escape(prev)} → {html_escape(now)}"))
 
-    filed = [tk for tk, d in deltas.items() if d.get("new_filing")]
-    if filed:
+    for tk, d in deltas.items():
+        if not d.get("new_filing"):
+            continue
+        p = by_tk.get(tk) or {}
         changes.append(("flag-g", "✦",
-            f"<b>{len(filed)} new filing{'s' if len(filed) != 1 else ''}</b> "
-            f"— {html_escape(', '.join(filed[:6]))}"))
+            f"<b>{html_escape(tk)} {html_escape((p.get('name') or '')[:20])}</b> "
+            f"— new EDINET filing"))
 
     newp = [tk for tk, d in deltas.items() if d.get("new")]
     if newp:
         changes.append(("flag-b", "+",
             f"<b>{len(newp)} new holding{'s' if len(newp) != 1 else ''}</b> "
-            f"— {html_escape(', '.join(newp[:6]))}"))
+            f"— {html_escape(', '.join(newp))}"))
 
     pmoves = sorted(((tk, d["pwer_pp"]) for tk, d in deltas.items()
                      if d.get("pwer_pp") is not None and abs(d["pwer_pp"]) >= 0.5),
                     key=lambda x: -abs(x[1]))
-    for tk, pp in pmoves[:2]:
+    for tk, pp in pmoves:
         p = by_tk.get(tk) or {}
         cls, ic = ("flag-g", "▲") if pp > 0 else ("flag-w", "▼")
         changes.append((cls, ic, f"<b>{html_escape(tk)} "
-            f"{html_escape((p.get('name') or '')[:16])}</b> — PWER {pp:+.1f}pp at spot"))
+            f"{html_escape((p.get('name') or '')[:20])}</b> — PWER {pp:+.1f}pp at spot"))
 
     xmoves = sorted(((tk, d["price_pct"]) for tk, d in deltas.items()
                      if d.get("price_pct") is not None and abs(d["price_pct"]) >= 3),
                     key=lambda x: -abs(x[1]))
-    for tk, pc in xmoves[:2]:
+    for tk, pc in xmoves:
         p = by_tk.get(tk) or {}
         cls, ic = ("flag-g", "▲") if pc > 0 else ("flag-w", "▼")
         changes.append((cls, ic, f"<b>{html_escape(tk)} "
-            f"{html_escape((p.get('name') or '')[:16])}</b> — price {pc:+.1f}%"))
+            f"{html_escape((p.get('name') or '')[:20])}</b> — price {pc:+.1f}%"))
 
-    # standing flags
     flags: list[tuple] = []
     wpwer = _wtd_avg_pwer(positions)
     if wpwer < PWER_FLOOR:
@@ -946,19 +965,69 @@ def render_changes_col(positions: list, deltas: dict) -> str:
         if derive_action(p) == "DATA_QUARANTINE":
             flags.append(("flag-r", "⛔",
                 f"<b>{html_escape(p.get('name'))}</b> — data quarantine"))
+    return changes, flags
 
+
+def render_changes_col(positions: list, deltas: dict) -> str:
+    """The hero's third column — top changes since the last snapshot, then
+    standing portfolio flags. The full list lives in the Changes tab."""
+    changes, flags = _collect_changes(positions, deltas)
     parts: list[str] = []
     if changes:
         parts += [_flag(c, i, t) for c, i, t in changes[:6]]
         if len(changes) > 6:
             parts.append(f'<div class="hero-empty">+{len(changes) - 6} more '
-                         f'in the Positions tab</div>')
+                         f'in the Changes tab</div>')
     else:
         parts.append('<div class="hero-empty">Quiet — no overnight changes.</div>')
     if flags:
         parts.append('<div class="chg-sub">Standing Flags</div>')
         parts += [_flag(c, i, t) for c, i, t in flags]
     return "".join(parts)
+
+
+def render_tab_changes(positions: list, deltas: dict) -> str:
+    """The Changes tab — every day-over-day change since the last snapshot."""
+    changes, flags = _collect_changes(positions, deltas)
+    n_flip = sum(1 for d in deltas.values() if d.get("action_changed"))
+    n_file = sum(1 for d in deltas.values() if d.get("new_filing"))
+    stats = f"""
+<div class="stat4">
+  <div class="stat"><div class="stat-l">Total Changes</div>
+    <div class="stat-v n">{len(changes)}</div>
+    <div class="stat-s">since the last snapshot</div></div>
+  <div class="stat"><div class="stat-l">Verdict Flips</div>
+    <div class="stat-v n">{n_flip}</div>
+    <div class="stat-s">action changed overnight</div></div>
+  <div class="stat"><div class="stat-l">New Filings</div>
+    <div class="stat-v n">{n_file}</div>
+    <div class="stat-s">EDINET filings overnight</div></div>
+  <div class="stat"><div class="stat-l">Standing Flags</div>
+    <div class="stat-v n">{len(flags)}</div>
+    <div class="stat-s">open portfolio issues</div></div>
+</div>"""
+    if changes:
+        changes_body = "".join(_flag(c, i, t) for c, i, t in changes)
+    else:
+        changes_body = ('<div class="empty"><div class="empty-i">✓</div>'
+                        '<div class="empty-t">No changes since the last snapshot</div>'
+                        '<div class="empty-s">The book is unchanged day-over-day.'
+                        '</div></div>')
+    flags_body = ("".join(_flag(c, i, t) for c, i, t in flags) if flags
+                  else '<div class="hero-empty">No standing flags.</div>')
+    return f"""{stats}
+<div class="row2">
+  <div class="card">
+    <div class="card-h"><div class="card-t">SINCE YESTERDAY — ALL CHANGES</div>
+      <div class="card-sub">{len(changes)} change{'s' if len(changes) != 1 else ''}</div></div>
+    <div class="card-b">{changes_body}</div>
+  </div>
+  <div class="card">
+    <div class="card-h"><div class="card-t">STANDING FLAGS</div>
+      <div class="card-sub">{len(flags)} open</div></div>
+    <div class="card-b">{flags_body}</div>
+  </div>
+</div>"""
 
 
 def render_hero(positions: list, deltas: dict) -> str:
@@ -1083,6 +1152,15 @@ def render_thesis_expand(p: dict) -> str:
          if p.get("catalyst_date") else "—"),
         ("Layer", html_escape(p.get("layer", "—"))),
     ]
+    acc = p.get("accumulation")
+    if acc and acc.get("latest_stake") is not None and acc.get("first_stake") is not None:
+        _rate = acc.get("recent_pp_per_30d")
+        if _rate is None:
+            _rate = acc.get("pp_per_30d")
+        _rt = f" · {_rate:+.1f}pp/30d" if _rate is not None else ""
+        facts.append(("Accumulation",
+                      f"{acc['first_stake']:.1f}% → {acc['latest_stake']:.1f}% · "
+                      f"{acc.get('filings', 0)} filings / {acc.get('span_days', 0)}d{_rt}"))
     kv = "".join(f'<div class="kv-i"><span class="kv-k">{k}</span>'
                  f'<span class="kv-v">{v}</span></div>' for k, v in facts)
 
@@ -1583,6 +1661,55 @@ def render_catalyst_timeline(positions: list) -> str:
 </div>"""
 
 
+FILING_PRIO = {"HIGH": ("HIGH", "fr-hi"), "MED": ("MED", "fr-md"),
+               "LOW": ("LOW", "fr-lo")}
+
+
+def render_filing_feed(filings: list) -> str:
+    """The EDINET filings feed — one row per filing, priority-ranked, with the
+    activist filer and the stake before -> after move, linking to the source."""
+    if not filings:
+        return """
+<div class="empty"><div class="empty-i">▤</div>
+  <div class="empty-t">No EDINET filings in the scan window</div>
+  <div class="empty-s">大量保有報告書 / 変更報告書 are matched on the subject
+  company across positions + watch-list.</div></div>"""
+    rank = {"HIGH": 0, "MED": 1, "LOW": 2}
+    ordered = sorted(filings, key=lambda f: str(f.get("received_at", "")),
+                     reverse=True)
+    ordered = sorted(ordered,
+                     key=lambda f: rank.get(f.get("alert_priority", "LOW"), 3))
+    rows = []
+    for f in ordered:
+        plabel, pcls = FILING_PRIO.get(f.get("alert_priority", "LOW"),
+                                       ("LOW", "fr-lo"))
+        sa, sb = f.get("stake_after"), f.get("stake_before")
+        stake = ""
+        if sa is not None:
+            stake = (f"{sb:.2f}% → {sa:.2f}%" if sb is not None
+                     else f"stake {sa:.2f}%")
+            dp = f.get("delta_pp") or 0
+            if dp:
+                stake += (f' <span class="{"pos" if dp > 0 else "neg"}">'
+                          f'{dp:+.2f}pp</span>')
+        url = f.get("edinet_url") or ""
+        link = (f'<a href="{html_escape(url)}" target="_blank" rel="noopener">'
+                f'EDINET ↗</a>' if url else "")
+        rows.append(f"""<div class="frow">
+  <div class="fr-prio {pcls}">{plabel}</div>
+  <div>
+    <div class="fr-top"><span class="fr-tk">{html_escape(f.get('ticker', ''))}</span>
+      <b>{html_escape(f.get('name', ''))}</b>
+      <span class="fr-dt">{html_escape(f.get('doc_type', ''))}</span></div>
+    <div class="fr-mid">{html_escape((f.get('filer') or '—')[:42])}"""
+            f"""{(' · ' + stake) if stake else ''}</div>
+    <div class="fr-sum">{html_escape((f.get('summary') or '')[:150])}</div>
+  </div>
+  <div class="fr-side">{html_escape(str(f.get('received_at', ''))[:10])}<br>{link}</div>
+</div>""")
+    return '<div class="ffeed">' + "".join(rows) + "</div>"
+
+
 def render_tab_catalysts(positions: list, data: dict) -> str:
     fut = _future_catalysts(positions)
     next_d = fut[0][0] if fut else None
@@ -1600,9 +1727,9 @@ def render_tab_catalysts(positions: list, data: dict) -> str:
   <div class="stat"><div class="stat-l">Upcoming Total</div>
     <div class="stat-v n">{len(fut)}</div>
     <div class="stat-s">positions with a future catalyst</div></div>
-  <div class="stat"><div class="stat-l">Filings Today</div>
+  <div class="stat"><div class="stat-l">EDINET Filings</div>
     <div class="stat-v n">{len(filings)}</div>
-    <div class="stat-s">EDINET / TDnet scan</div></div>
+    <div class="stat-s">activist 5%-rule + events</div></div>
 </div>"""
 
     rows = []
@@ -1619,24 +1746,7 @@ def render_tab_catalysts(positions: list, data: dict) -> str:
     upcoming = ("".join(rows) if rows
                 else '<div class="empty"><div class="empty-t">No upcoming catalysts</div></div>')
 
-    if filings:
-        frows = []
-        for f in filings[:8]:
-            frows.append(f"""
-<div class="cl-row">
-  <div class="cl-cd">NEW</div>
-  <div><div class="cl-nm">{html_escape(f.get('name', ''))}</div>
-    <div class="cl-tk">{html_escape(f.get('ticker', ''))}</div></div>
-  <div class="cl-ev">{html_escape((f.get('doc_type') or '') + ' · ' + (f.get('filer') or ''))}</div>
-  <div class="cl-date">{html_escape(str(f.get('received_at', ''))[:10])}</div>
-</div>""")
-        filings_body = '<div class="clist">' + "".join(frows) + "</div>"
-    else:
-        filings_body = """
-<div class="empty"><div class="empty-i">▤</div>
-  <div class="empty-t">No new filings today</div>
-  <div class="empty-s">EDINET + TDnet monitored for 大量保有報告 / 変更報告書<br>
-  across all held positions.</div></div>"""
+    filings_body = render_filing_feed(filings)
 
     return f"""{stats}
 {render_catalyst_timeline(positions)}
@@ -1738,6 +1848,7 @@ def render_tab_watch(data: dict) -> str:
 def render_dashboard(data: dict, positions: list, deltas: dict) -> str:
     watch = data.get("watch_list", []) or []
     n_future = len(_future_catalysts(positions))
+    n_changes = len(_collect_changes(positions, deltas)[0])
     gen = datetime.now().strftime("%d %b %Y %H:%M").lstrip("0")
     as_of = (data.get("as_of") or "")[:10]
     sources = " · ".join((data.get("metadata") or {}).get("data_sources", []))
@@ -1756,12 +1867,14 @@ def render_dashboard(data: dict, positions: list, deltas: dict) -> str:
 {render_hero(positions, deltas)}
 <nav class="tabs">
   <div class="tab on" data-pane="tab-positions">Positions <span class="tab-c">{len(positions)}</span></div>
+  <div class="tab" data-pane="tab-changes">Changes <span class="tab-c">{n_changes}</span></div>
   <div class="tab" data-pane="tab-risk">Risk</div>
   <div class="tab" data-pane="tab-catalysts">Catalysts <span class="tab-c">{n_future}</span></div>
   <div class="tab" data-pane="tab-watch">Watch <span class="tab-c">{len(watch)}</span></div>
 </nav>
 <main>
   <section class="tabpane" id="tab-positions">{render_tab_positions(positions, deltas)}</section>
+  <section class="tabpane" id="tab-changes" hidden>{render_tab_changes(positions, deltas)}</section>
   <section class="tabpane" id="tab-risk" hidden>{render_tab_risk(positions)}</section>
   <section class="tabpane" id="tab-catalysts" hidden>{render_tab_catalysts(positions, data)}</section>
   <section class="tabpane" id="tab-watch" hidden>{render_tab_watch(data)}</section>
