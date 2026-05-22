@@ -47,6 +47,9 @@ from dashboard_core import (
     compute_portfolio_metrics, derive_action, derive_buy_tier, html_escape,
     fmt_num,
 )
+# Reuse the dashboard's rule-based explainers so the digest and the dashboard
+# give one consistent rationale for every action and change.
+from generate_dashboard import explain_action, _pwer_standing
 
 # Windows consoles default to cp1252 and choke on this script's glyphs. Force
 # UTF-8 on the standard streams so a standalone run does not crash mid-output.
@@ -110,22 +113,6 @@ def _short_date(date_str) -> str:
         return d.strftime("%b %d").replace(" 0", " ")
     except (ValueError, TypeError):
         return str(date_str or "")
-
-
-def _action_reason(p: dict, action: str) -> str:
-    pwer = p.get("pwer")
-    notes = (p.get("notes") or "").strip()
-    first = notes.split(".")[0].strip()[:90] if notes else ""
-    if action == "BUY":
-        return first or (f"PWER {pwer:.0f}% — clears the entry threshold."
-                         if pwer is not None else "Thesis intact.")
-    if action == "SELL":
-        return first or (f"PWER {pwer:.0f}% — thesis impaired."
-                         if pwer is not None else "Thesis no longer viable.")
-    if action == "WEAK_HOLD":
-        return (f"PWER {pwer:.0f}% — sub-threshold; trim candidate."
-                if pwer is not None else "Sub-threshold conviction.")
-    return first
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -276,6 +263,7 @@ _CSS = """
     border-radius:7px}
   ul.chg li{padding:8px 11px;border-bottom:1px solid #eef0f2;font-size:12.5px}
   ul.chg li:last-child{border-bottom:none}
+  .chg-sub{font-size:11px;color:#888;margin-top:3px;line-height:1.45}
   .empty{color:#999;font-style:italic;padding:9px 11px;background:#fff;
     border:1px solid #e3e4e8;border-radius:7px;font-size:12.5px}
   .foot{font-size:10.5px;color:#999;margin-top:30px;padding-top:13px;
@@ -312,27 +300,41 @@ def _action_table(rows: list, action_of) -> str:
             f'<td><span class="tk">{html_escape(p.get("ticker", ""))}</span> '
             f'{html_escape(p.get("name", ""))}</td>'
             f'<td>{pw}</td><td>{wt}</td>'
-            f'<td class="mut">{html_escape(_action_reason(p, a))}</td></tr>')
+            f'<td>{html_escape(explain_action(p, a))}</td></tr>')
     out.append("</table>")
     return "".join(out)
 
 
 def _changes_list(d: dict) -> str:
+    by_tk = {p.get("ticker"): p for p in d["positions"]}
     items = []
     for tk, nm, prev, now in d["flips"]:
+        p = by_tk.get(tk)
+        sub = (f'<div class="chg-sub">{html_escape(explain_action(p, now))}</div>'
+               if p else "")
         items.append(f'<b>{html_escape(tk)} {html_escape(nm[:24])}</b> — '
-                     f'verdict {html_escape(prev)} → {html_escape(now)}')
+                     f'verdict {html_escape(prev)} → {html_escape(now)}{sub}')
     if d["new_filing_tks"]:
         items.append(f'<b>{len(d["new_filing_tks"])} new EDINET filing(s)</b> — '
-                     f'{html_escape(", ".join(d["new_filing_tks"]))}')
+                     f'{html_escape(", ".join(d["new_filing_tks"]))}'
+                     f'<div class="chg-sub">A filing on an anchor activist '
+                     f'confirms or breaks the accumulation thesis — decode it '
+                     f'in the dashboard Filings tab.</div>')
     for tk, pp in d["pmoves"][:5]:
+        p = by_tk.get(tk)
         cls = "pos" if pp > 0 else "neg"
+        sub = (f'<div class="chg-sub">{html_escape(_pwer_standing(p.get("pwer")))}'
+               f' — thesis {"strengthening" if pp > 0 else "softening"} at spot.'
+               f'</div>' if p else "")
         items.append(f'<b>{html_escape(tk)} {html_escape(d["name_of"].get(tk, "")[:24])}</b>'
-                     f' — PWER <span class="{cls}">{pp:+.1f}pp</span> at spot')
+                     f' — PWER <span class="{cls}">{pp:+.1f}pp</span> at spot{sub}')
     for tk, pc in d["xmoves"][:5]:
+        p = by_tk.get(tk)
         cls = "pos" if pc > 0 else "neg"
+        sub = (f'<div class="chg-sub">{html_escape(_pwer_standing(p.get("pwer")))}'
+               f' after the re-rate.</div>' if p else "")
         items.append(f'<b>{html_escape(tk)} {html_escape(d["name_of"].get(tk, "")[:24])}</b>'
-                     f' — price <span class="{cls}">{pc:+.1f}%</span>')
+                     f' — price <span class="{cls}">{pc:+.1f}%</span>{sub}')
     if not items:
         return '<div class="empty">No changes since the last snapshot.</div>'
     return '<ul class="chg"><li>' + "</li><li>".join(items) + "</li></ul>"
