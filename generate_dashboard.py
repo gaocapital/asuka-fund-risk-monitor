@@ -457,6 +457,30 @@ a{color:var(--ac);text-decoration:none}
 .addrow{display:flex;align-items:center;gap:9px;padding:11px 12px;font-size:11px;
   color:var(--ac);background:rgba(77,159,255,.05);border-top:1px solid var(--line)}
 
+/* ===== change impact · verdict flips · why-block ===== */
+.flag-sub{font-size:10px;color:var(--dim);margin-top:4px;line-height:1.5}
+.flipbar{background:var(--s1)}
+.flipbar-h{display:flex;align-items:center;gap:7px;padding:10px 18px 5px;
+  font-size:9.5px;font-weight:800;letter-spacing:.12em;color:var(--warn)}
+.flipbar-i{font-size:12px}
+.flip-item{display:grid;grid-template-columns:auto 1fr;gap:16px;
+  align-items:center;padding:9px 18px;border-top:1px solid var(--line)}
+.flip-verdict{display:flex;align-items:center;gap:6px}
+.flip-arr{color:var(--dim);font-weight:700}
+.flip-tk{font-size:12px;font-weight:700;margin-bottom:2px}
+.flip-why{font-size:10.5px;color:var(--mut);line-height:1.55}
+.flip-lbl{font-size:8px;font-weight:800;letter-spacing:.07em;color:var(--dim);
+  text-transform:uppercase;margin-right:4px}
+.pexp-why{background:var(--s1);border:1px solid var(--line);border-radius:9px;
+  padding:11px 13px;margin-bottom:16px}
+.why-head{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.why-h-t{font-size:9.5px;font-weight:800;letter-spacing:.11em;color:var(--mut)}
+.why-txt{font-size:12px;color:var(--tx);line-height:1.55}
+.why-rl{font-size:11px;color:var(--mut);line-height:1.55;margin-top:8px;
+  padding-top:8px;border-top:1px solid var(--lsoft)}
+.why-rl-t{font-size:8px;font-weight:800;letter-spacing:.07em;color:var(--ac);
+  text-transform:uppercase;margin-right:6px}
+
 /* ===== filings tab ===== */
 .acctbl{display:flex;flex-direction:column}
 .acc-head,.acc-row{display:grid;
@@ -812,30 +836,70 @@ def _activist_key(s) -> str:
     return (" ".join(parts))[:22] or "No activist"
 
 
-def _action_reason(p: dict, action: str) -> str:
-    notes = (p.get("notes") or "").strip()
-    first = notes.split(".")[0].strip() if notes else ""
+def explain_action(p: dict, action: str) -> str:
+    """A specific, rule-based rationale for the position's current verdict —
+    cites the same inputs derive_action() gates on (PWER vs the 20% entry bar
+    and 5% floor, price vs the activist WAC, catalyst proximity, freshness)."""
     pwer = p.get("pwer")
+    wac_d = wac_delta_pct(p.get("price"), p.get("wac"))
+    stake = p.get("stake_pct") or 0
+    cat_d = _days_to(p.get("catalyst_date"))
+    pw = f"{pwer:.0f}%" if pwer is not None else "—"
+    cat = (f", catalyst in {cat_d}d" if (cat_d is not None and 0 <= cat_d <= 120)
+           else "")
+
     if action == "BUY":
-        if first:
-            return first[:96]
-        return (f"PWER {pwer:.0f}% — clears the entry threshold."
-                if pwer is not None else "Thesis intact at the current price.")
-    if action == "SELL":
-        nu = notes.upper()
-        if "PROFIT WARNING" in nu:
-            return "Operating-profit warning — thesis impaired."
-        if "HOKUETSU" in nu or "FAILED CAMPAIGN" in nu:
-            return "Failed-campaign pattern — thesis broken."
-        if "ACTIVIST EXITING" in nu:
-            return "Anchor activist exiting — co-investment edge gone."
-        if pwer is not None and pwer < 5:
-            return f"PWER {pwer:.0f}% — below the 5% floor."
-        return first[:96] or "Thesis no longer viable at the current price."
+        if stake >= 20 and pwer is not None and pwer >= 25:
+            return (f"End-game — the activist holds {stake:.0f}% and PWER is {pw}; "
+                    f"the activist's exit is itself the catalyst{cat}.")
+        edge = ""
+        if wac_d is not None and wac_d <= 15:
+            edge = f", price {wac_d:+.0f}% vs the activist WAC — co-investment edge intact"
+        return f"PWER {pw} clears the 20% entry bar{edge}{cat}."
+    if action == "WATCH":
+        if pwer is not None and pwer >= 20:
+            ed = (f"price is {wac_d:+.0f}% above the activist WAC"
+                  if wac_d is not None else "the activist edge is compressed")
+            return (f"PWER {pw} clears 20% but {ed} — hold, don't add into a "
+                    f"thinned edge.")
+        return (f"PWER {pw} sits in the 15–20% watch band — short of the 20% "
+                f"entry bar; needs a re-rate or a cheaper entry{cat}.")
     if action == "WEAK_HOLD":
-        return (f"PWER {pwer:.0f}% — sub-threshold; trim candidate."
-                if pwer is not None else "Sub-threshold conviction — trim candidate.")
-    return first[:96]
+        return (f"PWER {pw} is sub-threshold (the 5–15% band) — conviction is "
+                f"thin; a trim candidate unless it re-rates.")
+    if action == "SELL":
+        nu = (p.get("notes") or "").upper()
+        if "HOKUETSU" in nu or "FAILED CAMPAIGN" in nu:
+            return "Failed-campaign pattern — the activist thesis is broken. Exit."
+        if "PROFIT WARNING" in nu or "OPERATING PROFIT WARNING" in nu:
+            return "Operating-profit warning — the earnings thesis is impaired. Exit."
+        if "ACTIVIST EXITING" in nu:
+            return "The anchor activist is exiting — the co-investment edge is gone. Exit."
+        if pwer is not None and pwer < 5:
+            return f"PWER {pw} — below the 5% floor; the thesis no longer pays. Exit."
+        if wac_d is not None and wac_d > 25:
+            return (f"Price is {wac_d:+.0f}% above the activist WAC — late-cycle, "
+                    f"the activist alpha is extracted. Exit.")
+        return "The thesis is no longer viable at the current price. Exit."
+    if action == "STALE_INPUTS":
+        fa = p.get("_freshness_audit") or {}
+        st = []
+        if fa.get("price_age_days", 0) > 3:
+            st.append(f"price {fa['price_age_days']}d old")
+        if fa.get("filings_age_days", 0) > 7:
+            st.append(f"EDINET scan {fa['filings_age_days']}d old")
+        if fa.get("news_age_days", 0) > 7:
+            st.append(f"news scan {fa['news_age_days']}d old")
+        return (f"Verdict suspended — {', '.join(st) or 'inputs are stale'}. "
+                f"Refresh the inputs before the action can lock.")
+    if action == "STALE_SCEN":
+        return ("Price has drifted >20% from where the PWER scenarios were "
+                "calibrated — refresh the scenarios before trusting the verdict.")
+    if action == "DATA_QUARANTINE":
+        return "Data quarantined — the position is under manual review; no signal."
+    if action == "HOLD":
+        return f"Thesis intact, PWER {pw} — hold the position, no change."
+    return "—"
 
 
 # ============================================================================
@@ -959,7 +1023,7 @@ def _act_card(p: dict, action: str) -> str:
   <div class="act-top"><span class="badge {cls}">{label}</span>{tier_badge}
     <span class="act-tk">{html_escape(p.get('ticker'))} {html_escape(p.get('name', ''))}</span>
     <span class="act-pw">{pw}</span></div>
-  <div class="act-why">{html_escape(_action_reason(p, action))}</div>
+  <div class="act-why">{html_escape(explain_action(p, action))}</div>
   <div class="act-nums">{nums}</div>
 </div>"""
 
@@ -969,9 +1033,28 @@ def _flag(cls: str, icon: str, text: str) -> str:
             f'<div>{text}</div></div>')
 
 
+def _pwer_standing(pwer) -> str:
+    """Where a PWER reading sits against the action thresholds."""
+    if pwer is None:
+        return "PWER not yet scored"
+    if pwer >= 20:
+        return f"PWER {pwer:.0f}% clears the 20% entry bar"
+    if pwer >= 15:
+        return f"PWER {pwer:.0f}% sits in the 15–20% watch band"
+    if pwer >= 5:
+        return f"PWER {pwer:.0f}% is in the 5–15% trim band"
+    return f"PWER {pwer:.0f}% is below the 5% floor"
+
+
+def _sub(text: str) -> str:
+    """A change row's thesis-impact sub-line."""
+    return f'<div class="flag-sub">{html_escape(text)}</div>'
+
+
 def _collect_changes(positions: list, deltas: dict) -> "tuple[list, list]":
     """Gather (changes, standing_flags) as [(css, icon, html)] tuples — shared
-    by the hero's Since-Yesterday column and the full Changes tab."""
+    by the hero's Since-Yesterday column and the full Changes tab. Every change
+    carries a thesis-impact sub-line explaining what it means for the verdict."""
     by_tk = {p.get("ticker"): p for p in positions}
     changes: list[tuple] = []
 
@@ -983,33 +1066,44 @@ def _collect_changes(positions: list, deltas: dict) -> "tuple[list, list]":
             continue
         prev = ACTION_BADGE.get(d.get("prev_action"),
                                 (d.get("prev_action") or "?", ""))[0]
-        now = ACTION_BADGE.get(derive_action(p), (derive_action(p), ""))[0]
-        changes.append(("flag-b", "Δ",
+        now_a = derive_action(p)
+        now = ACTION_BADGE.get(now_a, (now_a, ""))[0]
+        changes.append(("flag-b", "⇄",
             f"<b>{html_escape(tk)} {html_escape((p.get('name') or '')[:20])}</b> "
-            f"— verdict {html_escape(prev)} → {html_escape(now)}"))
+            f"— verdict {html_escape(prev)} → {html_escape(now)}"
+            + _sub(explain_action(p, now_a))))
 
     for tk, d in deltas.items():
         if not d.get("new_filing"):
             continue
         p = by_tk.get(tk) or {}
+        ft = (p.get("last_filing") or {}).get("type") or "EDINET filing"
         changes.append(("flag-g", "✦",
             f"<b>{html_escape(tk)} {html_escape((p.get('name') or '')[:20])}</b> "
-            f"— new EDINET filing"))
+            f"— new {html_escape(ft)}"
+            + _sub("A filing on the anchor activist confirms or breaks the "
+                   "accumulation thesis — decode it in the Filings tab.")))
 
     newp = [tk for tk, d in deltas.items() if d.get("new")]
     if newp:
         changes.append(("flag-b", "+",
             f"<b>{len(newp)} new holding{'s' if len(newp) != 1 else ''}</b> "
-            f"— {html_escape(', '.join(newp))}"))
+            f"— {html_escape(', '.join(newp))}"
+            + _sub("Entered from the CGSI broker sync — thesis, PWER scenarios "
+                   "and hard stops still to be enriched.")))
 
     pmoves = sorted(((tk, d["pwer_pp"]) for tk, d in deltas.items()
                      if d.get("pwer_pp") is not None and abs(d["pwer_pp"]) >= 0.5),
                     key=lambda x: -abs(x[1]))
     for tk, pp in pmoves:
         p = by_tk.get(tk) or {}
-        cls, ic = ("flag-g", "▲") if pp > 0 else ("flag-w", "▼")
-        changes.append((cls, ic, f"<b>{html_escape(tk)} "
-            f"{html_escape((p.get('name') or '')[:20])}</b> — PWER {pp:+.1f}pp at spot"))
+        up = pp > 0
+        cls, ic = ("flag-g", "▲") if up else ("flag-w", "▼")
+        impact = (f"{_pwer_standing(p.get('pwer'))} — the thesis is "
+                  f"{'strengthening' if up else 'softening'} at spot.")
+        changes.append((cls, ic,
+            f"<b>{html_escape(tk)} {html_escape((p.get('name') or '')[:20])}</b> "
+            f"— PWER {pp:+.1f}pp at spot" + _sub(impact)))
 
     xmoves = sorted(((tk, d["price_pct"]) for tk, d in deltas.items()
                      if d.get("price_pct") is not None and abs(d["price_pct"]) >= 3),
@@ -1017,8 +1111,19 @@ def _collect_changes(positions: list, deltas: dict) -> "tuple[list, list]":
     for tk, pc in xmoves:
         p = by_tk.get(tk) or {}
         cls, ic = ("flag-g", "▲") if pc > 0 else ("flag-w", "▼")
-        changes.append((cls, ic, f"<b>{html_escape(tk)} "
-            f"{html_escape((p.get('name') or '')[:20])}</b> — price {pc:+.1f}%"))
+        wd = wac_delta_pct(p.get("price"), p.get("wac"))
+        if wd is None:
+            edge = ""
+        elif wd <= 15:
+            edge = f" Price {wd:+.0f}% vs the activist WAC — co-investment edge intact."
+        elif wd <= 25:
+            edge = f" Price {wd:+.0f}% above the activist WAC — the edge is compressing."
+        else:
+            edge = f" Price {wd:+.0f}% above the activist WAC — the edge is gone."
+        impact = f"{_pwer_standing(p.get('pwer'))} after the re-rate.{edge}"
+        changes.append((cls, ic,
+            f"<b>{html_escape(tk)} {html_escape((p.get('name') or '')[:20])}</b> "
+            f"— price {pc:+.1f}%" + _sub(impact)))
 
     flags: list[tuple] = []
     wpwer = _wtd_avg_pwer(positions)
@@ -1104,6 +1209,57 @@ def render_tab_changes(positions: list, deltas: dict) -> str:
 </div>"""
 
 
+def _flip_trigger(d: dict) -> str:
+    """Infer, from the day-over-day delta, what tripped a verdict flip."""
+    bits = []
+    pc = d.get("price_pct")
+    if pc is not None and abs(pc) >= 0.1:
+        bits.append(f"price {pc:+.1f}%")
+    pp = d.get("pwer_pp")
+    if pp is not None and abs(pp) >= 0.1:
+        bits.append(f"PWER {pp:+.1f}pp at spot")
+    sp = d.get("stake_pp")
+    if sp is not None and abs(sp) >= 0.01:
+        bits.append(f"activist stake {sp:+.2f}pp")
+    if d.get("new_filing"):
+        bits.append("a new EDINET filing")
+    return " · ".join(bits) if bits else "an input refresh crossed a threshold"
+
+
+def render_flip_callout(positions: list, deltas: dict) -> str:
+    """A prominent band, inside the Today's Actions zone, for every verdict that
+    flipped vs. the previous snapshot — before → after, the trigger, the read."""
+    by_tk = {p.get("ticker"): p for p in positions}
+    flips = []
+    for tk, d in deltas.items():
+        if d.get("action_changed") and by_tk.get(tk):
+            flips.append((tk, by_tk[tk], d))
+    if not flips:
+        return ""
+    items = []
+    for tk, p, d in flips:
+        prev = d.get("prev_action")
+        now = derive_action(p)
+        plabel, pcls = ACTION_BADGE.get(prev, (prev or "?", "bg-hold"))
+        nlabel, ncls = ACTION_BADGE.get(now, (now or "?", "bg-hold"))
+        items.append(f"""<div class="flip-item">
+  <div class="flip-verdict">
+    <span class="badge {pcls}">{plabel}</span>
+    <span class="flip-arr">→</span>
+    <span class="badge {ncls}">{nlabel}</span>
+  </div>
+  <div class="flip-body">
+    <div class="flip-tk"><b>{html_escape(tk)}</b> {html_escape((p.get('name') or '')[:34])}</div>
+    <div class="flip-why"><span class="flip-lbl">Trigger</span>{html_escape(_flip_trigger(d))}
+      &nbsp; <span class="flip-lbl">Read</span>{html_escape(explain_action(p, now))}</div>
+  </div>
+</div>""")
+    plural = "S" if len(flips) != 1 else ""
+    return (f'<div class="flipbar"><div class="flipbar-h">'
+            f'<span class="flipbar-i">⇄</span>VERDICT FLIP{plural} · {len(flips)}'
+            f'</div>{"".join(items)}</div>')
+
+
 def render_hero(positions: list, deltas: dict) -> str:
     by_action: dict[str, list] = {}
     for p in positions:
@@ -1127,6 +1283,7 @@ def render_hero(positions: list, deltas: dict) -> str:
     reduce_html = _col(reduce, lambda p: derive_action(p))
 
     changes_html = render_changes_col(positions, deltas)
+    flip_co = render_flip_callout(positions, deltas)
 
     n_deploy, n_reduce = len(deploy), len(reduce)
     n_changed = sum(1 for d in deltas.values()
@@ -1140,6 +1297,7 @@ def render_hero(positions: list, deltas: dict) -> str:
     <div class="hero-title">TODAY'S ACTIONS</div>
     <div class="hero-meta">{meta}</div>
   </div>
+  {flip_co}
   <div class="hero-cols">
     <div class="hcol">
       <div class="hcol-h"><span class="hd hd-add"></span>DEPLOY</div>
@@ -1242,7 +1400,19 @@ def render_thesis_expand(p: dict) -> str:
                     'the reasoning layer, pending your approval. Scenarios and '
                     'targets are inference, not confirmed.</div>'
                     if is_draft else "")
-    return f"""<div class="pexp">{draft_banner}<div class="pexp-grid">
+
+    action = derive_action(p)
+    alabel, acls = ACTION_BADGE.get(action, (action, "bg-hold"))
+    rnote = (p.get("reasoning_note") or "").strip()
+    rnote_html = (f'<div class="why-rl"><span class="why-rl-t">Reasoning layer</span>'
+                  f'{html_escape(rnote[:380])}</div>' if rnote else "")
+    why_block = (f'<div class="pexp-why"><div class="why-head">'
+                 f'<span class="badge {acls}">{alabel}</span>'
+                 f'<span class="why-h-t">WHY THIS VERDICT</span></div>'
+                 f'<div class="why-txt">{html_escape(explain_action(p, action))}</div>'
+                 f'{rnote_html}</div>')
+
+    return f"""<div class="pexp">{draft_banner}{why_block}<div class="pexp-grid">
   <div>
     <div class="pexp-h">PWER SCENARIO DISTRIBUTION</div>
     <div class="scen">{''.join(rows)}</div>

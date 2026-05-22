@@ -102,6 +102,15 @@ Every run, for each held position with a disclosed activist:
   This is identical to edinet_filings_ingest.compute_accumulation.
 Commit the updated dashboard_data.json with the memo.
 
+PER-POSITION READ — stamp the dashboard with your current take:
+For each material position, write a concise `reasoning_note` onto the position
+in dashboard_data.json — 1–2 sentences: your current read of what the latest
+move (price, PWER, a new filing, a verdict flip) means for the thesis, and
+whether it supports or threatens the verdict. The dashboard shows this beside
+its own rule-based explanation, so the PM sees the mechanical signal and your
+analytical read side by side. Overwrite it every run; keep it current; date
+any material claim and separate inference from confirmed fact.
+
 OUTPUT FORMAT — reproduce framework/08-worked-example.md exactly:
 1. Boxed header (ASUKA FUND — DAILY SWEEP MEMO; as-of; pipeline line; last-sweep).
 2. Top-of-Page Summary — a tight narrative of the day's headline.
