@@ -1,5 +1,5 @@
 {
-  "as_of": "Mon May 25 2026 · 09:35 JST",
+  "as_of": "Mon May 25 2026 · 14:36 JST",
   "product": "Asuka Active Book Daily Risk",
   "version": "3.0",
   "schema_version": "1.0",
@@ -110,7 +110,7 @@
       "price_volume": 1168956,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 19,
       "_freshness_audit": {
         "price_age_days": 4,
         "filings_age_days": 4,
@@ -294,7 +294,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 5,
       "filing_history": [
         {
           "date": "2025-05-02",
@@ -440,7 +440,7 @@
       "price_volume": 4509140,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 23,
+      "news_scan_result_count": 16,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -550,7 +550,7 @@
       "price_volume": 199299,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 14,
       "_freshness_audit": {
         "price_age_days": 4,
         "filings_age_days": 4,
@@ -706,7 +706,7 @@
       "price_volume": 1064830,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 23,
+      "news_scan_result_count": 20,
       "_freshness_audit": {
         "price_age_days": 4,
         "filings_age_days": 4,
@@ -826,7 +826,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 10,
       "filing_history": [
         {
           "date": "2026-03-31",
@@ -941,7 +941,7 @@
           "rationale": "Extreme bear (NOT bull) — Oasis trims; FY27 guide is transformation year #2 with continued OP decline; segment-transfer / governance defensive action. Floor: net cash ~¥730/sh + PB/B/S floor ~¥900-1000"
         },
         "rationale": "Mid-band reference price ¥1,400 (Asuka PWER -0.8% from mid). At current ¥1,177 the bear-case target is already nearly tagged; PWER improves materially below ¥1,100 entry. Tripwires fired (FY26 guidance break + anchor underwater) override the original Mar-31 +22% PWER calc.",
-        "calculated_at": "2026-05-25T08:30:21.890146"
+        "calculated_at": "2026-05-25T13:30:08.880786"
       },
       "mos": -10.0,
       "asset_mos": -33.0,
@@ -950,7 +950,7 @@
       "verified_tdnet_date": "2026-05-21",
       "shadow_buy_reevaluation_date": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18,
+      "news_scan_result_count": 15,
       "cgsi": {
         "quantity": 3500.0,
         "avg_cost": 1148.2857,
@@ -979,23 +979,6 @@
         }
       ],
       "pwer_history": [
-        {
-          "timestamp": "2026-05-22T11:09:46.226418",
-          "trigger": "臨時報告書",
-          "filer": "エン株式会社",
-          "rules_applied": [
-            "extraordinary_report"
-          ],
-          "reasons": [
-            "  → extraordinary_report: Extraordinary report - human review needed"
-          ],
-          "old_pwer": 8.6,
-          "new_pwer": 12.6,
-          "delta_pp": 4.0,
-          "hokuetsu_reversed": false,
-          "ticker": "4849",
-          "name": "en Japan / en Inc."
-        },
         {
           "timestamp": "2026-05-22T13:30:08.330739",
           "trigger": "臨時報告書",
@@ -1134,6 +1117,23 @@
         },
         {
           "timestamp": "2026-05-25T08:30:21.890140",
+          "trigger": "臨時報告書",
+          "filer": "エン株式会社",
+          "rules_applied": [
+            "extraordinary_report"
+          ],
+          "reasons": [
+            "  → extraordinary_report: Extraordinary report - human review needed"
+          ],
+          "old_pwer": 12.6,
+          "new_pwer": 12.6,
+          "delta_pp": 0.0,
+          "hokuetsu_reversed": false,
+          "ticker": "4849",
+          "name": "en Japan / en Inc."
+        },
+        {
+          "timestamp": "2026-05-25T13:30:08.880780",
           "trigger": "臨時報告書",
           "filer": "エン株式会社",
           "rules_applied": [
@@ -1452,7 +1452,7 @@
       "price_volume": 1078532,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17,
+      "news_scan_result_count": 15,
       "cgsi": {
         "quantity": 2000.0,
         "avg_cost": 1806.5,
@@ -1647,7 +1647,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 15,
       "_freshness_audit": {
         "price_age_days": 4,
         "filings_age_days": 4,
@@ -1725,7 +1725,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 20,
       "cgsi": {
         "quantity": 2100.0,
         "avg_cost": 1688.0,
@@ -1880,7 +1880,7 @@
       "price_volume": 2878965,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 20,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -1974,7 +1974,7 @@
       "is_paha": true,
       "paha_promoted_at": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 14,
+      "news_scan_result_count": 20,
       "cgsi": {
         "quantity": 1000.0,
         "avg_cost": 2776.0,
@@ -2080,7 +2080,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18,
+      "news_scan_result_count": 19,
       "cgsi": {
         "quantity": 1500.0,
         "avg_cost": 1559.0,
@@ -2230,7 +2230,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15,
+      "news_scan_result_count": 14,
       "_freshness_audit": {
         "price_age_days": 4,
         "filings_age_days": 4,
@@ -2311,7 +2311,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 23,
+      "news_scan_result_count": 16,
       "cgsi": {
         "quantity": 600.0,
         "avg_cost": 3871.0,
@@ -2471,7 +2471,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 15,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 2113.29,
@@ -2636,7 +2636,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18,
+      "news_scan_result_count": 16,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 6578.96,
@@ -2747,7 +2747,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17,
+      "news_scan_result_count": 14,
       "filing_history": [
         {
           "date": "2025-07-04",
@@ -2857,7 +2857,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18,
+      "news_scan_result_count": 12,
       "accumulation": {
         "first_date": "2025-05-08",
         "first_stake": 18.66,
@@ -2923,7 +2923,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18,
+      "news_scan_result_count": 12,
       "filing_history": [
         {
           "date": "2026-02-09",
@@ -3024,128 +3024,128 @@
       "name": "Kanto Denka Kogyo",
       "activist": "Effissimo",
       "trigger": "",
-      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
+      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-25 NEWS-AUDIT] ?: 朝日生命保険は保有割合が増加したと報告 [変更報告書No.9] (変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21
+      "news_scan_result_count": 9
     },
     {
       "ticker": "1813",
       "name": "Fudo Tetra",
       "activist": "Effissimo",
       "trigger": "",
-      "notes": "Carried over from prior watch_list [2026-05-25 NEWS-AUDIT] ?: 1813: 不動テトラ - 大量保有報告書データベース - M&A Online (大量保有報告)",
+      "notes": "Carried over from prior watch_list [2026-05-25 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17
+      "news_scan_result_count": 21
     },
     {
       "ticker": "2267",
       "name": "Yakult Honsha",
       "activist": "Dalton Kizuna Fund",
       "trigger": "",
-      "notes": "Carried over — Oasis-failure-pattern risk; not initiated [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
-      "source": "pm_watchlist",
-      "verified_news_date": "2026-05-25",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22
-    },
-    {
-      "ticker": "2207",
-      "name": "Meito Co.",
-      "activist": "UGS Asset Management",
-      "trigger": "",
-      "notes": "Carried over — limit-order zone; SC co-file trigger [2026-05-25 NEWS-AUDIT] ?: meito(2207) ニュース - 株探（かぶたん） (決算発表)",
-      "source": "pm_watchlist",
-      "verified_news_date": "2026-05-25",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 12
-    },
-    {
-      "ticker": "3941",
-      "name": "Rengo",
-      "activist": "Murakami group",
-      "trigger": "",
-      "notes": "Carried over — Murakami early-stage entry [2026-05-25 NEWS-AUDIT] ?: 適時開示速報 - 日本経済新聞 (公開買付, 株主総会, 決算短信)",
-      "source": "pm_watchlist",
-      "verified_news_date": "2026-05-25",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18
-    },
-    {
-      "ticker": "6367",
-      "name": "Daikin Industries",
-      "activist": "Elliott Investment Management",
-      "trigger": "",
-      "notes": "Carried over — Elliott Mode 1 fresh campaign [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
-      "source": "pm_watchlist",
-      "verified_news_date": "2026-05-25",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22
-    },
-    {
-      "ticker": "3863",
-      "name": "Nippon Paper Industries",
-      "activist": "Murakami network",
-      "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings; kept for tracking [2026-05-25 NEWS-AUDIT] ?: 【大日本印刷】 [7912]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
-      "source": "pm_watchlist",
-      "verified_news_date": "2026-05-25",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22
-    },
-    {
-      "ticker": "4194",
-      "name": "Visional",
-      "activist": "PAH pre-activist screen",
-      "trigger": "",
-      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
-      "source": "pm_watchlist",
-      "verified_news_date": "2026-05-25",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17
-    },
-    {
-      "ticker": "4229",
-      "name": "Gun Ei Chemical",
-      "activist": "Ueshima wolf-pack",
-      "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
-      "source": "pm_watchlist",
-      "verified_news_date": "2026-05-25",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19
-    },
-    {
-      "ticker": "4246",
-      "name": "DaikyoNishikawa",
-      "activist": "Murakami / MI2",
-      "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: ダイキョーニシカワ（DNC）【4246】｜ニュース｜株探（かぶたん） (決算発表)",
+      "notes": "Carried over — Oasis-failure-pattern risk; not initiated [2026-05-25 NEWS-AUDIT] ?: 【ヤクルト本社】[2267]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
       "news_scan_result_count": 20
     },
     {
-      "ticker": "6594",
-      "name": "Nidec",
-      "activist": "Oasis Management",
+      "ticker": "2207",
+      "name": "Meito Co.",
+      "activist": "UGS Asset Management",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: 【ニデック】 [6594]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Carried over — limit-order zone; SC co-file trigger [2026-05-25 NEWS-AUDIT] ?: meitoを大量保有する株主詳細 - バフェット・コード (大量保有報告)",
+      "source": "pm_watchlist",
+      "verified_news_date": "2026-05-25",
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 17
+    },
+    {
+      "ticker": "3941",
+      "name": "Rengo",
+      "activist": "Murakami group",
+      "trigger": "",
+      "notes": "Carried over — Murakami early-stage entry [2026-05-25 NEWS-AUDIT] ?: レンゴー【3941】、今期経常は18％増益、10円増配へ | 決算速報 (増配)",
+      "source": "pm_watchlist",
+      "verified_news_date": "2026-05-25",
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 22
+    },
+    {
+      "ticker": "6367",
+      "name": "Daikin Industries",
+      "activist": "Elliott Investment Management",
+      "trigger": "",
+      "notes": "Carried over — Elliott Mode 1 fresh campaign [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
       "news_scan_result_count": 18
     },
     {
+      "ticker": "3863",
+      "name": "Nippon Paper Industries",
+      "activist": "Murakami network",
+      "trigger": "",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings; kept for tracking [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
+      "source": "pm_watchlist",
+      "verified_news_date": "2026-05-25",
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 20
+    },
+    {
+      "ticker": "4194",
+      "name": "Visional",
+      "activist": "PAH pre-activist screen",
+      "trigger": "",
+      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-25 NEWS-AUDIT] ?: ビジョナル【4194】｜ニュース - 株探（かぶたん） (決算発表)",
+      "source": "pm_watchlist",
+      "verified_news_date": "2026-05-25",
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 18
+    },
+    {
+      "ticker": "4229",
+      "name": "Gun Ei Chemical",
+      "activist": "Ueshima wolf-pack",
+      "trigger": "",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: 群栄化学工業 (4229)の概要 - 銘柄スカウターライト (決算発表)",
+      "source": "pm_watchlist",
+      "verified_news_date": "2026-05-25",
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 17
+    },
+    {
+      "ticker": "4246",
+      "name": "DaikyoNishikawa",
+      "activist": "Murakami / MI2",
+      "trigger": "",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
+      "source": "pm_watchlist",
+      "verified_news_date": "2026-05-25",
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 12
+    },
+    {
+      "ticker": "6594",
+      "name": "Nidec",
+      "activist": "Oasis Management",
+      "trigger": "",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書)",
+      "source": "pm_watchlist",
+      "verified_news_date": "2026-05-25",
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 16
+    },
+    {
       "ticker": "9006",
       "name": "Keikyu",
       "activist": "Murakami network",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: 【京浜急行電鉄】[9006]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
@@ -3156,22 +3156,22 @@
       "name": "Senko Group Holdings",
       "activist": "Dalton + NAVF",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: 【センコーグループホールディングス】 [9069]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-25 NEWS-AUDIT] ?: センコーグループホールディングス - 適時開示速報 - 日本経済新聞 (決算発表, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15
+      "news_scan_result_count": 19
     },
     {
       "ticker": "9982",
       "name": "Takihyo",
       "activist": "PAH pre-activist screen",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-25 NEWS-AUDIT] ?: 【TDK】 [6762]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-25 NEWS-AUDIT] ?: 【タキヒヨー】[9982]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-25",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20
+      "news_scan_result_count": 18
     }
   ],
   "exited": [
@@ -3381,7 +3381,7 @@
   ],
   "calendar": [],
   "todays_filings_truncated": true,
-  "last_price_pull": "2026-05-25T09:35:53.403131+09:00",
+  "last_price_pull": "2026-05-25T14:36:19.062700+09:00",
   "last_price_source": "yahoo_intraday",
   "last_price_fallback": "2026-05-21T17:43:36.405344+09:00"
 }
