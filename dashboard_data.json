@@ -1,5 +1,5 @@
 {
-  "as_of": "Tue May 26 2026 · 09:35 JST",
+  "as_of": "Tue May 26 2026 · 14:36 JST",
   "product": "Asuka Active Book Daily Risk",
   "version": "3.0",
   "schema_version": "1.0",
@@ -110,7 +110,7 @@
       "price_volume": 1168956,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 17,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -291,7 +291,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 10,
+      "news_scan_result_count": 15,
       "filing_history": [
         {
           "date": "2025-05-02",
@@ -432,7 +432,7 @@
       "price_volume": 4509140,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17,
+      "news_scan_result_count": 20,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -539,7 +539,7 @@
       "price_volume": 199299,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 10,
+      "news_scan_result_count": 11,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -692,7 +692,7 @@
       "price_volume": 1064830,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 20,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -809,7 +809,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 13,
+      "news_scan_result_count": 17,
       "filing_history": [
         {
           "date": "2026-03-31",
@@ -928,7 +928,7 @@
       "verified_tdnet_date": "2026-05-21",
       "shadow_buy_reevaluation_date": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15,
+      "news_scan_result_count": 23,
       "cgsi": {
         "quantity": 3500.0,
         "avg_cost": 1148.2857,
@@ -1239,7 +1239,7 @@
       "price_volume": 4904003,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 12,
+      "news_scan_result_count": 10,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -1425,7 +1425,7 @@
       "price_volume": 1078532,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15,
+      "news_scan_result_count": 16,
       "cgsi": {
         "quantity": 2000.0,
         "avg_cost": 1806.5,
@@ -1617,7 +1617,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 11
+      "news_scan_result_count": 16
     },
     {
       "ticker": "6151",
@@ -1690,7 +1690,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 15,
       "cgsi": {
         "quantity": 2100.0,
         "avg_cost": 1688.0,
@@ -1840,7 +1840,7 @@
       "price_volume": 2878965,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 13,
+      "news_scan_result_count": 21,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -1931,7 +1931,7 @@
       "is_paha": true,
       "paha_promoted_at": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15,
+      "news_scan_result_count": 18,
       "cgsi": {
         "quantity": 1000.0,
         "avg_cost": 2776.0,
@@ -2034,7 +2034,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 19,
       "cgsi": {
         "quantity": 1500.0,
         "avg_cost": 1559.0,
@@ -2181,7 +2181,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 11
+      "news_scan_result_count": 16
     },
     {
       "ticker": "3549",
@@ -2257,7 +2257,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 11,
+      "news_scan_result_count": 16,
       "cgsi": {
         "quantity": 600.0,
         "avg_cost": 3871.0,
@@ -2415,7 +2415,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 18,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 2113.29,
@@ -2577,7 +2577,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 11,
+      "news_scan_result_count": 23,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 6578.96,
@@ -2685,7 +2685,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 13,
+      "news_scan_result_count": 16,
       "filing_history": [
         {
           "date": "2025-07-04",
@@ -2737,7 +2737,7 @@
       "add_high": null,
       "catalyst": "",
       "catalyst_date": null,
-      "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 文化シヤタについて、NIPPON ACTIVE VALUE FUND PLCは保有 ... (変更報告書) [2026-05-22 NEWS-AUDIT] ?: Nomura Asset Management holds 5.3% of shares in Pigeon(7956.JP) (大量保有報告, 変更報告書) [2026-05-23 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書) [2026-05-24 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書) [2026-05-25 NEWS-AUDIT] ?: 三井住友信託銀行が文化シヤッター＜5930＞株式の大量保有報告書 ... (大量保有報告)",
+      "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 文化シヤタについて、NIPPON ACTIVE VALUE FUND PLCは保有 ... (変更報告書) [2026-05-22 NEWS-AUDIT] ?: Nomura Asset Management holds 5.3% of shares in Pigeon(7956.JP) (大量保有報告, 変更報告書) [2026-05-23 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書) [2026-05-24 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書) [2026-05-25 NEWS-AUDIT] ?: 三井住友信託銀行が文化シヤッター＜5930＞株式の大量保有報告書 ... (大量保有報告) [2026-05-26 NEWS-AUDIT] ?: 三井住友信託銀行が文化シヤッター＜5930＞株式の大量保有報告書 ... (大量保有報告)",
       "last_filing": {
         "date": "2026-04-08",
         "type": "変更報告書",
@@ -2789,8 +2789,8 @@
       "verified_filings_date": "2026-05-21",
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-26",
-      "news_scan_max_severity": "LOW",
-      "news_scan_result_count": 13,
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 16,
       "accumulation": {
         "first_date": "2025-05-08",
         "first_stake": 18.66,
@@ -2851,7 +2851,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 12,
+      "news_scan_result_count": 13,
       "filing_history": [
         {
           "date": "2026-02-09",
@@ -2947,7 +2947,7 @@
       "name": "Kanto Denka Kogyo",
       "activist": "Effissimo",
       "trigger": "",
-      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-26 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書)",
+      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-26 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
@@ -2958,11 +2958,11 @@
       "name": "Fudo Tetra",
       "activist": "Effissimo",
       "trigger": "",
-      "notes": "Carried over from prior watch_list [2026-05-26 NEWS-AUDIT] ?: 1813: 不動テトラ - 大量保有報告書データベース - M&A Online (大量保有報告)",
+      "notes": "Carried over from prior watch_list [2026-05-26 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 12
+      "news_scan_result_count": 16
     },
     {
       "ticker": "2267",
@@ -2973,7 +2973,7 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 23
+      "news_scan_result_count": 18
     },
     {
       "ticker": "2207",
@@ -2984,95 +2984,95 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16
+      "news_scan_result_count": 15
     },
     {
       "ticker": "3941",
       "name": "Rengo",
       "activist": "Murakami group",
       "trigger": "",
-      "notes": "Carried over — Murakami early-stage entry [2026-05-26 NEWS-AUDIT] ?: レンゴー【3941】｜ニュース - 株探（かぶたん） (自社株買い)",
+      "notes": "Carried over — Murakami early-stage entry [2026-05-26 NEWS-AUDIT] ?: レンゴー【3941】、今期経常は18％増益、10円増配へ | 決算速報 (増配)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 9
+      "news_scan_result_count": 17
     },
     {
       "ticker": "6367",
       "name": "Daikin Industries",
       "activist": "Elliott Investment Management",
       "trigger": "",
-      "notes": "Carried over — Elliott Mode 1 fresh campaign [2026-05-26 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
+      "notes": "Carried over — Elliott Mode 1 fresh campaign [2026-05-26 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22
+      "news_scan_result_count": 21
     },
     {
       "ticker": "3863",
       "name": "Nippon Paper Industries",
       "activist": "Murakami network",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings; kept for tracking [2026-05-26 NEWS-AUDIT] ?: 2015年02月23日（月）に提出されたEDINET... (大量保有報告, 変更報告書)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings; kept for tracking [2026-05-26 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19
+      "news_scan_result_count": 23
     },
     {
       "ticker": "4194",
       "name": "Visional",
       "activist": "PAH pre-activist screen",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-26 NEWS-AUDIT] ?: 【ビジョナル】[4194]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-26 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20
+      "news_scan_result_count": 22
     },
     {
       "ticker": "4229",
       "name": "Gun Ei Chemical",
       "activist": "Ueshima wolf-pack",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-26 NEWS-AUDIT] ?: 株式会社 (大量保有報告, 変更報告書)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 14
+      "news_scan_max_severity": "LOW",
+      "news_scan_result_count": 12
     },
     {
       "ticker": "4246",
       "name": "DaikyoNishikawa",
       "activist": "Murakami / MI2",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-26 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-26 NEWS-AUDIT] ?: DNCについて、MI2は保有割合が増加したと報告 [変更報告書No.1] (変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 13
+      "news_scan_result_count": 10
     },
     {
       "ticker": "6594",
       "name": "Nidec",
       "activist": "Oasis Management",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-26 NEWS-AUDIT] ?: 【ニデック】[6594]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-26 NEWS-AUDIT] ?: ニデック、26年3月期決算発表を延期 | 時事通信ニュース (会計不正, 決算発表)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18
+      "news_scan_result_count": 11
     },
     {
       "ticker": "9006",
       "name": "Keikyu",
       "activist": "Murakami network",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-26 NEWS-AUDIT] ?: 【京浜急行電鉄】[9006]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-26 NEWS-AUDIT] ?: 大量保有報告書ＤＢ [株主:E10677] アセットマネジメントOne > [8804]... (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20
+      "news_scan_result_count": 13
     },
     {
       "ticker": "9069",
@@ -3083,7 +3083,7 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19
+      "news_scan_result_count": 21
     },
     {
       "ticker": "9982",
@@ -3094,7 +3094,7 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-26",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15
+      "news_scan_result_count": 18
     }
   ],
   "exited": [
@@ -3287,7 +3287,7 @@
   ],
   "calendar": [],
   "todays_filings_truncated": true,
-  "last_price_pull": "2026-05-26T09:35:49.636833+09:00",
+  "last_price_pull": "2026-05-26T14:36:02.016791+09:00",
   "last_price_source": "yahoo_intraday",
   "last_price_fallback": "2026-05-21T17:43:36.405344+09:00"
 }
