@@ -1,5 +1,5 @@
 {
-  "as_of": "Fri May 29 2026 · 09:35 JST",
+  "as_of": "Fri May 29 2026 · 14:35 JST",
   "product": "Asuka Active Book Daily Risk",
   "version": "3.0",
   "schema_version": "1.0",
@@ -110,7 +110,7 @@
       "price_volume": 1168956,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 15,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -432,7 +432,7 @@
       "price_volume": 4509140,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 20,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -539,7 +539,7 @@
       "price_volume": 199299,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17,
+      "news_scan_result_count": 22,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -661,7 +661,7 @@
           "target_price": 1306.0
         },
         "rationale": "Stock -53% over 1Y reset. Below WAC = edge intact. Apr 14 Q1 already past. Founder 30.62% caps variance but xBull MBO at premium real (founder + Arcus alignment).",
-        "calculated_at": "2026-05-29T08:30:11.510180",
+        "calculated_at": "2026-05-29T13:30:12.947303",
         "price_status": "refreshed_apr28",
         "activist_pwer": 16.8,
         "calibrated_at_price": 670.8,
@@ -692,7 +692,7 @@
       "price_volume": 1064830,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 15,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -898,6 +898,23 @@
           "hokuetsu_reversed": false,
           "ticker": "3697",
           "name": "Shift Inc."
+        },
+        {
+          "timestamp": "2026-05-29T13:30:12.947294",
+          "trigger": "臨時報告書",
+          "filer": "株式会社ＳＨＩＦＴ",
+          "rules_applied": [
+            "extraordinary_report"
+          ],
+          "reasons": [
+            "  → extraordinary_report: Extraordinary report - human review needed"
+          ],
+          "old_pwer": 32.8,
+          "new_pwer": 32.8,
+          "delta_pp": 0.0,
+          "hokuetsu_reversed": false,
+          "ticker": "3697",
+          "name": "Shift Inc."
         }
       ]
     },
@@ -947,7 +964,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 17,
       "filing_history": [
         {
           "date": "2026-03-31",
@@ -1066,7 +1083,7 @@
       "verified_tdnet_date": "2026-05-21",
       "shadow_buy_reevaluation_date": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 16,
+      "news_scan_result_count": 15,
       "cgsi": {
         "quantity": 3500.0,
         "avg_cost": 1148.2857,
@@ -1377,7 +1394,7 @@
       "price_volume": 4904003,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 18,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -1459,7 +1476,7 @@
       "add_high": null,
       "catalyst": "verify - Wil Field engagement pattern",
       "catalyst_date": null,
-      "notes": "POST-QUARANTINE RECORD (Apr 30 2026). Will Field Capital quiet accumulator: Feb 2025 5.02% → Apr 2025 6.02% → Oct 2025 9.14% (joint with Shino Fumiya). Implied WAC ¥1,679. Asuka WAC ¥1,860 (slightly above activist basis, no edge degradation). Strategic-source: GOV — TSE PBR-reform pressure on healthcare services, capital allocation pressure plausible from dividend/buyback mechanism. Not a hard-activist thesis. PWER 6.0% reflects defensive priors on quiet accumulator campaigns. PM TODO: verify Will Field filing chain via EDINET 株主プロ; investigate auto-tilt bug. [2026-05-01 NEWS-AUDIT] ?: bloomberg.com/jp/news/articles/2007-09-26/JOYG7I1A74EB (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配... (決算発表, 業績) [2026-05-21 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告, 変更報告書) [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-23 NEWS-AUDIT] ?: WILL FIELD CAPITAL PTE LTDは保有割合が増加したと報告 [変更報告書 ... (変更報告書) [2026-05-24 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-25 NEWS-AUDIT] ?: WILL FIELD CAPITAL PTE LTDは保有割合が増加したと報告 [変更報告書 ... (変更報告書) [2026-05-26 NEWS-AUDIT] ?: クオールホールディングス（クオールHD）【3034】｜ニュース ... (大量保有報告, 変更報告書) [2026-05-27 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-28 NEWS-AUDIT] ?: クオールホールディングス（クオールHD）【3034】｜ニュース ... (増配)",
+      "notes": "POST-QUARANTINE RECORD (Apr 30 2026). Will Field Capital quiet accumulator: Feb 2025 5.02% → Apr 2025 6.02% → Oct 2025 9.14% (joint with Shino Fumiya). Implied WAC ¥1,679. Asuka WAC ¥1,860 (slightly above activist basis, no edge degradation). Strategic-source: GOV — TSE PBR-reform pressure on healthcare services, capital allocation pressure plausible from dividend/buyback mechanism. Not a hard-activist thesis. PWER 6.0% reflects defensive priors on quiet accumulator campaigns. PM TODO: verify Will Field filing chain via EDINET 株主プロ; investigate auto-tilt bug. [2026-05-01 NEWS-AUDIT] ?: bloomberg.com/jp/news/articles/2007-09-26/JOYG7I1A74EB (大量保有報告) [2026-05-16 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-18 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配... (決算発表, 業績) [2026-05-21 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告, 変更報告書) [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-23 NEWS-AUDIT] ?: WILL FIELD CAPITAL PTE LTDは保有割合が増加したと報告 [変更報告書 ... (変更報告書) [2026-05-24 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-25 NEWS-AUDIT] ?: WILL FIELD CAPITAL PTE LTDは保有割合が増加したと報告 [変更報告書 ... (変更報告書) [2026-05-26 NEWS-AUDIT] ?: クオールホールディングス（クオールHD）【3034】｜ニュース ... (大量保有報告, 変更報告書) [2026-05-27 NEWS-AUDIT] ?: 大量保有報告書に載ったことはありますか - Yahoo!知恵袋 (大量保有報告) [2026-05-28 NEWS-AUDIT] ?: クオールホールディングス（クオールHD）【3034】｜ニュース ... (増配) [2026-05-29 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告)",
       "last_filing": {
         "date": "2026-04-24",
         "type": "変更報告書",
@@ -1562,8 +1579,8 @@
       "price_intraday_low": 1783.19,
       "price_volume": 1078532,
       "verified_tdnet_date": "2026-05-21",
-      "news_scan_max_severity": "LOW",
-      "news_scan_result_count": 14,
+      "news_scan_max_severity": "HIGH",
+      "news_scan_result_count": 21,
       "cgsi": {
         "quantity": 2000.0,
         "avg_cost": 1806.5,
@@ -1828,7 +1845,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 19,
       "cgsi": {
         "quantity": 2100.0,
         "avg_cost": 1688.0,
@@ -1978,7 +1995,7 @@
       "price_volume": 2878965,
       "verified_tdnet_date": "2026-05-21",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 19,
       "_freshness_audit": {
         "price_age_days": 0,
         "filings_age_days": 1,
@@ -2069,7 +2086,7 @@
       "is_paha": true,
       "paha_promoted_at": "2026-05-16",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 19,
+      "news_scan_result_count": 21,
       "cgsi": {
         "quantity": 1000.0,
         "avg_cost": 2776.0,
@@ -2172,7 +2189,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20,
+      "news_scan_result_count": 19,
       "cgsi": {
         "quantity": 1500.0,
         "avg_cost": 1559.0,
@@ -2319,7 +2336,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 12
+      "news_scan_result_count": 21
     },
     {
       "ticker": "3549",
@@ -2395,7 +2412,7 @@
       "verified_tdnet_date": "2026-05-21",
       "is_paha": false,
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18,
+      "news_scan_result_count": 20,
       "cgsi": {
         "quantity": 600.0,
         "avg_cost": 3871.0,
@@ -2553,7 +2570,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 23,
+      "news_scan_result_count": 21,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 2113.29,
@@ -2715,7 +2732,7 @@
       "action_verified_date": "2026-04-30",
       "price_freshness_status": "live",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_result_count": 17,
       "price_time_jst": "2026-05-01T14:15:54.657689+09:00",
       "price_market_state": "REGULAR",
       "price_previous_close": 6578.96,
@@ -2798,8 +2815,8 @@
       "catalyst_date": null,
       "notes": "NEW HOLDING from CGSI sync — needs thesis enrichment (activist, PWER scenarios, hard stops). [2026-05-21 NEWS-AUDIT] ?: 藤田観光（藤田観）【9722】｜ニュース - 株探（かぶたん） (変更報告書) [2026-05-22 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告, 変更報告書) [2026-05-23 NEWS-AUDIT] ?: 【藤田観光】 [9722]IR情報 中期経営計画や決算短信 | 日経電子版 (決算発表, 中期経営計画, 株主総会) [2026-05-24 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告, 変更報告書) [2026-05-25 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配信 (全ての上場会社を提供) (決算発表, 業績) [2026-05-26 NEWS-AUDIT] ?: 株主プロ 【 有価証券報告書・大量保有報告書の検証 ｜ 藤田観光 ... (大量保有報告) [2026-05-27 NEWS-AUDIT] ?: 藤田観光（藤田観）【9722】｜材料ニュース｜株探（かぶたん） (変更報告書) [2026-05-28 NEWS-AUDIT] ?: ５％ルール大量保有報告書 マネーフォワード(3994)... (大量保有報告) [2026-05-29 NEWS-AUDIT] ?: Old Peak Group Ltd.は保有割合が増加したと報告 [変更報告書No.2] (変更報告書)",
       "last_filing": {
-        "date": "2026-05-28",
-        "type": "大量保有報告書",
+        "date": "2026-05-29",
+        "type": "変更報告書",
         "filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
         "stake_after": null,
         "purpose": "",
@@ -2823,7 +2840,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21,
+      "news_scan_result_count": 20,
       "filing_history": [
         {
           "date": "2025-07-04",
@@ -2844,6 +2861,13 @@
         {
           "date": "2026-05-28",
           "doc_type": "大量保有報告書",
+          "filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
+          "stake_after": null,
+          "purpose": ""
+        },
+        {
+          "date": "2026-05-29",
+          "doc_type": "変更報告書",
           "filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
           "stake_after": null,
           "purpose": ""
@@ -2934,8 +2958,8 @@
       "verified_filings_date": "2026-05-21",
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-29",
-      "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22,
+      "news_scan_max_severity": "MEDIUM",
+      "news_scan_result_count": 23,
       "accumulation": {
         "first_date": "2025-05-08",
         "first_stake": 18.66,
@@ -2996,7 +3020,7 @@
       "verified_tdnet_date": "2026-05-21",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 23,
+      "news_scan_result_count": 22,
       "filing_history": [
         {
           "date": "2026-02-09",
@@ -3092,33 +3116,33 @@
       "name": "Kanto Denka Kogyo",
       "activist": "Effissimo",
       "trigger": "",
-      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-29 NEWS-AUDIT] ?: 4047 | Kanto Denka Kogyo Co Ltd 株式-Investing.com (増配)",
+      "notes": "Carried over from prior watch_list — stake escalation past 5% trigger [2026-05-29 NEWS-AUDIT] ?: JavaScriptが無効になっています。 - Kabutan (業績予想の修正, 決算発表, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 14
+      "news_scan_result_count": 19
     },
     {
       "ticker": "1813",
       "name": "Fudo Tetra",
       "activist": "Effissimo",
       "trigger": "",
-      "notes": "Carried over from prior watch_list [2026-05-29 NEWS-AUDIT] ?: 1813: 不動テトラ - 大量保有報告書データベース - M&A Online (大量保有報告)",
+      "notes": "Carried over from prior watch_list [2026-05-29 NEWS-AUDIT] ?: 不動テトラ【1813】株の基本情報｜株探（かぶたん）明日の好悪材料 アーカイブ | 株探特集記事株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイ (自社株買い, 決算発表, 株式分割)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20
+      "news_scan_result_count": 24
     },
     {
       "ticker": "2267",
       "name": "Yakult Honsha",
       "activist": "Dalton Kizuna Fund",
       "trigger": "",
-      "notes": "Carried over — Oasis-failure-pattern risk; not initiated [2026-05-29 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告)",
+      "notes": "Carried over — Oasis-failure-pattern risk; not initiated [2026-05-29 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配信 (全ての上場会社を提供) (決算発表, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20
+      "news_scan_result_count": 22
     },
     {
       "ticker": "2207",
@@ -3129,29 +3153,29 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 18
+      "news_scan_result_count": 20
     },
     {
       "ticker": "3941",
       "name": "Rengo",
       "activist": "Murakami group",
       "trigger": "",
-      "notes": "Carried over — Murakami early-stage entry [2026-05-29 NEWS-AUDIT] ?: 【レンゴー】[3941]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Carried over — Murakami early-stage entry [2026-05-29 NEWS-AUDIT] ?: レンゴー【3941】、今期経常は18％増益、10円増配へ | 決算速報 (増配)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 21
+      "news_scan_result_count": 23
     },
     {
       "ticker": "6367",
       "name": "Daikin Industries",
       "activist": "Elliott Investment Management",
       "trigger": "",
-      "notes": "Carried over — Elliott Mode 1 fresh campaign [2026-05-29 NEWS-AUDIT] ?: ダイキン工業 (6367) : 決算情報・業績 [DAIKIN INDUSTRIES,] - みんかぶ (決算発表, 業績)",
+      "notes": "Carried over — Elliott Mode 1 fresh campaign [2026-05-29 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 9
+      "news_scan_result_count": 17
     },
     {
       "ticker": "3863",
@@ -3162,40 +3186,40 @@
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 15
+      "news_scan_result_count": 17
     },
     {
       "ticker": "4194",
       "name": "Visional",
       "activist": "PAH pre-activist screen",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-29 NEWS-AUDIT] ?: 【ビジョナル】[4194]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-29 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 17
+      "news_scan_result_count": 18
     },
     {
       "ticker": "4229",
       "name": "Gun Ei Chemical",
       "activist": "Ueshima wolf-pack",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-29 NEWS-AUDIT] 2026-05-26: 株式会社DOE5パーセントが群栄化学工業株式会社＜4229＞株式の変更 ... (変更報告書, DOE)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-29 NEWS-AUDIT] ?: 大量保有報告書等の提出について - 金融庁 (大量保有報告)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 14
+      "news_scan_result_count": 20
     },
     {
       "ticker": "4246",
       "name": "DaikyoNishikawa",
       "activist": "Murakami / MI2",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-29 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-29 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告, 変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 12
+      "news_scan_result_count": 20
     },
     {
       "ticker": "6594",
@@ -3213,29 +3237,29 @@
       "name": "Keikyu",
       "activist": "Murakami network",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-29 NEWS-AUDIT] ?: 大量保有報告書等の提出について：金融庁 (大量保有報告)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-29 NEWS-AUDIT] ?: 株探 | 決算速報 - 決算発表・業績修正の分析記事をリアルタイムで配... (決算発表, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 20
+      "news_scan_result_count": 16
     },
     {
       "ticker": "9069",
       "name": "Senko Group Holdings",
       "activist": "Dalton + NAVF",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-29 NEWS-AUDIT] ?: 株探 | 適時開示 - 上場会社が公表した【開示情報 ... - 株探（かぶたん） (公開買付)",
+      "notes": "Dropped from book in CGSI sync — not in CGSI holdings [2026-05-29 NEWS-AUDIT] ?: センコーグループ Hd（9069）のir情報・決算資料 | Irbank (決算発表, 業績)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
-      "news_scan_result_count": 22
+      "news_scan_result_count": 20
     },
     {
       "ticker": "9982",
       "name": "Takihyo",
       "activist": "PAH pre-activist screen",
       "trigger": "",
-      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-29 NEWS-AUDIT] ?: 【タキヒヨー】[9982]適時開示情報 株主総会や定款関連 | 日経電子版 (決算発表, 株主総会, 業績)",
+      "notes": "Dropped from book in CGSI sync — pre-activist screen [2026-05-29 NEWS-AUDIT] 2026-05-27: Ugsアセットマネジメント株式会社がタキヒヨー株式会社＜9982＞株式の変更報告書を提出（保有増加） - エキサイトニュース (変更報告書)",
       "source": "pm_watchlist",
       "verified_news_date": "2026-05-29",
       "news_scan_max_severity": "HIGH",
@@ -3428,11 +3452,28 @@
       "is_position": true,
       "alert_priority": "LOW",
       "summary": "大量保有報告書 · stake 0.00%."
+    },
+    {
+      "received_at": "2026-05-29 12:27",
+      "ticker": "9722",
+      "name": "FUJITA KANKO ORD",
+      "doc_type": "変更報告書",
+      "doc_subtype": "訂正報告書（大量保有報告書・変更報告書）",
+      "filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
+      "edinet_code": "E34245",
+      "stake_before": null,
+      "stake_after": null,
+      "delta_pp": 0.0,
+      "purpose": "",
+      "edinet_url": "https://disclosure2.edinet-fsa.go.jp/WEEE0040.aspx?bXVsPTk3MjImY3RmPW9mZiZmbHM9b2ZmJmxwcj1vbiZycHI9b2ZmJm90aD1vZmYmeWVyPSZtb249JnBmcz02JnNlcj0xJnBhZz0xJnNvcj0y",
+      "is_position": true,
+      "alert_priority": "LOW",
+      "summary": "変更報告書 · stake 0.00%."
     }
   ],
   "calendar": [],
   "todays_filings_truncated": true,
-  "last_price_pull": "2026-05-29T09:35:36.055268+09:00",
+  "last_price_pull": "2026-05-29T14:35:36.615388+09:00",
   "last_price_source": "yahoo_intraday",
   "last_price_fallback": "2026-05-21T17:43:36.405344+09:00"
 }
